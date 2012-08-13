@@ -1,0 +1,6 @@
+== render partial: 'posts/new'
+
+- if @posts
+  == render partial: 'posts/parent', collection: @posts
+- else
+    p No posts!

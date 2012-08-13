@@ -1,0 +1,39 @@
+.post
+  margin-left: +30px
+
+  article
+    +transition-property(all)
+    +transition-duration(5s)
+    background-color: $accent
+    display: inline-block
+    
+    margin: 5px 0
+    padding: 10px
+    border-left: 10px solid $bold-accent
+
+    &:hover
+      background-color: lighten($accent, 1%)
+      .reply-toggle
+        display: block
+
+    .reply-toggle
+      background-color: $bold-accent
+      font-variant: small-caps
+      display: none
+
+      p
+        width: 10%
+        margin: 0 auto
+
+    header
+      border-bottom: 1px solid
+      // Any child of the header
+      & > *
+        display: inline-block
+    .name
+      color: green
+    .subject
+      font-weight: bold
+
+  &.reply
+    display: none

@@ -1,0 +1,17 @@
+.post(id=child.id)
+  article.child
+    header
+      .name = child.name
+
+      - if child.tripcode
+        .tripcode = "!#{child.tripcode}"
+
+      .date:time(datetime=child.created_at) = child.date
+      .id == link_to_post("##{child.id}", child)
+      .parent == link_to_post('^', child.parent)
+
+    .body == child.body
+    a.reply-toggle(href="#reply" data-post=child.id)
+      p reply
+  == render partial: "posts/reply", locals: { :parent => child }
+  == render partial: 'posts/child', collection: child.children

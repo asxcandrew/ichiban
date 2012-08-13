@@ -1,0 +1,12 @@
+== form_for([@board, @post], autocomplete: "off") do |f|
+  == f.hidden_field :directory, value: @board.directory
+  == f.label :name
+  == f.text_field :name, :placeholder => "Name"
+  
+  == f.label :subject
+  == f.text_field :subject, :placeholder => "Subject"
+
+  == f.label :body
+  == f.text_area :body, :placeholder => "Comment"
+  
+  == f.submit "Submit"

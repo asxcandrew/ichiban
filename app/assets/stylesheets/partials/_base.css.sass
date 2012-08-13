@@ -1,0 +1,42 @@
+// Colors
+$base: #f2d8c2              // Peach
+$accent: #bf95ac           // violet
+$bold-accent: #8c6d84     // Darker violet
+$dark-base: #231726      // Dark indigo
+$light: #fff            // White
+
+// Layout defaults
+$footer-height: 50px
+
+*
+  // Prevents broken box model annoyances.
+  +box-sizing(border-box)
+
+html, body
+  height: 100%
+  background-color: $base
+  color: $dark-base
+  font:
+    family: sans-serif
+
+
+body
+  padding-bottom: $footer-height // Used for sticky footer
+
+h1
+  font-size: 2.5em
+h2
+  font-size: 2em
+
+.container
+  min-height: 100%
+
+.content
+  padding: 20px
+
+.site-footer
+  position: absolute
+  bottom: 0
+  width: 100%
+  height: $footer-height
+  padding: 10px

@@ -1,0 +1,11 @@
+.post.reply
+  article
+    == form_for @reply do |f|
+      == f.hidden_field :parent_id, value: parent.id
+      == f.label :name
+      == f.text_field :name, placeholder: "Name"
+
+      == f.label :body, placeholder: "Comment"
+      == f.text_area :body
+
+      == f.submit "Submit"
