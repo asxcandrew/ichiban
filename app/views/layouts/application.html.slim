@@ -12,6 +12,7 @@ html(lang='en')
     == render partial: 'layouts/shared/header'
     
     .content
+      == render partial: 'layouts/shared/flash_messages'
       == yield
       
     == render partial: 'layouts/shared/footer'

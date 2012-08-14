@@ -1,12 +1,14 @@
 class PostsController < ApplicationController
 
   def show
-    @post = Post.find(params[:id])
-    # @board = Board.find_by_directory
+    @board = Board.find_by_directory(params[:directory])
+    @post  = Post.find(params[:id])
+    @reply = Post.new
   end
 
   def create
-    @post = Post.new(params[:post])
+    @board = Board.find_by_directory params[:directory]
+    @post  = Post.new(params[:post])
     path_options = {}
 
     if @post.parent_id # Post is a reply.
@@ -15,16 +17,20 @@ class PostsController < ApplicationController
     end
 
     if @post.save!
-      path_options[:id] = @post.parent_id || @post.id
-      path_options[:directory] = @post.directory
-
       flash[:notice] = 'Post created!'
-
-      anchor = "##{@post.id}"
-      redirect url(:boards, :thread, path_options) + anchor
+      redirect_to board_post_path(@board, @post, anchor: @post.id)
     else
-      render url(:boards, :index, directory: params[:post][:directory])
       flash[:notice] = 'Something went wrong.'
+      render board_path(@board)
     end
+  end
+
+  def delete
+  end
+
+  def edit
+  end
+
+  def update
   end
 end

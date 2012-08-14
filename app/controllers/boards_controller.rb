@@ -1,12 +1,13 @@
 class BoardsController < ApplicationController
   before_filter :find_boards, except: [:create, :delete]
+  
   def index
     @prefix = "Boards"
   end
 
   def new
     @prefix = "Create a new board"
-    @board = Board.new
+    @board  = Board.new
   end
 
   def create
@@ -14,7 +15,6 @@ class BoardsController < ApplicationController
 
     if @board.save!
       flash[:notice] = 'Board created!'
-      binding.pry
       # redirect url(:boards, :index)
     else
       # render 'boards/new'
@@ -23,8 +23,19 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @board = Board.find_by_directory(params[:id])
-    @post = Post.new
+    @board = Board.find_by_directory(params[:directory])
+    @post  = Post.new
+    @reply = Post.new
+    @posts = Post.where(directory: @board.directory)
+  end
+
+  def delete
+  end
+
+  def edit
+  end
+
+  def update
   end
 
   protected

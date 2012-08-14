@@ -1,6 +1,6 @@
 .post.reply
   article
-    == form_for @reply do |f|
+    == form_for [@board, @reply] do |f|
       == f.hidden_field :parent_id, value: parent.id
       == f.label :name
       == f.text_field :name, placeholder: "Name"

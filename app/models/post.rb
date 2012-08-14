@@ -5,11 +5,7 @@ class Post < ActiveRecord::Base
   belongs_to :parent, class_name: 'Post'
   has_many :children, class_name: 'Post', :foreign_key => :parent_id
 
-  before_save :parse_name, :render_markdown
-
-  def to_params
-    binding.pry
-  end
+  before_save :parse_name
 
   def date
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
@@ -30,10 +26,6 @@ class Post < ActiveRecord::Base
     else
       self.name = input.empty? ? "Anonymous" : input
     end
-  end
-
-  def render_markdown
-    self.body = $markdown.render(self.body)
   end
 
   def crypt_tripcode(input)

@@ -6,7 +6,8 @@ class Board < ActiveRecord::Base
 
   has_many :posts
 
-  def to_params
+# Used to build RESTful routes
+  def to_param
     self.directory
   end
 

@@ -15,12 +15,9 @@ gem 'redcarpet'
 
 group :development, :test do
   gem 'pry'
-end
-
-group :test do
+  gem 'rspec-rails'
+  gem 'capybara'
   gem 'nyan-cat-formatter' # Because I said so.
-
-  gem 'rspec'
 end
 
 # Gems used only for assets and not required

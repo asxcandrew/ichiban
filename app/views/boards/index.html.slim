@@ -2,4 +2,4 @@ h1 Boards
 
 - if @boards
   - @boards.each do |board|
-    = board.name
+    == link_to_board("#{board.name} - /#{board.directory}/", board)

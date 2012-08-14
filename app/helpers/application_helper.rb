@@ -4,23 +4,24 @@ module ApplicationHelper
     content_tag("title", text)
   end
 
-  def link_to_directory(*text, board)
-    text = board.directory if text.empty?
-    path = url(:boards, :index, directory: board.directory)
-    link_to(text, path)
+  def markdown(text)
+    options = [ :hard_wrap,
+                :filter_html,
+                :autolink,
+                :no_intraemphasis,
+                :fenced_code,
+                :gh_blockcode ]
+
+    Redcarpet.new(text, *options).to_html.html_safe
   end
 
-  # This method will accept a hash of directives or a Post object.
+  def link_to_board(*text, board)
+    text = text.empty? ? board.directory : text.to_sentence
+    link_to(text, board_path(board))
+  end
+
   def link_to_post(*text, post)
-    if post.is_a? Post
-      post = { directory: post.directory, id: post.id }
-    end
-
-    # Link will output as the post ID if nothing is specified.
-    text = post.id if text.empty?
-
-    path = url(:boards, :thread, post)
-
-    link_to(text, path)
+    text = text.empty? ? post.id : text.to_sentence
+    link_to(text, board_post_path(@board, post))
   end
 end
