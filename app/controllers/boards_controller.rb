@@ -13,12 +13,12 @@ class BoardsController < ApplicationController
   def create
     @board = Board.new(params[:board])
 
-    if @board.save!
+    if @board.save
       flash[:notice] = 'Board created!'
-      # redirect url(:boards, :index)
+      redirect_to boards_path
     else
-      # render 'boards/new'
-      flash[:notice] = 'Something went wrong.'
+      flash[:errors] = @board.errors.full_messages.to_sentence
+      render new_board_path
     end
   end
 

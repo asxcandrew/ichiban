@@ -16,8 +16,16 @@ gem 'redcarpet'
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'nyan-cat-formatter', '0.0.7' # Because I said so.
+  
+  gem 'watchr'
+  gem 'spork'
+
   gem 'capybara'
-  gem 'nyan-cat-formatter' # Because I said so.
+  gem 'capybara-webkit'
+  # Capybara webkit requires QT libraries
+  # sudo apt-get install libqt4-dev libqtwebkit-dev
 end
 
 # Gems used only for assets and not required
