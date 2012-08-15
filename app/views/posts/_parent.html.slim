@@ -13,6 +13,9 @@
       - if parent.parent
         .parent == link_to_post("^", parent.parent)
 
+    - if parent.image?
+      .image == link_to(image_tag(parent.image_url(:thumb)), parent.image_url)
+        
     .body == parent.body
     a.reply-toggle(href="#reply" data-post=parent.id)
       p reply

@@ -6,6 +6,12 @@ gem 'rails', '3.2.8'
 # Server
 gem 'unicorn'
 
+# File uploads
+gem 'carrierwave'
+gem 'rmagick'
+# Rmagick dependencies
+# sudo apt-get install graphicsmagick-libmagick-dev-compat libmagickwand-dev
+
 # Database
 gem 'pg'
 
