@@ -20,11 +20,13 @@
         .subject = parent.subject
 
         - if parent.parent
-          .parent == link_to_post("^", parent.parent)
+          .parent == link_to_parent(parent.parent)
+        .controls
+          abbr(title="Reply"):i.icon-pencil
+          abbr(title="Delete"):i.icon-trash
+          abbr(title="Report"):i.icon-flag
 
-          
       .body == markdown(parent.body)
-      a.reply-toggle(href="#reply" data-post=parent.id)
-        p reply
+    hr.clearfix
   == render partial: "posts/reply", locals: { :parent => parent }
   == render partial: 'posts/child', collection: parent.children

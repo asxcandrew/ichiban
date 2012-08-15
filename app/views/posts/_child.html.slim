@@ -1,17 +1,30 @@
 .post(id=child.id)
   article.child
-    header
-      .name = child.name
+    - if child.image?
+        figure.image.left
+          figcaption
+            em == "#{child.image_width} x #{child.image_height}"
+          == link_to(child.image_url) do
+            == image_tag(child.image_url(:thumbnail),
+                      height: child.thumbnail_height,
+                      width: child.thumbnail_width)
+    .right
+      header
+        .name = child.name
 
-      - if child.tripcode
-        .tripcode = "!#{child.tripcode}"
+        - if child.tripcode
+          .tripcode = "!#{child.tripcode}"
 
-      .date:time(datetime=child.created_at) = child.date
-      .id == link_to_post("##{child.id}", child)
-      .parent == link_to_post('^', child.parent)
+        .date:time(datetime=child.created_at) = child.date
+        .id == link_to_post("##{child.id}", child)
+        .parent == link_to_parent(child.parent)
+        .controls
+          abbr(title="Reply"):i.icon-pencil
+          abbr(title="Delete"):i.icon-trash
+          abbr(title="Report"):i.icon-flag
 
-    .body == child.body
-    a.reply-toggle(href="#reply" data-post=child.id)
-      p reply
+      .body == child.body
+    hr.clearfix
+
   == render partial: "posts/reply", locals: { :parent => child }
   == render partial: 'posts/child', collection: child.children

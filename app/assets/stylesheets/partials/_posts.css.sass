@@ -19,6 +19,10 @@
       color: green
     .subject
       font-weight: bold
+    // Any child of the controls
+    .controls > *
+      margin: 0 2px
+
 
     &:hover
       background-color: lighten($accent, 1%)
@@ -39,7 +43,7 @@
         display: inline-block
       figcaption
         +transition-property(opacity)
-        +transition-duration(1s)
+        +transition-duration(500ms)
         opacity: 0.3
         &:hover
           opacity: 1.0

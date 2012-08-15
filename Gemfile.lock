@@ -68,6 +68,9 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffi (1.1.5)
+    font-awesome-sass-rails (2.0.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     fssm (0.2.9)
     heroku (2.30.2)
       heroku-api (~> 0.3.2)
@@ -199,6 +202,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails
   database_cleaner
+  font-awesome-sass-rails
   heroku
   jquery-rails
   nyan-cat-formatter (= 0.0.7)

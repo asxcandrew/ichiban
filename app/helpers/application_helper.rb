@@ -24,4 +24,9 @@ module ApplicationHelper
     text = text.empty? ? post.id : text.to_sentence
     link_to(text, board_post_path(@board, post))
   end
+
+  def link_to_parent(post)
+    link_to(content_tag(:i, nil, class: "icon-chevron-up"), 
+            board_post_path(@board, post))
+  end
 end

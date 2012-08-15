@@ -26,7 +26,7 @@ class BoardsController < ApplicationController
     @board = Board.find_by_directory(params[:directory])
     @post  = Post.new
     @reply = Post.new
-    @posts = Post.where(directory: @board.directory)
+    @posts = Post.where(directory: @board.directory, parent_id: nil)
   end
 
   def delete
