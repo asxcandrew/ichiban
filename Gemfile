@@ -10,7 +10,9 @@ gem 'unicorn'
 gem 'carrierwave'
 gem 'rmagick'
 # Rmagick dependencies
-# sudo apt-get install graphicsmagick-libmagick-dev-compat libmagickwand-dev
+# You might have to install the packages seperately.
+# sudo apt-get install graphicsmagick-libmagick-dev-compat 
+# sudo apt-get install libmagickwand-dev
 
 # Database
 gem 'pg'

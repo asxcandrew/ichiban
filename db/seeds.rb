@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+@board = Board.create!({ name: "Test Board",
+                         description: "Testing. 1, 2, 3.",
+                         directory: 'test' })

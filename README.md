@@ -14,11 +14,10 @@ Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba
 * Built with ActiveRecord for easy database abstraction.
 
 # User Features
-* The usual imageboard features:
-  * BB Code
-  * Reporting
-  * Quoting
-  * Tripcodes/Secure Tripcodes
+* Markdown in posts
+* Reporting
+* Quoting
+* Tripcodes/Secure Tripcodes
 * Modern UI while retaining the feel of an imageboard.
 * Built in "4chan X"-esq enhancements:
   * Post hiding.
@@ -31,17 +30,18 @@ Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba
   * Editing posts.
   * Quick banning.
 * Regex spam prevention.
+* Image deduplication.
 * Optional reCAPTCHA.
 
 # Thread Architecture
 Traditionally, imageboards rely on quote anchors to reply to posts. A thread is simply a series of replies to a post in Ichiban, saving users from having to re-read posts.
 
 # Setup
-Ichiban is a Rack based app; we don't do anything fancy here. Things will go better for you if Heroku and Amazon's S3 are used.
+Ichiban is a Rails app; we don't do anything fancy here. Things will go better for you if Heroku and Amazon's S3 are used.
 ## Requirements
 * Some *nix variant. I recommend Ubuntu Server or a Debian derivative. (God help you if you're on Gentoo.)
-* Ruby 1.9.3+. Ichiban uses the new symbol syntax (e.g. foo: "bar").
-* Bundler
+* Ruby 1.9.3+, preferably using RVM; Ichiban uses the new symbol syntax (e.g. foo: "bar").
+* Bundler; See Gemfile for gem dependecies.
 * Relevent database dependecies (Postgres, MySQL, etc). I recommend Postgres though MySQL should be fine.
 
 

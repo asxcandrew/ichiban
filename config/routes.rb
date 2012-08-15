@@ -5,6 +5,7 @@ Ichiban::Application.routes.draw do
   # board's directory.
 
   # Boards
+  root to: 'boards#index'
   scope 'boards' do
     get  '/' => 'boards#index',  :as => :boards
     post '/' => 'boards#create', :as => :boards
