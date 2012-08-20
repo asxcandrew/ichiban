@@ -21,12 +21,9 @@
 
         - if parent.parent
           .parent == link_to_parent(parent.parent)
-        .controls
-          abbr(title="Reply"):i.icon-pencil
-          abbr(title="Delete"):i.icon-trash
-          abbr(title="Report"):i.icon-flag
+        == render partial: 'posts/controls', locals: { :post => parent }
 
       .body == markdown(parent.body)
     hr.clearfix
-  == render partial: "posts/reply", locals: { :parent => parent }
+  == render partial: 'posts/reply', locals: { :parent => parent }
   == render partial: 'posts/child', collection: parent.children

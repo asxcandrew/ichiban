@@ -15,7 +15,7 @@ Ichiban::Application.routes.draw do
 
     get    ':directory' => 'boards#show',   :as => :board
     put    ':directory' => 'boards#update', :as => :board
-    delete ':directory' => 'boards#delete', :as => :board
+    delete ':directory' => 'boards#destroy', :as => :board
 
     # Posts
     scope ':directory' do
@@ -27,7 +27,7 @@ Ichiban::Application.routes.draw do
 
       get    ':id' => 'posts#show',   :as => :board_post
       put    ':id' => 'posts#update', :as => :board_post
-      delete ':id' => 'posts#delete', :as => :board_post
+      delete ':id' => 'posts#destroy', :as => :board_post
     end
   end
 

@@ -1,3 +1,22 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$ ->
+  $(document).on "click", ".reply-toggle", () ->
+    toggleReply($(this).data('id'))
+  $(document).on "click", ".delete-post", () ->
+    deletePost($(this).data('id'))
+
+toggleReply = (id) ->
+  reply = "##{id} .reply:first"
+  $(reply).toggle(250)
+  
+  # Jump to the reply
+  $('body').animate { scrollTop: $(reply).offset().top }, 250, () ->
+    $("#{reply} input#post_name").focus()
+
+deletePost = (id) ->
+  if confirm("Are you sure you want to delete post ##{id}?")
+    $.post "/boards/test/#{id}", { _method: 'delete' }, (response) ->
+      if response.success
+        $("##{id}").hide(250)
+        flash("notice", response.message)
+      else
+        flash("warning", response.message)

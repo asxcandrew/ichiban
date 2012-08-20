@@ -4,6 +4,7 @@
         figure.image.left
           figcaption
             em == "#{child.image_width} x #{child.image_height}"
+          
           == link_to(child.image_url) do
             == image_tag(child.image_url(:thumbnail),
                       height: child.thumbnail_height,
@@ -18,10 +19,9 @@
         .date:time(datetime=child.created_at) = child.date
         .id == link_to_post("##{child.id}", child)
         .parent == link_to_parent(child.parent)
-        .controls
-          abbr(title="Reply"):i.icon-pencil
-          abbr(title="Delete"):i.icon-trash
-          abbr(title="Report"):i.icon-flag
+        
+        == render partial: 'posts/controls', locals: { :post => child }
+
 
       .body == child.body
     hr.clearfix
