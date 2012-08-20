@@ -40,4 +40,3 @@ Ichiban::Application.configure do
   #   config.enable_processing = false
   # end
 end
-end
