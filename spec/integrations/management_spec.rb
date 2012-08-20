@@ -10,7 +10,6 @@ describe "The management panel", js: true do
   it "will not make duplicate boards" do
     create_board
     page.current_path.should == boards_path
-    binding.pry
     page.should have_no_css('.flash error')
 
     # Second attempt

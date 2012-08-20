@@ -23,10 +23,15 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @board = Board.find_by_directory(params[:directory])
     @post  = Post.new
     @reply = Post.new
-    @posts = Post.where(directory: @board.directory, parent_id: nil)
+    @board = Board.find_by_directory(params[:directory])
+    if @board
+      @posts = Post.where(directory: @board.directory, parent_id: nil)
+      @prefix = "/#{@board.directory}/"
+    else
+      render 'errors/error_404'
+    end
   end
 
   def delete

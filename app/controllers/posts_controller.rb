@@ -1,9 +1,14 @@
 class PostsController < ApplicationController
 
   def show
-    @board = Board.find_by_directory(params[:directory])
-    @post  = Post.find(params[:id])
     @reply = Post.new
+    @board = Board.find_by_directory(params[:directory])
+    
+    if @board
+      @post = Post.find(params[:id])
+    else
+      render 'errors/error_404'
+    end
   end
 
   def create

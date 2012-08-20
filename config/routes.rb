@@ -30,4 +30,8 @@ Ichiban::Application.routes.draw do
       delete ':id' => 'posts#delete', :as => :board_post
     end
   end
+
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
 end
