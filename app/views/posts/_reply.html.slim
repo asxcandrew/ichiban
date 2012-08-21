@@ -6,7 +6,10 @@
       == f.text_field :name, placeholder: "Name"
 
       == f.label :body, placeholder: "Comment"
-      == f.text_area :body
+      == f.text_area :body, maxlength: 100
+      .meter
+        span
+
       == f.file_field :image
 
       == f.submit "Submit"
