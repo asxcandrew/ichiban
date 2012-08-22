@@ -11,19 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815172820) do
+ActiveRecord::Schema.define(:version => 20120822205101) do
 
   create_table "boards", :id => false, :force => true do |t|
-    t.string   "directory"
     t.string   "name"
+    t.string   "directory"
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "boards", ["directory"], :name => "index_boards_on_directory", :unique => true
+
+  create_table "operators", :force => true do |t|
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "operators", ["email"], :name => "index_operators_on_email"
+
   create_table "posts", :force => true do |t|
     t.string   "name"
     t.string   "subject"
+    t.string   "ip_address"
     t.text     "body"
     t.string   "tripcode"
     t.string   "directory"
@@ -36,5 +48,8 @@ ActiveRecord::Schema.define(:version => 20120815172820) do
     t.string   "thumbnail_height"
     t.string   "thumbnail_width"
   end
+
+  add_index "posts", ["directory"], :name => "index_posts_on_directory"
+  add_index "posts", ["parent_id"], :name => "index_posts_on_parent_id"
 
 end

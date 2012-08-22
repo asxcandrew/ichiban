@@ -1,0 +1,11 @@
+h1 Log in
+
+.login
+  == form_tag sessions_path do
+    == label_tag :email
+    == text_field_tag :email, params[:email], placeholder: "Email"
+
+    == label_tag :password
+    == password_field_tag :password
+
+    == submit_tag "Log in", disable_with: "Ichiban!"

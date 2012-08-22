@@ -24,6 +24,9 @@ gem 'heroku'
 gem 'slim'
 gem 'redcarpet'
 
+# Staff
+gem 'bcrypt-ruby'
+
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails'

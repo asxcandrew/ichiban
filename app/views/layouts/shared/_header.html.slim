@@ -4,4 +4,8 @@
       == directory_header
     .links
       == link_to("Home", boards_url)
+    - if @current_operator
+      .right
+        == link_to("[Manage]", '#')
+        == button_to("[Log out]", session_path(@current_operator), :method => :delete)
 hr

@@ -6,6 +6,28 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-@board = Board.create!({ name: "Test Board",
-                         description: "Testing. 1, 2, 3.",
-                         directory: 'test' })
+Operator.create!({ email: "admin@example.com",
+                   password: "password"})
+
+boards = [ 
+  { name: "Video Games",
+    description: "Vidya",
+    directory: 'v'},
+
+  { name: "Technology",
+    description: "Computers & Phones",
+    directory: 'g'},
+
+  { name: "Anime",
+    description: "Uguu~",
+    directory: 'a'},
+
+  { name: "Test",
+    description: "Testing. 1, 2, 3.",
+    directory: 'test'},
+]
+
+boards.each do |board|
+  Board.create!(board)
+end
+

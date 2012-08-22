@@ -1,0 +1,12 @@
+.register
+  == form_for @operator do |f|
+    == f.label :email
+    == f.text_field :email, placeholder: "Email"
+
+    == f.label :password
+    == f.password_field :password, placeholder: "Password"
+
+    == f.label :password_confirmation
+    == f.password_field :password_confirmation, placeholder: "Confirmation"
+
+    == f.submit

@@ -31,6 +31,9 @@ Ichiban::Application.routes.draw do
     end
   end
 
+  resources :operators
+  resources :sessions
+
   unless Rails.application.config.consider_all_requests_local
     match '*not_found', to: 'errors#error_404'
   end

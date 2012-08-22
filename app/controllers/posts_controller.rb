@@ -11,6 +11,7 @@ class PostsController < ApplicationController
   def create
     @board = Board.find_by_directory params[:directory]
     @post  = Post.new(params[:post])
+    @post.ip_address = request.ip
     path_options = {}
 
     # TODO: Handle situation where parent doesn't exist.

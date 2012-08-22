@@ -1,5 +1,5 @@
 form
-  input[type="text"], input[type="file"]
+  input[type="text"], input[type="password"], input[type="file"]
     display: block
   label
     display: none
@@ -10,7 +10,7 @@ form
     width: 350px
     height: 70px
 
-  input[type="text"]
+  input[type="text"], input[type="password"]
     border: 0
     background-color: $light
 
@@ -34,3 +34,6 @@ form
       height: 100%
       width: 0%
       background: blue
+
+.login, .register
+  width: 500px
