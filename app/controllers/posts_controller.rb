@@ -36,11 +36,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    # TODO: Redirect to board if post is parent.
     @post = Post.find_by_id(params[:id])
 
+    # If the post was found
     if @post
-      # If the post was found, attempt to destroy it.
-      if @post.destroy
+      if @post.destroy(params[:tripcode])
         response = { success: true, 
                      message: "Deleted post ##{@post.id}." }
       else
@@ -52,6 +53,8 @@ class PostsController < ApplicationController
                    message: "Post ##{params[:id]} does not exist." }
     end
 
+    # No sense in keeping them on a page without a parent.
+    response[:redirect] = @post.parent ? false : true 
     render json: response
   end
 

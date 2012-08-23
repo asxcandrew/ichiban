@@ -25,13 +25,20 @@ toggleReply = (id) ->
     $("#{reply} input#post_name").focus()
 
 deletePost = (id) ->
-  if confirm("Are you sure you want to delete post ##{id}?")
-    $.post "/boards/test/#{id}", { _method: 'delete' }, (response) ->
-      if response.success
-        $("##{id}").hide(250)
-        flash("notice", response.message)
-      else
-        flash("warning", response.message)
+  tripcode = prompt("Enter your tripcode to delete post ##{id}.")
+
+  if tripcode.length != 0
+    $.post "/boards/test/#{id}", { _method: 'delete', tripcode }, 
+      (response) ->
+        if response.success
+          $("##{id}").hide(250)
+          flash("notice", response.message)
+          if response.redirect
+            console.log("REDIRECT")
+        else
+          flash("error", response.message)
+  else
+    flash("error", "No tripcode entered.")
 
 updateMeter = (percentange, meter) ->
   $(meter).css("width", "#{percentange}%")
