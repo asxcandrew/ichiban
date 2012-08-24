@@ -1,39 +1,50 @@
 form
-  input[type="text"], input[type="password"], input[type="file"]
-    display: block
   label
     display: none
 
   textarea
+    font-family: $fonts
     border: 0
 
     width: 350px
     height: 70px
 
-  input[type="text"], input[type="password"]
-    border: 0
-    background-color: $light
+    padding: 2px 4px
+      
 
-  input[type="submit"]
+  input
+    +border-radius(2px)
+    font-family: $fonts
+    border: 0
     display: block
-    width: 100%
-    border: 0
+    
+    margin: 5px 0
 
-    background-color: $bold-accent
-    color: $light
+    &[type="text"], &[type="password"] 
+      background-color: $light
+      padding: 2px 4px
 
-    &:hover
-      background-color: lighten($bold-accent, 10%)
+    &[type="submit"]
+      width: 100%
+
+      background-color: $bold-accent
+      color: $light
+
+      &:hover
+        background-color: lighten($bold-accent, 10%)
 
   .meter
-    height: 10px
-    background: #ccc
+    margin-top: -2px
+    height: 2px
 
     & > span
+      +transition-property(width)
+      +transition-timing-function(ease-in)
+      +transition-duration(200ms)
       display: block
       height: 100%
       width: 0%
-      background: blue
+      background: $bold-accent
 
-.login, .register
+.login, .register, .new-post
   width: 500px

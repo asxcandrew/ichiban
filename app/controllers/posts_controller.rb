@@ -9,29 +9,32 @@ class PostsController < ApplicationController
   end
 
   def create
-    @board = Board.find_by_directory params[:directory]
+    @board = Board.find_by_directory(params[:directory])
     @post  = Post.new(params[:post])
+
+    @post.directory  = params[:directory]
     @post.ip_address = request.ip
+    
     path_options = {}
 
     # TODO: Handle situation where parent doesn't exist.
     if @post.parent_id # Post is a reply.
       @parent = Post.find(@post.parent_id)
       @post.directory = @parent.directory
-      
-      # Redirect to the parent.
-      path = @parent
-    else
-      # Redirect to the post.
-      path = @post
     end
 
-    if @post.save!
+    if @post.save
       flash[:notice] = 'Post created!'
-      redirect_to board_post_path(@board, path, anchor: @post.id)
+
+      if @post.parent
+        redirect_to(request.referrer + "##{@post.id}")
+      else
+        redirect_to board_post_path(@board, @post, anchor: @post.id)
+      end
+
     else
-      flash[:notice] = 'Something went wrong.'
-      render board_path(@board)
+      flash[:errors] = @post.errors.full_messages.to_sentence
+      redirect_to request.referrer
     end
   end
 

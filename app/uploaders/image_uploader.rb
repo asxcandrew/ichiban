@@ -34,6 +34,16 @@ class ImageUploader < CarrierWave::Uploader::Base
     end
   end
 
+  def md5
+  chunk = model.image
+  @md5 ||= Digest::MD5.hexdigest(chunk.read)
+  end
+
+  def filename
+    # HACK: What is this I don't even.
+    @name ||= "#{md5}#{File.extname(super)}" if super
+  end
+
   # Add a white list of extensions which are allowed to be uploaded.
   def extension_white_list
     %w(jpg jpeg gif png)

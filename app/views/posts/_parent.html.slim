@@ -10,18 +10,19 @@
                     width: parent.thumbnail_width)
     .right
       header
-        .name = parent.name
+        .inner
+          .name = parent.name
 
-        - if parent.tripcode
-          .tripcode = "!#{parent.tripcode}"
+          - if parent.tripcode
+            .tripcode = "!#{parent.tripcode}"
 
-        .date:time(datetime=parent.created_at) = parent.date
-        .id == link_to_post("##{parent.id}", parent)
-        .subject = parent.subject
+          .date:time(datetime=parent.created_at) = parent.date
+          .id == link_to_post("##{parent.id}", parent)
+          .subject = parent.subject
 
-        - if parent.parent
-          .parent == link_to_parent(parent.parent)
-        == render partial: 'posts/controls', locals: { :post => parent }
+          - if parent.parent
+            .parent == link_to_parent(parent.parent)
+          == render partial: 'posts/controls', locals: { :post => parent }
 
       .body == markdown(parent.body)
     hr.clearfix

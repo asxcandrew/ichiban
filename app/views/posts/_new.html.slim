@@ -1,12 +1,18 @@
-== form_for([@board, @post], autocomplete: "off") do |f|
-  == f.hidden_field :directory, value: @board.directory
-  == f.label :name
-  == f.text_field :name, :placeholder => "Name"
-  
-  == f.label :subject
-  == f.text_field :subject, :placeholder => "Subject"
+.new-post
+  == form_for([@board, @post], autocomplete: "off", :foo => :bar) do |f|
+    == hidden_field_tag :request_controller, params[:controller]
+    == hidden_field_tag :request_action,     params[:action]
+    
+    == f.label :name
+    == f.text_field :name,    placeholder: "Name"
+    
+    == f.label :subject
+    == f.text_field :subject, placeholder: "Subject"
 
-  == f.label :body
-  == f.text_area :body, :placeholder => "Comment"
-  == f.file_field :image
-  == f.submit "Submit"
+
+    == f.label :body
+    == f.text_area :body,     placeholder: "Comment"
+    .meter:span
+    
+    == f.file_field :image
+    == f.submit "Submit"

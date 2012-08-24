@@ -11,16 +11,17 @@
                       width: child.thumbnail_width)
     .right
       header
-        .name = child.name
+        .inner
+          .name = child.name
 
-        - if child.tripcode
-          .tripcode = "!#{child.tripcode}"
+          - if child.tripcode
+            .tripcode = "!#{child.tripcode}"
 
-        .date:time(datetime=child.created_at) = child.date
-        .id == link_to_post("##{child.id}", child)
-        .parent == link_to_parent(child.parent)
-        
-        == render partial: 'posts/controls', locals: { :post => child }
+          .date:time(datetime=child.created_at) = child.date
+          .id == link_to_post("##{child.id}", child)
+          .parent == link_to_parent(child.parent)
+          
+          == render partial: 'posts/controls', locals: { :post => child }
 
 
       .body == child.body
