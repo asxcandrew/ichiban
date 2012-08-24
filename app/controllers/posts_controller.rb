@@ -41,23 +41,33 @@ class PostsController < ApplicationController
   def destroy
     # TODO: Redirect to board if post is parent.
     @post = Post.find_by_id(params[:id])
+    response = {}
 
-    # If the post was found
     if @post
-      if @post.destroy(params[:tripcode])
-        response = { success: true, 
-                     message: "Deleted post ##{@post.id}." }
+      # No sense in keeping them on a page without a parent.
+      if @post.parent
+        response[:redirect] = false
       else
-        response = { success: false, 
-                     message: "You are not the creator of post ##{@post.id}." }
+        @board = Board.find_by_directory(@post.directory)
+        response[:redirect] = board_path(@board)
       end
-    else
-      response = { success: false, 
-                   message: "Post ##{params[:id]} does not exist." }
+
+      if @post.destroy(params[:tripcode])
+        response.merge!(
+          { success: true, 
+            message: "Deleted post ##{@post.id}." })
+      else
+        response.merge!(
+          { success: false, 
+            message: "You are not the creator of post ##{@post.id}." })
+      end
+
+    else # Post wasn't found
+      response.merge!(
+        { success: false, 
+          message: "Post ##{params[:id]} does not exist." })
     end
 
-    # No sense in keeping them on a page without a parent.
-    response[:redirect] = @post.parent ? false : true 
     render json: response
   end
 

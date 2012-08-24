@@ -27,24 +27,33 @@
     .subject
       font-weight: bold
     
-    // Any child of the controls
-    .controls > *
-      margin: 0 2px
+    .controls
+      font-size: 1.15em
+      
+      // Any child of the controls
+      & > *
+        margin: 0 5px
+        
+        &:hover
+          +transition-property(color)
+          +transition-duration(200ms)
+          color: $link
 
 
     &:hover
       background-color: lighten($accent, 1%)
 
     figure
+      margin: 5px 5px 0 0
       img
-        margin: 0 5px
         border: 1px solid darken($accent, 25%)
       a
         display: inline-block
       figcaption
+        margin-bottom: 4px
         +transition-property(opacity)
-        +transition-duration(500ms)
-        opacity: 0.3
+        +transition-duration(200ms)
+        opacity: 0.25
         &:hover
           opacity: 1.0
         font:
