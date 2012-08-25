@@ -1,7 +1,9 @@
 $ ->
-  $(".post").on "click", ".reply-toggle", () ->
+  $(document).on "click", ".reply-toggle", () ->
     toggleReply($(this).data('id'))
   
+  # The body limitation is also validated in
+  # post model.
   $('textarea').limiter(maxLength: 800)
 
   $(".post").on "click", ".delete-post", () ->
