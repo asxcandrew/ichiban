@@ -1,8 +1,8 @@
 module Tripcode
+
+  # Below is the canonical way to make 2ch style tripcodes.
+  # I'm not sure who thought this was a good idea.
   def crypt_tripcode(input)
-    # Below is the canonical way to make 2ch style tripcodes.
-    # I'm not sure who thought this was a good idea.
-    
     # Password would be blank if only a hash was entered.
     unless input.blank?
       forbidden_in_salt = ':;<=>?@[\]^_`'
@@ -20,6 +20,13 @@ module Tripcode
 
       # Call crypt and returns the last 10 characters.
       input.crypt(salt)[-10..-1]
+    end
+  end
+
+  # We store the hex output of a tripcode to use as a color variable.
+  def crypt_tripcode_hex(input)
+    unless input.blank?
+      Digest::MD5.hexdigest(input)[0..5]
     end
   end
 end

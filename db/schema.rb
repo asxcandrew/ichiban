@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120822205101) do
+ActiveRecord::Schema.define(:version => 20120829160441) do
 
   create_table "boards", :id => false, :force => true do |t|
     t.string   "name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20120822205101) do
     t.string   "image_width"
     t.string   "thumbnail_height"
     t.string   "thumbnail_width"
+    t.string   "tripcode_hex"
   end
 
   add_index "posts", ["directory"], :name => "index_posts_on_directory"

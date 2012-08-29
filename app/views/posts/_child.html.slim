@@ -1,5 +1,5 @@
-.post(id=child.id)
-  article.child
+.post.child(id=child.id)
+  = post_article_tag(child) do
     - if child.image?
         figure.image.left
           figcaption
@@ -7,8 +7,8 @@
           
           == link_to(child.image_url) do
             == image_tag(child.image_url(:thumbnail),
-                      height: child.thumbnail_height,
-                      width: child.thumbnail_width)
+                         height: child.thumbnail_height,
+                         width: child.thumbnail_width)
     .right
       header
         .inner

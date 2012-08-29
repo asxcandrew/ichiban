@@ -28,7 +28,7 @@ class Post < ActiveRecord::Base
                         :if => :image_required?)
 
 
-  validates :image, file_size: { maximum: (0.5.megabytes.to_i) }
+  validates :image, file_size: { maximum: (1.megabytes.to_i) }
 
   # Maximum length is also limited 
   # in the post.js.coffeescript.
@@ -67,6 +67,8 @@ class Post < ActiveRecord::Base
       password = input[ ((hash_pos + 1)..-1) ]
 
       self.tripcode = crypt_tripcode(password)
+      self.tripcode_hex = crypt_tripcode_hex(self.tripcode)
+
       self.name = name
     else
       self.name = input.empty? ? "Anonymous" : input

@@ -1,5 +1,5 @@
 .post.parent(id=parent.id)
-  article
+  = post_article_tag(parent) do
     - if parent.image?
       figure.image.left
         figcaption
