@@ -1,12 +1,15 @@
 $ ->
-  $(document).on "click", ".reply-toggle", () ->
+  $(document).on "click", ".reply-toggle", (e) ->
+    e.preventDefault()
     toggleReply($(this).data('id'))
   
   # The body limitation is also validated in
   # post model.
   $('textarea').limiter(maxLength: 800)
 
-  $(".post").on "click", ".delete-post", () ->
+  # FIX: issue where child posts are deleted.
+  $(".post").on "click", ".delete-post", (e) ->
+    e.preventDefault()
     deletePost($(this).data('id'))
 
   $("figure").on "click", "a", (e) ->
@@ -34,7 +37,7 @@ toggleReply = (id) ->
   
   # Jump to the reply
   $('body').animate { scrollTop: $(reply).offset().top }, 200, () ->
-    $("#{reply} input#post_name").focus()
+    $("#{reply} textarea#post_body").focus()
 
 deletePost = (id) ->
   tripcode = prompt("Enter your tripcode to delete post ##{id}.")

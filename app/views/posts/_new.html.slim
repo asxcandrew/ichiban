@@ -3,16 +3,15 @@
     == hidden_field_tag :request_controller, params[:controller]
     == hidden_field_tag :request_action,     params[:action]
     
-    == f.label :name
-    == f.text_field :name,    placeholder: "Name"
-    
     == f.label :subject
     == f.text_field :subject, placeholder: "Subject"
-
 
     == f.label :body
     == f.text_area :body,     placeholder: "Comment"
     .meter:span
+    
+    == f.label :name
+    == f.text_field :name,    placeholder: "Name"
     
     == f.file_field :image
     == f.submit "Submit"

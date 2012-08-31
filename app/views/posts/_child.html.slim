@@ -1,31 +1,33 @@
 .post.child(id=child.id)
   = post_article_tag(child) do
+    header
+      .date
+        time(datetime=child.created_at title=child.created_at) = human_date(child)
+      
+      .right
+        .id == link_to_post("##{child.id}", child)
+
     - if child.image?
-        figure.image.left
-          figcaption
-            em == "#{child.image_width} x #{child.image_height}"
-          
+      .left
+        figure
           == link_to(child.image_url) do
             == image_tag(child.image_url(:thumbnail),
                          height: child.thumbnail_height,
                          width: child.thumbnail_width)
-    .right
-      header
-        .inner
-          .name = child.name
-
-          - if child.tripcode
-            .tripcode = "!#{child.tripcode}"
-
-          .date:time(datetime=child.created_at) = child.date
-          .id == link_to_post("##{child.id}", child)
-          .parent == link_to_parent(child.parent)
-          
-          == render partial: 'posts/controls', locals: { :post => child }
-
-
-      .body == child.body
+    .left
+      .body == markdown(child.body)
     hr.clearfix
+    
+    footer
+      span.name = child.name
+
+      - if child.tripcode
+        span.tripcode == "!#{child.tripcode}"
+      
+      .right 
+        == render partial: 'posts/controls', locals: { :post => child }
+
+
 
   == render partial: "posts/reply", locals: { :parent => child }
   == render partial: 'posts/child', collection: child.children

@@ -3,12 +3,12 @@
     == form_for [@board, @reply] do |f|
       == f.hidden_field :parent_id, value: parent.id
 
+      == f.label :body
+      == f.text_area :body, cols: nil, rows: nil, placeholder: "Comment"
+      .meter:span
+
       == f.label :name
       == f.text_field :name, placeholder: "Name"
-
-      == f.label :body, placeholder: "Comment"
-      == f.text_area :body, cols: nil, rows: nil
-      .meter:span
 
       == f.file_field :image
 

@@ -2,17 +2,22 @@ form
   label
     display: none
 
+  &.new_post
+    width: 500px
+
   textarea
+    width: 100%
     font-family: $fonts
     border: 0
 
-    width: 350px
+    // width: 350px
     height: 70px
 
     padding: 2px 4px
       
 
   input
+    width: 100%
     +border-radius(2px)
     font-family: $fonts
     border: 0
@@ -34,7 +39,7 @@ form
         background-color: lighten($bold-accent, 10%)
 
   .meter
-    margin-top: -2px
+    margin: -2px 0 -2px 0
     height: 2px
 
     & > span

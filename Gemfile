@@ -23,6 +23,7 @@ gem 'heroku'
 # Templating
 gem 'slim'
 gem 'redcarpet'
+gem 'color'
 
 # Staff
 gem 'bcrypt-ruby'

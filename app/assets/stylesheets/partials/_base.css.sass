@@ -5,7 +5,11 @@ $bold-accent: #8c6d84     // Darker violet
 $dark-base: #231726      // Dark indigo
 $light: #fff            // White
 
-$link: lighten($dark-base, 10%)
+$link: darken($accent, 30%)
+$link-hover: darken($accent, 25)
+
+$slow-transition: 500ms
+$fast-transition: 200ms
 
 // Fonts
 $fonts: "sans-serif"
@@ -13,8 +17,8 @@ $fonts: "sans-serif"
 // Layout defaults
 $footer-height: 50px
 
+// Prevents broken box model annoyances.
 *
-  // Prevents broken box model annoyances.
   +box-sizing(border-box)
 
 html, body

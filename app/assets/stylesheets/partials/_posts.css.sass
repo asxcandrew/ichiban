@@ -1,8 +1,16 @@
 .post
   margin-left: +30px
 
+  a
+    color: $link
+    text-decoration: none
+
+    &:hover
+      color: $link-hover
+      text-decoration: underline
+
   article
-    // TODO: Lighten replies
+    min-width: 500px
     background-color: $accent
     display: inline-block
     
@@ -13,52 +21,64 @@
     word-break: break-word
 
     header
-      margin-bottom: 5px
+      margin-bottom: 6px
 
-      .inner
-        border-bottom: 1px solid
+      // TODO: Use smarter selector
+      &:hover .date
+        +transition-property(opacity)
+        +transition-duration($fast-transition)
+        opacity: 1.0
+
+      .date
         display: inline-block
+        opacity: 0.25
         
-        // Any child of the header
-        & > *
-          display: inline-block
-    .name
-      color: green
-    .subject
-      font-weight: bold
-    
-    .controls
-      font-size: 1.15em
-      
-      // Any child of the controls
+        font:
+          size: 0.8em
+          style: italics
+
+      .subject, .parent, .id
+        display: inline-block
+        font-weight: bold
+        a
+          text-decoration: none
+
+
+
+    footer
+      margin-top: 5px
+      padding-top: 6px
+      border-top: 1px solid
+
+      // Any child of the footer
       & > *
-        margin: 0 5px
+        display: inline-block
+      .name
+        color: green
+      .subject
+        font-weight: bold
+      
+      &:hover .controls
+        +transition-property(opacity)
+        +transition-duration($fast-transition)
+        opacity: 1.0
         
-        &:hover
-          +transition-property(color)
-          +transition-duration(200ms)
-          color: $link
+      .controls
+        opacity: 0.3
 
-
-    &:hover
-      background-color: lighten($accent, 1%)
-
+        // Any child of the controls
+        & > *
+          margin: 0 5px
+          
     figure
-      margin: 5px 5px 0 0
+      margin-right: 8px
+
       img
         border: 1px solid darken($accent, 25%)
       a
         display: inline-block
       figcaption
         margin-bottom: 4px
-        +transition-property(opacity)
-        +transition-duration(200ms)
-        opacity: 0.25
-        &:hover
-          opacity: 1.0
-        font:
-          size: 0.8em
-          style: italics
 
   &.reply
     display: none

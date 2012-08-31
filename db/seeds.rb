@@ -12,15 +12,15 @@ Operator.create!({ email: "admin@example.com",
 boards = [ 
   { name: "Video Games",
     description: "Vidya",
-    directory: 'v'},
+    directory: 'gaming'},
 
   { name: "Technology",
     description: "Computers & Phones",
-    directory: 'g'},
+    directory: 'technology'},
 
   { name: "Anime",
     description: "Uguu~",
-    directory: 'a'},
+    directory: 'anime'},
 
   { name: "Test",
     description: "Testing. 1, 2, 3.",

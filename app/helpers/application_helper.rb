@@ -3,8 +3,7 @@ module ApplicationHelper
     attributes = {}
 
     if post.tripcode_hex
-      attributes[:style] = "border-left-color: ##{post.tripcode_hex}"
-      options.merge!(attributes)
+      options[:style] = "border-left-color: #{border_color(post.tripcode_hex)}"
     end
 
     output = ActiveSupport::SafeBuffer.new

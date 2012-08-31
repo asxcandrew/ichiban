@@ -71,7 +71,7 @@ class Post < ActiveRecord::Base
 
       self.name = name
     else
-      self.name = input.empty? ? "Anonymous" : input
+      self.name = input.blank? ? "Anonymous" : input
     end
   end
 
