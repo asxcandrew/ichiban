@@ -6,17 +6,19 @@ class Post < ActiveRecord::Base
                   :tripcode,
                   :directory,
                   :parent_id,
-                  :image)
+                  :upload)
 
   belongs_to :board
   belongs_to :parent, class_name: 'Post'
   has_many :children, class_name: 'Post', :foreign_key => :parent_id
 
+  has_attachment :upload, accept: ['jpg', 'jpeg', 'png', 'gif']
+
   before_save :parse_name
 
   # Mounted by Carrierwave.
   # See documentation for more information.
-  mount_uploader :image, ImageUploader
+  # mount_uploader :image, ImageUploader
 
   # TODO: Validate existance of directory
   validates_presence_of :directory
@@ -24,11 +26,11 @@ class Post < ActiveRecord::Base
   validates_presence_of(:body,
                         :if => :body_required?)
 
-  validates_presence_of(:image, 
-                        :if => :image_required?)
+  validates_presence_of(:upload, 
+                        :if => :upload_required?)
 
 
-  validates :image, file_size: { maximum: (1.megabytes.to_i) }
+  # validates :image, file_size: { maximum: (3.megabytes.to_i) }
 
   # Maximum length is also limited 
   # in the post.js.coffeescript.
@@ -36,12 +38,12 @@ class Post < ActiveRecord::Base
 
   # A body is required if an image is not given.
   def body_required?
-    return !self.image?
+    return !self.upload?
   end
 
   # An image is required if the post is a parent 
   # or if the body is blank.
-  def image_required?
+  def upload_required?
     if self.parent # post is a reply
       return self.body.blank?
     else
@@ -76,7 +78,9 @@ class Post < ActiveRecord::Base
   end
 
   def destroy(input)
-    self.delete if (self.tripcode == crypt_tripcode(input))
+    if self.tripcode == crypt_tripcode(input)
+      self.delete
+    end
   end
 
 end

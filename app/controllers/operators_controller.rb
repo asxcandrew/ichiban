@@ -1,4 +1,5 @@
 class OperatorsController < ApplicationController
+  before_filter :verify_permissions
   def new
     @operator = Operator.new
   end

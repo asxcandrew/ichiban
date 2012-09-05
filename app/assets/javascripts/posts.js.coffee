@@ -23,13 +23,18 @@ toggleImageExpansion = ($link) ->
     src = image.data("srcToggle")
   else
     src = $link.attr("href")
-    
+  
   image.data("srcToggle": image.attr("src"))
 
-  image.attr(
-    'src': src
-    height: null
-    width: null)
+  # FIX: issue where image dimensions are not updated.
+  # The following corrects the issue temporarily.
+  if image.css('max-width') == 'none'
+    image.css('max-width': '100%')
+  else if image.css('max-width') == '100%'
+    image.css('max-width': 'none')
+
+  image.attr('src': src)
+
 
 toggleReply = (id) ->
   reply = "##{id} .reply:first"

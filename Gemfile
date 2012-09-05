@@ -7,12 +7,8 @@ gem 'rails', '3.2.8'
 gem 'unicorn'
 
 # File uploads
-gem 'carrierwave'
-gem 'rmagick'
-# Rmagick dependencies
-# You might have to install the packages seperately.
-# sudo apt-get install graphicsmagick-libmagick-dev-compat 
-# sudo apt-get install libmagickwand-dev
+gem 'cloudinary'
+gem 'attachinary'
 
 # Database
 gem 'pg'
@@ -24,6 +20,7 @@ gem 'heroku'
 gem 'slim'
 gem 'redcarpet'
 gem 'color'
+gem 'simple_form'
 
 # Staff
 gem 'bcrypt-ruby'

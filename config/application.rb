@@ -69,5 +69,8 @@ module Ichiban
 
     # Set logger for Unicorn webserver
     config.logger = Logger.new(STDOUT)
+
+    # Automagically combine Cloudinary's features with the image_tag method.
+    # Cloudinary.config.enhance_image_tag
   end
 end

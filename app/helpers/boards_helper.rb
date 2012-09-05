@@ -1,11 +1,6 @@
 module BoardsHelper
-  def directory_header
-    # if @boards
-    #   header = ""
-    #   @boards.each do |board|
-    #     header << link_to_directory(board)
-    #   end
-    #   return header
-    # end
+  def link_to_board(*text, board)
+    text = text.empty? ? board.directory : text.to_sentence
+    link_to(text, board_path(board))
   end
 end

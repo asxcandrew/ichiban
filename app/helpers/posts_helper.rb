@@ -1,4 +1,20 @@
 module PostsHelper
+  def link_to_post(*text, post)
+    text = text.empty? ? post.id : text.to_sentence
+    link_to(text, board_post_path(@board, post))
+  end
+
+  def link_to_parent(post)
+    link_to(content_tag(:i, nil, class: "icon-chevron-up"), 
+            board_post_path(@board, post))
+  end
+
+  def link_to_upload(path)
+    link_to(cl_image_path(path)) do
+      cl_image_tag(path, width: '250', :crop => :limit)
+    end
+  end
+
   def human_date(post)
     "#{time_ago_in_words(post.created_at)} ago.".capitalize
   end

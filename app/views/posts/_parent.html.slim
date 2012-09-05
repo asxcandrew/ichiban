@@ -10,14 +10,10 @@
         
         - if parent.parent
           .parent == link_to_parent(parent.parent)
-      
-    - if parent.image?
+    - if parent.upload?
       .left
         figure
-          == link_to(parent.image_url) do
-            == image_tag(parent.image_url(:thumbnail),
-                         height: parent.thumbnail_height,
-                         width: parent.thumbnail_width)
+          == link_to_upload(parent.upload.path)
     .left
       .body == markdown(parent.body)
     hr.clearfix

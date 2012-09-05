@@ -7,13 +7,11 @@
       .right
         .id == link_to_post("##{child.id}", child)
 
-    - if child.image?
+    - if child.upload?
+        - if parent.upload?
       .left
         figure
-          == link_to(child.image_url) do
-            == image_tag(child.image_url(:thumbnail),
-                         height: child.thumbnail_height,
-                         width: child.thumbnail_width)
+          == link_to_upload(child.upload.path)
     .left
       .body == markdown(child.body)
     hr.clearfix

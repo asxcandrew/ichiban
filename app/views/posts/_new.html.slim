@@ -1,17 +1,15 @@
 .new-post
-  == form_for([@board, @post], autocomplete: "off", :foo => :bar) do |f|
+  == simple_form_for([@board, @post], autocomplete: "off", :html => { multipart: true }) do |f|
     == hidden_field_tag :request_controller, params[:controller]
     == hidden_field_tag :request_action,     params[:action]
     
-    == f.label :subject
-    == f.text_field :subject, placeholder: "Subject"
+    == f.input :subject, placeholder: "Subject"
 
-    == f.label :body
-    == f.text_area :body,     placeholder: "Comment"
+    == f.input :body, :as => :text, placeholder: "Comment"
     .meter:span
     
-    == f.label :name
-    == f.text_field :name,    placeholder: "Name"
+    == f.input :name, placeholder: "Name"
     
-    == f.file_field :image
+    == f.input :upload, :as => :attachinary
+
     == f.submit "Submit"

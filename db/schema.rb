@@ -11,7 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829160441) do
+ActiveRecord::Schema.define(:version => 20120905210654) do
+
+  create_table "attachinary_attachments", :force => true do |t|
+    t.integer  "parent_id"
+    t.string   "parent_type"
+    t.integer  "file_id"
+    t.string   "scope"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "attachinary_attachments", ["parent_type", "parent_id", "scope"], :name => "by_scoped_parent"
+
+  create_table "attachinary_files", :force => true do |t|
+    t.string   "public_id"
+    t.string   "version"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "format"
+    t.string   "resource_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "boards", :id => false, :force => true do |t|
     t.string   "name"
@@ -40,13 +62,8 @@ ActiveRecord::Schema.define(:version => 20120829160441) do
     t.string   "tripcode"
     t.string   "directory"
     t.integer  "parent_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "image"
-    t.string   "image_height"
-    t.string   "image_width"
-    t.string   "thumbnail_height"
-    t.string   "thumbnail_width"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "tripcode_hex"
   end
 
