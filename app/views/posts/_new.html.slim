@@ -1,5 +1,8 @@
 .new-post
-  == simple_form_for([@board, @post], autocomplete: "off", :html => { multipart: true }) do |f|
+  == simple_form_for([@board, @post],
+                     autocomplete: "off", 
+                     html: { multipart: true }) do |f|
+
     == hidden_field_tag :request_controller, params[:controller]
     == hidden_field_tag :request_action,     params[:action]
     

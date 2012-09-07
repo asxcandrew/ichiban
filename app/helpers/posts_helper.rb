@@ -10,8 +10,10 @@ module PostsHelper
   end
 
   def link_to_upload(path)
-    link_to(cl_image_path(path)) do
-      cl_image_tag(path, width: '250', :crop => :limit)
+    cl_path = cl_image_path(path)
+
+    link_to(cl_path) do
+      cl_image_tag(path, { width: '250', :crop => :limit, 'data-toggle' => cl_path })
     end
   end
 
