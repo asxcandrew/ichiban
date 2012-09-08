@@ -1,22 +1,23 @@
 # Ichiban
-*Modern Imageboard Software*
+###*Modern Imageboard Software*
 
 ## What's this all about?
 Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba, Kusaba; all of these are terrible. It's time for something better than just a clone.
 
 # Developer Features
-* Written with the beautiful web framework, Padrino.
+* Written with the beautiful web framework, Ruby on Rails.
 * SASS.
 * Works out of the box.
 * Cloud friendly.
 * Posts via JSON.
 * Test driven.
 * Built with ActiveRecord for easy database abstraction.
+* Image hosting via Cloudinary
 
 # User Features
-* Markdown in posts
-* Reporting
-* Quoting
+* Markdown formatting.
+* Post Reporting.
+* Inline quoting.
 * Tripcodes/Secure Tripcodes
 * Modern UI while retaining the feel of an imageboard.
 * Built in "4chan X"-esq enhancements:
@@ -37,7 +38,7 @@ Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba
 Traditionally, imageboards rely on quote anchors to reply to posts. A thread is simply a series of replies to a post in Ichiban, saving users from having to re-read posts.
 
 # Setup
-Ichiban is a Rails app; we don't do anything fancy here. Things will go better for you if Heroku and Amazon's S3 are used.
+Ichiban is a Rails app; we don't do anything fancy here. Things will go better for you if Heroku and Cloudinary are used.
 ## Requirements
 * Some *nix variant. I recommend Ubuntu Server or a Debian derivative. (God help you if you're on Gentoo.)
 * Ruby 1.9.3+, preferably using RVM; Ichiban uses the new symbol syntax (e.g. foo: "bar").
