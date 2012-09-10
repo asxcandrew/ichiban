@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
   include Tripcode
+  include ColorDigest
   attr_accessible(:name,
                   :subject,
                   :body,
@@ -75,11 +76,12 @@ class Post < ActiveRecord::Base
         password = input[ ((hash_pos + 1)..-1) ]
 
         self.tripcode = crypt_tripcode(password)
-        self.tripcode_hex = crypt_tripcode_hex(self.tripcode)
+        self.color = input_to_color(self.tripcode)
 
         self.name = name
       else
         self.name = input.blank? ? "Anonymous" : input
+        self.color = input_to_color(self.ip_address)
       end
     end
   #end_private

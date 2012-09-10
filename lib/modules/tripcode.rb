@@ -22,11 +22,4 @@ module Tripcode
       input.crypt(salt)[-10..-1]
     end
   end
-
-  # We store the hex output of a tripcode to use as a color variable.
-  def crypt_tripcode_hex(input)
-    unless input.blank?
-      Digest::MD5.hexdigest(input)[0..5]
-    end
-  end
 end

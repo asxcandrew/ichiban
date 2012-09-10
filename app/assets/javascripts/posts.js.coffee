@@ -23,13 +23,14 @@ toggleImageExpansion = ($link) ->
   newSource = image.data('toggle')
 
   image.data('toggle': oldSource)
-  image.attr 'src': newSource, () ->
-    # HACK: issue where image dimensions are not updated.
-    # The following corrects the issue temporarily.
+
+  # HACK: issue where image dimensions are not updated.
+  # The following corrects the issue temporarily.
+  image.attr('src': newSource).one('load', () ->
     if image.css('max-width') == 'none'
       image.css('max-width': '100%')
     else if image.css('max-width') == '100%'
-      image.css('max-width': 'none')
+      image.css('max-width': 'none'))
 
 
 

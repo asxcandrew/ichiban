@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20120905210654) do
     t.string   "tripcode"
     t.string   "directory"
     t.integer  "parent_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "tripcode_hex"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "color"
   end
 
   add_index "posts", ["directory"], :name => "index_posts_on_directory"

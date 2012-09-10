@@ -1,19 +1,4 @@
 module ApplicationHelper
-  def post_article_tag(post, options={}, &block)
-    attributes = {}
-
-    if post.tripcode_hex
-      options[:style] = "border-left-color: #{border_color(post.tripcode_hex)}"
-    end
-
-    output = ActiveSupport::SafeBuffer.new
-    output.safe_concat(tag(:article, options, true))
-
-    output << capture(&block)
-    output.safe_concat("</article>")
-  end
-
-
   def title
     text = @prefix ? "#{@prefix} :: Ichiban!" : "Ichiban!"
     content_tag("title", text)
