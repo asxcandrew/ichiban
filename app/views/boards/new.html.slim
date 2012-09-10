@@ -1,12 +1,9 @@
 h1 Create a board
-== form_for @board do |f|
-  == f.label :name
-  == f.text_field :name, :placeholder => "Name"
+== simple_form_for @board do |f|
+  == f.input :name, :placeholder => "Name"
   
-  == f.label :description
-  == f.text_field :description, :placeholder => "Description"
+  == f.input :description, :placeholder => "Description"
 
-  == f.label :directory
-  == f.text_field :directory, :placeholder => "Directory"
+  == f.input :directory, :placeholder => "Directory"
   
   == f.submit "Submit"

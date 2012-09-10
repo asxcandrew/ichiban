@@ -13,6 +13,6 @@
     
     == f.input :name, placeholder: "Name"
     
-    == f.input :upload, :as => :attachinary
+    == f.input :upload, :as => :attachinary, required: true, input_html: { accept: '' }
 
     == f.submit "Submit"

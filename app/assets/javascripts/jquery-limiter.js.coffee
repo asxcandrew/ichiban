@@ -14,7 +14,7 @@ $.fn.limiter = (opts) ->
 
     percentage = Math.floor((characters / opts.maxLength) * 100)
 
-    form = $(this).parent()
+    form = $(this).parent().parent()
     meter = $(form).find('.meter span')
     updateMeter(percentage, meter)
 
