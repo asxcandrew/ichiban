@@ -8,7 +8,6 @@ gem 'unicorn'
 
 # File uploads
 gem 'cloudinary'
-gem 'attachinary'
 
 # Database
 gem 'pg'
