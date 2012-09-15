@@ -72,5 +72,8 @@ module Ichiban
 
     # Automagically combine Cloudinary's features with the image_tag method.
     # Cloudinary.config.enhance_image_tag
+
+    # This fixes some Heroku slug compliation weirdness
+    config.assets.initialize_on_precompile = false
   end
 end
