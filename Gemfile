@@ -8,6 +8,7 @@ gem 'unicorn'
 
 # File uploads
 gem 'cloudinary'
+gem 'attachinary'
 
 # Database
 gem 'pg'
@@ -42,7 +43,6 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'attachinary'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'compass-rails'
