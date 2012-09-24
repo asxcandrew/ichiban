@@ -6,7 +6,7 @@
         time(datetime=parent.created_at title=parent.created_at) = human_date(parent)
 
       .right
-        .id == link_to_post("##{parent.id}", parent)
+        .id == link_to_post(parent)
         
         - if parent.parent
           .parent == link_to_parent(parent.parent)

@@ -11,8 +11,8 @@ module PostsHelper
   end
 
   def link_to_post(*text, post)
-    text = text.empty? ? post.id : text.to_sentence
-    link_to(text, board_post_path(@board, post))
+    text = text.empty? ? "##{post.id}" : text.to_sentence
+    link_to(text, board_post_path(post.directory, post))
   end
 
   def link_to_parent(post)

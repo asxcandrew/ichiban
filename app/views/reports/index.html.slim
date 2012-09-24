@@ -1,17 +1,26 @@
 h1 Reports
 
-table
-  thead
-    tr
-      th IP Address
-      th Comment
-      th Post ID
-  tbody
-    - if @reports
-      - @reports.each do |report|
-        tr
-          td = report.ip_address
-          td = report.comment
-          td = report.post_id
+.reports
+  table
+    thead
+      tr
+        th Post ID
+        th Reporter IP Address
+        th Comment
+        th Date
+    tbody
+      - if @reports
+        - @reports.each do |report|
+          tr(id=report.id)
+            td = link_to_post(report.post)
+            td = report.ip_address
+            td = report.comment
+            td = report.date
+            td.controls
+              a.delete-post(href='#' data-id=report.id) Delete Post
+              a.ban-poster(href='#' data-id=report.id) Ban Poster
+              a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
+            td
+              a.delete-report(href='#' title="Delete Report" data-id=report.id) X
 
 

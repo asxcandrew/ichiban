@@ -5,7 +5,7 @@
         time(datetime=child.created_at title=child.created_at) = human_date(child)
       
       .right
-        .id == link_to_post("##{child.id}", child)
+        .id == link_to_post(child)
 
     - if child.upload?
       .left

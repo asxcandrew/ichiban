@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20120924050855) do
   add_index "posts", ["parent_id"], :name => "index_posts_on_parent_id"
 
   create_table "reports", :force => true do |t|
-    t.integer  "ip_address"
+    t.string   "ip_address"
     t.string   "model"
     t.integer  "post_id"
     t.text     "comment"
