@@ -12,6 +12,10 @@ $ ->
     e.preventDefault()
     deletePost($(this).data('id'))
 
+  $(".post").on "click", ".report-post", (e) ->
+    e.preventDefault()
+    reportPost($(this).data('id'))
+
   $("figure").on "click", "a", (e) ->
     e.preventDefault()
     toggleImageExpansion($(this))
@@ -32,8 +36,6 @@ toggleImageExpansion = ($link) ->
     else if image.css('max-width') == '100%'
       image.css('max-width': 'none'))
 
-
-
 toggleReply = (id) ->
   reply = "##{id} .reply:first"
   $(reply).toggle(250)
@@ -46,7 +48,7 @@ deletePost = (id) ->
   tripcode = prompt("Enter your tripcode to delete post ##{id}.")
 
   if tripcode != null && tripcode.length != 0
-    $.post "/boards/test/#{id}", { _method: 'delete', tripcode }, 
+    $.post "/boards/posts/#{id}", { _method: 'delete', tripcode }, 
       (response) ->
         if response.success
           if response.redirect
@@ -59,6 +61,19 @@ deletePost = (id) ->
           flash("error", response.message)
   else
     flash("error", "No tripcode entered.")
+
+reportPost = (id) ->
+  comment = prompt("Why are you reporting post ##{id}?")
+
+  if comment != null && comment.length >= 4
+    $.post "/reports/", { _method: 'create', report: { post_id: id, comment } },
+      (response) ->
+        if response.success
+          flash("notice", response.message)
+        else
+          flash("error", response.message)
+  else
+    flash("error", "You must provide a comment with your report.")
 
 @updateMeter = (percentage, meter) ->
   percentage = Math.min(percentage, 100)

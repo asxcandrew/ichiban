@@ -38,8 +38,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def destroy
-    # TODO: Redirect to board if post is parent.
+  def destroy_with_tripcode
     @post = Post.find_by_id(params[:id])
     response = {}
 
@@ -52,7 +51,7 @@ class PostsController < ApplicationController
         response[:redirect] = board_path(@board)
       end
 
-      if @post.destroy(params[:tripcode])
+      if @post.destroy_with_tripcode(params[:tripcode])
         response.merge!(
           { success: true, 
             message: "Deleted post ##{@post.id}." })

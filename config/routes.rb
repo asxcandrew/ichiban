@@ -17,6 +17,7 @@ Ichiban::Application.routes.draw do
     put    ':directory' => 'boards#update', :as => :board
     delete ':directory' => 'boards#destroy', :as => :board
 
+
     # Posts
     scope ':directory' do
       get  '/' => 'posts#index',  :as => :board_posts
@@ -27,12 +28,14 @@ Ichiban::Application.routes.draw do
 
       get    ':id' => 'posts#show',   :as => :board_post
       put    ':id' => 'posts#update', :as => :board_post
-      delete ':id' => 'posts#destroy', :as => :board_post
     end
+    delete 'posts/:id' => 'posts#destroy_with_tripcode', :as => :destroy_with_tripcode_board_post
+
   end
 
   resources :operators
   resources :sessions
+  resources :reports
 
   mount Attachinary::Engine => "/attachinary"
 

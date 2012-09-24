@@ -1,0 +1,17 @@
+h1 Reports
+
+table
+  thead
+    tr
+      th IP Address
+      th Comment
+      th Post ID
+  tbody
+    - if @reports
+      - @reports.each do |report|
+        tr
+          td = report.ip_address
+          td = report.comment
+          td = report.post_id
+
+
