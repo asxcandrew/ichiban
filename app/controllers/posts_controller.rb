@@ -23,18 +23,23 @@ class PostsController < ApplicationController
       @post.directory = @parent.directory
     end
 
-    if @post.save
-      flash[:notice] = 'Post created!'
-
-      if @post.parent
-        redirect_to(request.referrer + "##{@post.id}")
-      else
-        redirect_to board_post_path(@board, @post, anchor: @post.id)
-      end
-
-    else
-      flash[:errors] = @post.errors.full_messages.to_sentence
+    # Only a bot would see this field.
+    if !params[:email].blank?
       redirect_to request.referrer
+    else
+      if @post.save
+        flash[:notice] = 'Post created!'
+
+        if @post.parent
+          redirect_to(request.referrer + "##{@post.id}")
+        else
+          redirect_to board_post_path(@board, @post, anchor: @post.id)
+        end
+
+      else
+        flash[:errors] = @post.errors.full_messages.to_sentence
+        redirect_to request.referrer
+      end
     end
   end
 

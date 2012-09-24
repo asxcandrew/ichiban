@@ -12,6 +12,8 @@
     .meter:span
     
     == f.input :name, placeholder: "Name"
+    == label_tag :email
+    == text_field_tag :email
     
     == f.input :upload, :as => :attachinary, required: true, input_html: { accept: '' }
 
