@@ -36,11 +36,18 @@ class Post < ActiveRecord::Base
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
   end
 
-  # TODO: Respond to upload destroy failures.
   def destroy(input)
     if self.tripcode == crypt_tripcode(input)
-      status = Cloudinary::Uploader.destroy(self.upload.public_id)
+      obliterate
     end
+  end
+
+  # INFO: I'd like a means to delete posts internally without a tripcode.
+  #       Consider 'destroy' a public method.
+  def obliterate
+    # TODO: Respond to upload destroy failures.
+    status = Cloudinary::Uploader.destroy(self.upload.public_id)
+    self.delete
   end
 
   private
