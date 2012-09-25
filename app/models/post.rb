@@ -12,7 +12,7 @@ class Post < ActiveRecord::Base
   belongs_to :board
   belongs_to :parent, class_name: 'Post'
   has_many :children, class_name: 'Post', :foreign_key => :parent_id
-  has_many :reports
+  has_many :reports, :dependent => :destroy
 
   has_attachment :upload, accept: [:jpg, :png, :gif]
 

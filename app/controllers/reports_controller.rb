@@ -1,44 +1,45 @@
 class ReportsController < ApplicationController
   def index
+    @prefix = "View Reports"
     @reports = Report.all
   end
 
   def create
     @report = Report.new(params[:report])
+    @post = Post.find_by_id(params[:report][:post_id])
     @report.ip_address = request.ip
-    response = {}
+    response = { success: false }
 
-    if @report.save
-      response.merge!(
-        { success: true,
-          message: "Report submitted!" })
+    if @post
+      if @report.save
+        response.merge!(
+          { success: true,
+            message: "Report submitted!" })
+      else
+        response[:message] = @report.errors.full_messages.to_sentence
+      end
     else
-      response.merge!(
-        { success: false,
-          message: @report.errors.full_messages.to_sentence })
+      response[:message] = "Post ##{params[:report][:post_id]} not found."
     end
 
     render json: response
   end
 
   def destroy
-    @report = Report.find_by_id(params[:report][:id])
-    response = {}
+    @report = Report.find_by_id(params[:id])
+    response = { success: false }
 
     if @report
       if @report.destroy
         response.merge!(
           { success: true,
-            message: "Report ##{@report.id} deleted." })
+            message: "Report ##{@report.id} deleted.",
+            report_total:  @report.total })
       else
-        response.merge!(
-          { success: false,
-            message: @report.errors.full_messages.to_sentence })
+        response[:message] = @report.errors.full_messages.to_sentence
       end
     else
-      response.merge!(
-        { success: false,
-          message: "Report ##{params[:report][:id]} not found."})
+      response[:message] = "Report ##{params[:report][:id]} not found."
     end
 
     render json: response

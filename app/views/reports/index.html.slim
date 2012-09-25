@@ -1,23 +1,27 @@
-h1 Reports
+- if @reports 
+  h1#report-counter == pluralize(@reports.size, "Report")
 
 .reports
   table
     thead
       tr
+        td #
         th Post ID
-        th Reporter IP Address
+        th IP Address
         th Comment
         th Date
     tbody
       - if @reports
-        - @reports.each do |report|
+        - @reports.to_enum.with_index(1) do |report, i|
           tr(id=report.id)
+            td = i
             td = link_to_post(report.post)
             td = report.ip_address
             td = report.comment
-            td = report.date
+            td
+              time(datetime=report.created_at title=report.created_at) = human_date(report)
             td.controls
-              a.delete-post(href='#' data-id=report.id) Delete Post
+              a.delete-post(href='#' data-id=report.post_id) Delete Post
               a.ban-poster(href='#' data-id=report.id) Ban Poster
               a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
             td

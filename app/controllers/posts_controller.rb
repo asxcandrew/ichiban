@@ -43,9 +43,26 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find_by_id(params[:id])
+    response = { success: false }
+    if @post
+      if @post.destroy
+        response = { success: true,
+                     message: "Deleted post ##{@post.id}." }
+      else
+        response[:message] = @post.errors.full_messages.to_sentence
+      end
+    else
+      response[:message] = "Post ##{params[:id]} not found."
+    end
+
+    render json: response
+  end
+
   def destroy_with_tripcode
     @post = Post.find_by_id(params[:id])
-    response = {}
+    response = { success: false }
 
     if @post
       # No sense in keeping them on a page without a parent.
@@ -61,21 +78,14 @@ class PostsController < ApplicationController
           { success: true, 
             message: "Deleted post ##{@post.id}." })
       else
-        response.merge!(
-          { success: false, 
-            message: "You are not the creator of post ##{@post.id}." })
+        response[:message] = "You are not the creator of post ##{@post.id}."
       end
 
     else # Post wasn't found
-      response.merge!(
-        { success: false, 
-          message: "Post ##{params[:id]} does not exist." })
+      response[:message] = "Post ##{params[:id]} not found."
     end
 
     render json: response
-  end
-
-  def edit
   end
 
   def update

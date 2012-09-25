@@ -10,7 +10,7 @@ $ ->
   # FIX: issue where child posts are deleted.
   $(".post").on "click", ".delete-post", (e) ->
     e.preventDefault()
-    deletePost($(this).data('id'))
+    deletePostWithTripcode($(this).data('id'))
 
   $(".post").on "click", ".report-post", (e) ->
     e.preventDefault()
@@ -44,11 +44,11 @@ toggleReply = (id) ->
   $('body').animate { scrollTop: $(reply).offset().top }, 200, () ->
     $("#{reply} textarea#post_body").focus()
 
-deletePost = (id) ->
+deletePostWithTripcode = (id) ->
   tripcode = prompt("Enter your tripcode to delete post ##{id}.")
 
   if tripcode != null && tripcode.length != 0
-    $.post "/boards/posts/#{id}", { _method: 'delete', tripcode }, 
+    $.post "/posts/#{id}/#{tripcode}", { _method: 'delete' }, 
       (response) ->
         if response.success
           if response.redirect

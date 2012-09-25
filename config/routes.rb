@@ -29,9 +29,13 @@ Ichiban::Application.routes.draw do
       get    ':id' => 'posts#show',   :as => :board_post
       put    ':id' => 'posts#update', :as => :board_post
     end
-    delete 'posts/:id' => 'posts#destroy_with_tripcode', :as => :destroy_with_tripcode_board_post
-
   end
+
+    # TODO: Rewrite JSON routes to be more RESTful.
+    #       I would prefer that the javascript didn't need to know
+    #       what board the posts was on.
+    delete 'posts/:id' => 'posts#destroy', :as => :destroy_board_post
+    delete 'posts/:id/:tripcode' => 'posts#destroy_with_tripcode', :as => :destroy_with_tripcode_board_post
 
   resources :operators
   resources :sessions
