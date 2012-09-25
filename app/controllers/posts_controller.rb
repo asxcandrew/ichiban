@@ -4,6 +4,7 @@ class PostsController < ApplicationController
     @reply = Post.new
     @board = Board.find_by_directory(params[:directory])
     @post = Post.find_by_id(params[:id])
+    @total_replies = Post.where(parent_id: params[:id]).size
     
     render 'errors/error_404' unless @board && @post
   end

@@ -20,6 +20,7 @@ gem 'slim'
 gem 'redcarpet'
 gem 'color'
 gem 'simple_form'
+gem 'numbers_and_words'
 
 # Staff
 gem 'bcrypt-ruby'
