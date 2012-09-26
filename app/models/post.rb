@@ -17,13 +17,11 @@ class Post < ActiveRecord::Base
   has_attachment :upload, accept: [:jpg, :png, :gif]
 
   before_save :parse_name
-  # before_destroy :check_tripcode
-
-  # TODO: Validate existance of directory
   validates_presence_of :directory
   validates_presence_of(:body, :if => :body_required?)
   validates_presence_of(:upload, :if => :upload_required?)
   validate :upload_file_size
+  validate :board_existance
 
   # Maximum length is also limited 
   # in the post.js.coffeescript.
@@ -45,6 +43,12 @@ class Post < ActiveRecord::Base
   end
 
   private
+    def board_existance
+      unless Board.find_by_directory(self.directory)
+        errors.add(:board_existance, "The board specified does not exist.")
+      end
+    end
+
     def upload_file_size
     end
 

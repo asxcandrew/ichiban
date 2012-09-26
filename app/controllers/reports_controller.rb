@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   def index
     @prefix = "View Reports"
-    @reports = Report.all
+    @reports = Report.find(:all, order: "created_at")
   end
 
   def create

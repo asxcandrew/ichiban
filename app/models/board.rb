@@ -2,7 +2,7 @@ class Board < ActiveRecord::Base
   attr_accessible :directory, :name, :description
 
   validates :name, :directory, presence: true
-  validates :directory, uniqueness: true
+  validates_uniqueness_of :directory
 
   has_many :posts
 
