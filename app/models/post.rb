@@ -34,7 +34,9 @@ class Post < ActiveRecord::Base
   # OPTIMIZE: Attachinary won't seem to work with a before_destroy filter
   #           so we use this method instead.
   def destroy_post_and_upload
-    status = Cloudinary::Uploader.destroy(self.upload.public_id)
+    if self.upload
+      status = Cloudinary::Uploader.destroy(self.upload.public_id)
+    end
     self.destroy
   end
 
