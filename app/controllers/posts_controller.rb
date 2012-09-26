@@ -15,8 +15,9 @@ class PostsController < ApplicationController
     path_options = {}
 
     @post.directory  = params[:directory]
-    @post.ip_address = request.ip
-    
+  
+    # Simulate different IP addresses
+    @post.ip_address = Rails.env.production? ? request.ip : Array.new(4){rand(256)}.join('.')
 
     # TODO: Handle situation where parent doesn't exist.
     if @post.parent_id # Post is a reply.
@@ -48,9 +49,14 @@ class PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
     response = { success: false }
     if @post
-      if @post.destroy
+      if @post.destroy_post_and_upload
         response = { success: true,
                      message: "Deleted post ##{@post.id}." }
+
+        if params[:getReportTotal]
+          report = Report.new
+          response[:report_total] = report.total
+        end
       else
         response[:message] = @post.errors.full_messages.to_sentence
       end

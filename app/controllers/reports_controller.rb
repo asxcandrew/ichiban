@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
           { success: true,
             message: "Report submitted!" })
       else
-        response[:message] = @report.errors.full_messages.to_sentence
+        response[:message] = @report.errors.first[1]
       end
     else
       response[:message] = "Post ##{params[:report][:post_id]} not found."

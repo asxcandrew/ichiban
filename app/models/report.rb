@@ -4,6 +4,9 @@ class Report < ActiveRecord::Base
 
   belongs_to :post
   validates_presence_of :comment
+  validates_uniqueness_of :ip_address, 
+                          :scope => :post_id,
+                          message: "You have already reported that post."
 
   def date
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")

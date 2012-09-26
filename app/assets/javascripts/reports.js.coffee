@@ -5,25 +5,34 @@ $ ->
 
   $(".reports").on "click", ".delete-post", (e) ->
     e.preventDefault()
-    deletePost($(this).data('id'))
+    $this = $(this) # Not going to ask for this twice...
 
-
+    reportID = $this.parent().parent().attr('id')
+    postID = $this.data('id')
+    deletePost(postID, reportID)
 
 deleteReport = (id) ->
-  $.post "/reports/#{id}", { _method: 'delete' },
+  $.post "/reports/#{id}", { _method: 'delete', getReportTotal: true },
   (response) ->
     if response.success
       $("##{id}").hide(250)
-      $('#report-counter').text(response.report_total)
+      setReportCounter(response.report_total)
       flash("notice", response.message)
     else
       flash("error", response.message)
 
-deletePost = (id) ->
-  $.post "/posts/#{id}", { _method: 'delete' },
+deletePost = (postID, reportID) ->
+  $.post "/posts/#{postID}", { _method: 'delete', getReportTotal: true },
   (response) ->
     if response.success
-      $("##{id}").hide(250)
+      deletedReports = $("tr[data-postID = #{postID}]")
+      deletedReports.each (i, report) ->
+        $(report).hide(250)
+
+      setReportCounter(response.report_total)
       flash("notice", response.message)
     else
       flash("error", response.message)
+
+setReportCounter = (total) ->
+  $('#report-counter').text(total)

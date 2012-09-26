@@ -21,12 +21,8 @@ class Post < ActiveRecord::Base
 
   # TODO: Validate existance of directory
   validates_presence_of :directory
-  validates_presence_of(:body,
-                        :if => :body_required?)
-  validates_presence_of(:upload, 
-                        :if => :upload_required?)
-
-
+  validates_presence_of(:body, :if => :body_required?)
+  validates_presence_of(:upload, :if => :upload_required?)
   validate :upload_file_size
 
   # Maximum length is also limited 
@@ -37,11 +33,15 @@ class Post < ActiveRecord::Base
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
   end
 
+  # OPTIMIZE: Attachinary won't seem to work with a before_destroy filter
+  #           so we use this method instead.
+  def destroy_post_and_upload
+    status = Cloudinary::Uploader.destroy(self.upload.public_id)
+    self.destroy
+  end
+
   def destroy_with_tripcode(input)
-    if self.tripcode == crypt_tripcode(input)
-      status = Cloudinary::Uploader.destroy(self.upload.public_id)
-      self.destroy
-    end
+    destroy_post_and_upload if self.tripcode == crypt_tripcode(input)
   end
 
   private
