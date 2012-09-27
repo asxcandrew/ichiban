@@ -48,47 +48,35 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find_by_id(params[:id])
     response = { success: false }
-    if @post
-      if @post.destroy_post_and_upload
-        response = { success: true,
-                     message: "Deleted post ##{@post.id}." }
 
-        if params[:getReportTotal]
-          report = Report.new
-          response[:report_total] = report.total
+    if @post
+      @board = Board.find_by_directory(@post.directory)
+      # No sense in keeping them on a page without a parent.
+      response[:redirect] = board_path(@board) unless @post.parent
+      
+      if params[:tripcode]
+        if @post.destroy_with_tripcode(params[:tripcode])
+          response.merge!(
+            { success: true, 
+              message: "Deleted post ##{@post.id}." })
+        else
+          response[:message] = "You are not the creator of post ##{@post.id}."
         end
       else
-        response[:message] = @post.errors.full_messages.to_sentence
+        if @current_operator
+          if @post.destroy_post_and_upload
+            response.merge!(
+              { success: true,
+                message: "Deleted post ##{@post.id}." })
+          else
+            response[:message] = @post.errors.full_messages.to_sentence
+          end
+          response[:report_total] = Report.all.size if params[:getReportTotal]
+        else
+          response[:message] = "You are not authorized to delete post ##{params[:id]}."
+        end
       end
     else
-      response[:message] = "Post ##{params[:id]} not found."
-    end
-
-    render json: response
-  end
-
-  def destroy_with_tripcode
-    @post = Post.find_by_id(params[:id])
-    response = { success: false }
-
-    if @post
-      # No sense in keeping them on a page without a parent.
-      if @post.parent
-        response[:redirect] = false
-      else
-        @board = Board.find_by_directory(@post.directory)
-        response[:redirect] = board_path(@board)
-      end
-
-      if @post.destroy_with_tripcode(params[:tripcode])
-        response.merge!(
-          { success: true, 
-            message: "Deleted post ##{@post.id}." })
-      else
-        response[:message] = "You are not the creator of post ##{@post.id}."
-      end
-
-    else # Post wasn't found
       response[:message] = "Post ##{params[:id]} not found."
     end
 

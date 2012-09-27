@@ -8,11 +8,25 @@ $ ->
   $('textarea').limiter(maxLength: 800)
 
   # FIX: issue where child posts are deleted.
-  $(".post").on "click", ".delete-post", (e) ->
+  $(".post footer").on "click", ".delete-post-with-tripcode", (e) ->
     e.preventDefault()
-    deletePostWithTripcode($(this).data('id'))
+    deletePost($(this).data('id'), { askForTripcode: true })
 
-  $(".post").on "click", ".report-post", (e) ->
+  $(".post footer").on "click", ".delete-post", (e) ->
+    e.preventDefault()
+    $this = $(this)
+    if $this.data('asked') == 'yes'
+      deletePost($this.data('id'), { askForTripcode: false })
+    else
+      $this.data('asked', 'yes')
+      $this.text('really?')
+      setTimeout (-> 
+        $this.text("delete")
+        $this.data('asked', 'no')), 3000
+
+
+  $(".post footer").on "click", ".
+  report-post", (e) ->
     e.preventDefault()
     reportPost($(this).data('id'))
 
@@ -44,23 +58,26 @@ toggleReply = (id) ->
   $('body').animate { scrollTop: $(reply).offset().top }, 200, () ->
     $("#{reply} textarea#post_body").focus()
 
-deletePostWithTripcode = (id) ->
-  tripcode = prompt("Enter your tripcode to delete post ##{id}.")
+deletePost = (postID, options) ->
+  params = { _method: 'delete' }
+  valid = !options["askForTripcode"]
 
-  if tripcode != null && tripcode.length != 0
-    $.post "/posts/#{id}/#{tripcode}", { _method: 'delete' }, 
-      (response) ->
-        if response.success
-          if response.redirect
-            window.location = response.redirect
-          else
-            $("##{id}").hide(250)
-            flash("notice", response.message)
+  if options["askForTripcode"] == true
+    params['tripcode'] = prompt("Enter your tripcode to delete post ##{postID}.")
 
+    valid = params['tripcode'] != null && params['tripcode'].length != 0
+    flash("error", "No tripcode entered.") if not valid
+
+  if valid
+    $.post "/posts/#{postID}", params, (response) ->
+      if response.success
+        if response.redirect
+          window.location = response.redirect
         else
-          flash("error", response.message)
-  else
-    flash("error", "No tripcode entered.")
+          $("##{postID}").hide(250)
+          flash("notice", response.message)
+      else
+        flash("error", response.message)
 
 reportPost = (id) ->
   comment = prompt("Why are you reporting post ##{id}?")

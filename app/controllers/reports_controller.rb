@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  before_filter :verify_permissions
   def index
     @prefix = "View Reports"
     @reports = Report.find(:all, order: "created_at")
@@ -34,7 +35,7 @@ class ReportsController < ApplicationController
         response.merge!(
           { success: true,
             message: "Report ##{@report.id} deleted.",
-            report_total:  @report.total })
+            report_total:  Report.all.size })
       else
         response[:message] = @report.errors.full_messages.to_sentence
       end

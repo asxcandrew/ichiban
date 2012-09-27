@@ -20,14 +20,14 @@ Ichiban::Application.routes.draw do
 
     # Posts
     scope ':directory' do
-      get  '/' => 'posts#index',  :as => :board_posts
-      post '/' => 'posts#create', :as => :board_posts
+      get  '/'       => 'posts#index',  :as => :board_posts
+      post '/'       => 'posts#create', :as => :board_posts
 
-      get 'new'      => 'posts#new',  :as => :new_board_post
-      get ':id/edit' => 'posts#edit', :as => :edit_board_post
+      get 'new'      => 'posts#new',    :as => :new_board_post
+      get ':id/edit' => 'posts#edit',   :as => :edit_board_post
 
-      get    ':id' => 'posts#show',   :as => :board_post
-      put    ':id' => 'posts#update', :as => :board_post
+      get ':id'      => 'posts#show',   :as => :board_post
+      put ':id'      => 'posts#update', :as => :board_post
     end
   end
 
@@ -35,11 +35,17 @@ Ichiban::Application.routes.draw do
     #       I would prefer that the javascript didn't need to know
     #       what board the posts was on.
     delete 'posts/:id' => 'posts#destroy', :as => :destroy_board_post
-    delete 'posts/:id/:tripcode' => 'posts#destroy_with_tripcode', :as => :destroy_with_tripcode_board_post
 
   resources :operators
   resources :sessions
   resources :reports
+
+  # A few nicities
+  get 'login' => 'sessions#new'
+  get 'logout' => 'sessions#destroy'
+
+  
+
 
   mount Attachinary::Engine => "/attachinary"
 

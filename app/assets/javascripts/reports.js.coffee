@@ -23,16 +23,17 @@ deleteReport = (id) ->
 
 deletePost = (postID, reportID) ->
   $.post "/posts/#{postID}", { _method: 'delete', getReportTotal: true },
-  (response) ->
-    if response.success
-      deletedReports = $("tr[data-postID = #{postID}]")
-      deletedReports.each (i, report) ->
-        $(report).hide(250)
+    (response) ->
+      if response.success
+        deletedReports = $("tr[data-postID = #{postID}]")
+        deletedReports.each (i, report) ->
+          $(report).hide(250)
 
-      setReportCounter(response.report_total)
-      flash("notice", response.message)
-    else
-      flash("error", response.message)
+        setReportCounter(response.report_total)
+        flash("notice", response.message)
+      else
+        flash("error", response.message)
 
 setReportCounter = (total) ->
-  $('#report-counter').text(total)
+  label = if total == 1 then "Report" else "Reports"
+  $('#report-counter').text("#{total} #{label}")

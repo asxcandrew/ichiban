@@ -24,11 +24,6 @@ form
     
     margin: 5px 0
 
-    // Spam prevention
-    // Only a bot would see this field.
-    &#email
-      display: none
-
     &[type="text"], &[type="password"] 
       background-color: $light
       padding: 2px 4px
@@ -41,6 +36,12 @@ form
 
       &:hover
         background-color: lighten($bold-accent, 10%)
+  
+  // Spam prevention
+  // Only a bot would see this field.
+  &.new_post 
+    input#email
+      display: none
 
   .meter
     margin: -2px 0 -2px 0
