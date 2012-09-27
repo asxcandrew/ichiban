@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924050855) do
+ActiveRecord::Schema.define(:version => 20120927192034) do
 
   create_table "attachinary_attachments", :force => true do |t|
     t.integer  "parent_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20120924050855) do
     t.string   "password_digest"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "role_id"
   end
 
   add_index "operators", ["email"], :name => "index_operators_on_email"
@@ -62,9 +63,11 @@ ActiveRecord::Schema.define(:version => 20120924050855) do
     t.string   "tripcode"
     t.string   "directory"
     t.integer  "parent_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "color"
+    t.integer  "ancestor_id"
+    t.boolean  "locked"
   end
 
   add_index "posts", ["directory"], :name => "index_posts_on_directory"
@@ -75,6 +78,12 @@ ActiveRecord::Schema.define(:version => 20120924050855) do
     t.string   "model"
     t.integer  "post_id"
     t.text     "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

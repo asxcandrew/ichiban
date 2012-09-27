@@ -24,6 +24,7 @@ gem 'numbers_and_words'
 
 # Staff
 gem 'bcrypt-ruby'
+gem 'cancan'
 
 group :development, :test do
   gem 'pry'

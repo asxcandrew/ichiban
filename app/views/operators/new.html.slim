@@ -1,12 +1,12 @@
 .register
-  == form_for @operator do |f|
-    == f.label :email
-    == f.text_field :email, placeholder: "Email"
+  == simple_form_for @operator do |f|
+   
+    == f.input :email, placeholder: "Email"
 
-    == f.label :password
-    == f.password_field :password, placeholder: "Password"
+    .selection
+      == f.collection_radio_buttons :role_id, @roles, :id, :name
 
-    == f.label :password_confirmation
-    == f.password_field :password_confirmation, placeholder: "Confirmation"
+    == f.input :password, placeholder: "Password"
+    == f.input :password_confirmation, placeholder: "Confirmation"
 
     == f.submit

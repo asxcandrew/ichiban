@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def current_ability
+      @current_ability ||= AccountAbility.new(current_operator)
+    end
+
     def current_operator
       if session[:operator_id]
         @current_operator ||= Operator.find_by_id(session[:operator_id])

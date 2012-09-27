@@ -36,6 +36,7 @@ GEM
     aws_cf_signer (0.1.1)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
+    cancan (1.6.8)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -209,6 +210,7 @@ PLATFORMS
 DEPENDENCIES
   attachinary
   bcrypt-ruby
+  cancan
   capybara
   capybara-webkit
   cloudinary
