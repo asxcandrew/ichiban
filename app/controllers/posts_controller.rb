@@ -54,27 +54,16 @@ class PostsController < ApplicationController
       # No sense in keeping them on a page without a parent.
       response[:redirect] = board_path(@board) unless @post.parent
       
-      if params[:tripcode]
-        if @post.destroy_with_tripcode(params[:tripcode])
+      if (@current_operator && @current_operator) || @post.verify_tripcode(params[:tripcode])
+        if @post.destroy_post_and_upload
           response.merge!(
             { success: true, 
               message: "Deleted post ##{@post.id}." })
-        else
-          response[:message] = "You are not the creator of post ##{@post.id}."
+
+          response[:report_total] = Report.all.size if params[:getReportTotal]
         end
       else
-        if @current_operator
-          if @post.destroy_post_and_upload
-            response.merge!(
-              { success: true,
-                message: "Deleted post ##{@post.id}." })
-          else
-            response[:message] = @post.errors.full_messages.to_sentence
-          end
-          response[:report_total] = Report.all.size if params[:getReportTotal]
-        else
-          response[:message] = "You are not authorized to delete post ##{params[:id]}."
-        end
+        response[:message] = "You are not authorized to delete post ##{params[:id]}."
       end
     else
       response[:message] = "Post ##{params[:id]} not found."

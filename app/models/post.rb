@@ -18,8 +18,8 @@ class Post < ActiveRecord::Base
 
   before_save :parse_name
   validates_presence_of :directory
-  validates_presence_of(:body, :if => :body_required?)
-  validates_presence_of(:upload, :if => :upload_required?)
+  validates_presence_of :body, :if => :body_required?
+  validates_presence_of :upload, :if => :upload_required?
   validate :upload_file_size
   validate :board_existance
 
@@ -40,8 +40,8 @@ class Post < ActiveRecord::Base
     self.destroy
   end
 
-  def destroy_with_tripcode(input)
-    destroy_post_and_upload if self.tripcode == crypt_tripcode(input)
+  def verify_tripcode(input)
+    !input.blank? && self.tripcode == crypt_tripcode(input)
   end
 
   private

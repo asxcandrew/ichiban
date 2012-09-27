@@ -25,8 +25,7 @@ $ ->
         $this.data('asked', 'no')), 3000
 
 
-  $(".post footer").on "click", ".
-  report-post", (e) ->
+  $(".post footer").on "click", ".report-post", (e) ->
     e.preventDefault()
     reportPost($(this).data('id'))
 
