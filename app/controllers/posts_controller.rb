@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     @reply = Post.new
     @board = Board.find_by_directory(params[:directory])
     @post = Post.find_by_id(params[:id])
-    @total_replies = Post.where(parent_id: params[:id]).size
+    @total_replies = Post.where(ancestor_id: params[:id]).size
     
     render 'errors/error_404' unless @board && @post
   end
@@ -55,7 +55,7 @@ class PostsController < ApplicationController
       response[:redirect] = board_path(@board) unless @post.parent
       
       if can?(:destroy, Post) || @post.verify_tripcode(params[:tripcode])
-        if @post.destroy_post_and_upload
+        if @post.destroy
           response.merge!(
             { success: true, 
               message: "Deleted post ##{@post.id}." })

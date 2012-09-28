@@ -7,11 +7,15 @@ class Post < ActiveRecord::Base
                   :tripcode,
                   :directory,
                   :parent_id,
+                  :ancestor_id,
                   :upload)
 
   belongs_to :board
   belongs_to :parent, class_name: 'Post'
-  has_many :children, class_name: 'Post', :foreign_key => :parent_id
+  belongs_to :ancestor, class_name: 'Post'
+
+  # OPTIMIZE: I'm concerned about the time it takes to delete each child.
+  has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
   has_many :reports, :dependent => :destroy
 
   has_attachment :upload, accept: [:jpg, :png, :gif]
@@ -33,11 +37,11 @@ class Post < ActiveRecord::Base
 
   # OPTIMIZE: Attachinary won't seem to work with a before_destroy filter
   #           so we use this method instead.
-  def destroy_post_and_upload
+  def destroy
     if self.upload
       status = Cloudinary::Uploader.destroy(self.upload.public_id)
     end
-    self.destroy
+    super
   end
 
   def verify_tripcode(input)
