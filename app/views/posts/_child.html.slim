@@ -2,8 +2,7 @@
   = post_article_tag(child) do
     header
       .date
-        time(datetime=child.created_at title=child.created_at) = human_date(child)
-      
+        == time_tag(child.created_at, human_date(child), title: child.created_at)
       .right
         .id == link_to_post(child)
 

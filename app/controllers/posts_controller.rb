@@ -14,7 +14,7 @@ class PostsController < ApplicationController
     @post  = Post.new(params[:post])
     path_options = {}
 
-    @post.directory  = params[:directory]
+    @post.directory = params[:directory]
   
     # Simulate different IP addresses
     @post.ip_address = Rails.env.production? ? request.ip : Array.new(4){rand(256)}.join('.')
