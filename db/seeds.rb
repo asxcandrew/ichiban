@@ -8,7 +8,7 @@
 
 Operator.create!({ email: "admin@example.com",
                    password: "password",
-                   :role => :admin })
+                   :role => :owner })
 
 boards = [ 
   { name: "Video Games",
