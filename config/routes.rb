@@ -36,7 +36,7 @@ Ichiban::Application.routes.draw do
     #       what board the posts was on.
     delete 'posts/:id' => 'posts#destroy', :as => :destroy_board_post
 
-  resources :operators
+  resources :users
   resources :sessions
   resources :reports
 

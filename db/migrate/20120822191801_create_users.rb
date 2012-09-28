@@ -1,6 +1,6 @@
-class CreateOperators < ActiveRecord::Migration
+class CreateUsers < ActiveRecord::Migration
   def self.up
-    create_table :operators do |t|
+    create_table :users do |t|
       t.string :email
       t.string :password_digest
 
@@ -9,6 +9,6 @@ class CreateOperators < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :operators
+    drop_table :users
   end
 end

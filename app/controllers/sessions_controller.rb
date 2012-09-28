@@ -1,13 +1,13 @@
 class SessionsController < ApplicationController
   def new
-    redirect_to root_url , notice: "You're already logged in." if @current_operator
+    redirect_to root_url , notice: "You're already logged in." if @current_user
   end
 
   def create
-    operator = Operator.find_by_email(params[:email])
+    user = User.find_by_email(params[:email])
 
-    if operator && operator.authenticate(params[:password])
-      session[:operator_id] = operator.id
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
       redirect_to root_url, notice: "Logged in!"
     else
       flash.now.alert = "Invalid email or password."
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:operator_id] = nil
+    session[:user_id] = nil
     redirect_to root_url, notice: "Logged out!"
   end
 end

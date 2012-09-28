@@ -1,4 +1,4 @@
-class Operator < ActiveRecord::Base
+class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :role
   has_secure_password
   

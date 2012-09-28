@@ -1,11 +1,11 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(operator)
-    @operator = operator || Operator.new
-    can(:manage, :all) if @operator.admin?
+  def initialize(user)
+    @user = user || User.new
+    can(:manage, :all) if @user.admin?
 
-    if @operator.moderator?
+    if @user.moderator?
       can(:destroy, Post)
     end
     # Define abilities for the passed in user here. For example:

@@ -45,16 +45,6 @@ ActiveRecord::Schema.define(:version => 20120927192034) do
 
   add_index "boards", ["directory"], :name => "index_boards_on_directory", :unique => true
 
-  create_table "operators", :force => true do |t|
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "role"
-  end
-
-  add_index "operators", ["email"], :name => "index_operators_on_email"
-
   create_table "posts", :force => true do |t|
     t.string   "name"
     t.string   "subject"
@@ -81,5 +71,15 @@ ActiveRecord::Schema.define(:version => 20120927192034) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "role"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email"
 
 end

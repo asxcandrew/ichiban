@@ -1,7 +1,7 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :current_operator
+  before_filter :current_user
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, :with => :render_500
@@ -29,22 +29,22 @@ class ApplicationController < ActionController::Base
     end
 
     def current_ability
-      @current_ability ||= Ability.new(current_operator)
+      @current_ability ||= Ability.new(current_user)
     end
 
-    def current_operator
-      if session[:operator_id]
-        @current_operator ||= Operator.find_by_id(session[:operator_id])
+    def current_user
+      if session[:user_id]
+        @current_user ||= User.find_by_id(session[:user_id])
       end
     end
 
     def verify_permissions
-      unless @current_operator
+      unless @current_user
         redirect_to(new_session_path, 
                     notice: "You must login to perform that action.")
       end
     end
 
-    helper_method :current_operator
+    helper_method :current_user
   # private_end
 end

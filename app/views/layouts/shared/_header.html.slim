@@ -3,10 +3,10 @@ header.site-header
     .links
       == link_to("Home", boards_url)
       == link_to("Log in", new_session_path)
-    - if @current_operator
+    - if @current_user
       .infotainment.right
-        .name == @current_operator.email
-        .role == @current_operator.role
+        .name == @current_user.email
+        .role == @current_user.role
 
         == link_to("[Manage]", '#')
-        == button_to("[Log out]", session_path(@current_operator), :method => :delete)
+        == button_to("[Log out]", session_path(@current_user), :method => :delete)

@@ -6,9 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Operator.create!({ email: "admin@example.com",
+User.create!({ email: "admin@example.com",
                    password: "password",
-                   :role => :owner })
+                   :role => :admin })
 
 boards = [ 
   { name: "Video Games",
