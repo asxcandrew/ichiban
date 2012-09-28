@@ -22,9 +22,10 @@ gem 'color'
 gem 'simple_form'
 gem 'numbers_and_words'
 
-# Staff
+# Authentication
 gem 'bcrypt-ruby'
 gem 'cancan'
+gem 'simple_roles' 
 
 group :development, :test do
   gem 'pry'

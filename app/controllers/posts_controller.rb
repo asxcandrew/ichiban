@@ -54,7 +54,7 @@ class PostsController < ApplicationController
       # No sense in keeping them on a page without a parent.
       response[:redirect] = board_path(@board) unless @post.parent
       
-      if (@current_operator && @current_operator) || @post.verify_tripcode(params[:tripcode])
+      if can?(:destroy, Post) || @post.verify_tripcode(params[:tripcode])
         if @post.destroy_post_and_upload
           response.merge!(
             { success: true, 

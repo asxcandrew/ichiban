@@ -1,11 +1,12 @@
-- if @boards
+header.site-header
   nav.site-nav
-    .directories
-      / == directory_header
     .links
       == link_to("Home", boards_url)
+      == link_to("Log in", new_session_path)
     - if @current_operator
-      .right
+      .infotainment.right
+        .name == @current_operator.email
+        .role == @current_operator.role
+
         == link_to("[Manage]", '#')
         == button_to("[Log out]", session_path(@current_operator), :method => :delete)
-hr

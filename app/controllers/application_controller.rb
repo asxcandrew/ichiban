@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :current_operator
@@ -28,7 +29,7 @@ class ApplicationController < ActionController::Base
     end
 
     def current_ability
-      @current_ability ||= AccountAbility.new(current_operator)
+      @current_ability ||= Ability.new(current_operator)
     end
 
     def current_operator
