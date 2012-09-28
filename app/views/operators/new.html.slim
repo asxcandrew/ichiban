@@ -4,7 +4,7 @@
     == f.input :email, placeholder: "Email"
 
     .selection
-      == f.collection_radio_buttons :role_id, @roles, :id, :name
+      == f.input :role, collection: [:owner, :moderator, :janitor], :as => :radio_buttons
 
     == f.input :password, placeholder: "Password"
     == f.input :password_confirmation, placeholder: "Confirmation"

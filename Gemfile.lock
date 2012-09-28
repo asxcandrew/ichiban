@@ -146,6 +146,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     redcarpet (2.1.1)
+    require_all (1.2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.11.0)
@@ -175,6 +176,11 @@ GEM
     simple_form (2.0.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
+    simple_roles (0.0.8)
+      activerecord
+      require_all
+      sugar-high
+      sweetloader
     slim (1.2.2)
       temple (~> 0.4.0)
       tilt (~> 1.3.3)
@@ -184,6 +190,10 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sugar-high (0.7.2)
+    sweetloader (0.1.6)
+      activesupport (>= 3.0.1)
+      i18n
     temple (0.4.0)
     therubyracer (0.10.2)
       libv8 (~> 3.3.10)
@@ -230,6 +240,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   simple_form
+  simple_roles
   slim
   spork
   therubyracer

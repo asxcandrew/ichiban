@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(:version => 20120927192034) do
     t.string   "password_digest"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "role_id"
+    t.string   "role"
   end
 
   add_index "operators", ["email"], :name => "index_operators_on_email"
@@ -78,12 +78,6 @@ ActiveRecord::Schema.define(:version => 20120927192034) do
     t.string   "model"
     t.integer  "post_id"
     t.text     "comment"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
