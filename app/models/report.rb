@@ -3,11 +3,11 @@ class Report < ActiveRecord::Base
 
   belongs_to :post
 
-  validate :max_amount_of_reports
   validates_presence_of :comment
   validates_uniqueness_of :ip_address, 
                           :scope => :post_id,
                           message: "You have already reported that post."
+  validate :max_reports_per_IP
 
 
   def date
@@ -16,8 +16,8 @@ class Report < ActiveRecord::Base
   
   private
     # TODO: Replace max amount of reports number with variable from admin panel.
-    def max_amount_of_reports
-      if Report.where(ip_address: self.ip_address).size > 5
+    def max_reports_per_IP
+      if Report.where(ip_address: self.ip_address).size >= Setting[:max_reports_per_IP]
         errors.add(:max_reports, "You have too many open reports.")
       end
     end

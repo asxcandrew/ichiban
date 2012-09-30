@@ -10,6 +10,10 @@ User.create!({ email: "admin@example.com",
                    password: "password",
                    :role => :admin })
 
+Setting = { site_name: 'Ichiban!',
+            max_reports_per_IP: 6 }
+
+
 boards = [ 
   { name: "Video Games",
     description: "Vidya",

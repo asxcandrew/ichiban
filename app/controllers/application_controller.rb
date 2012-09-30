@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
 
     def verify_permissions
       unless @current_user
+        session[:redirect_to] = request.env["REQUEST_PATH"]
         redirect_to(new_session_path, 
                     notice: "You must login to perform that action.")
       end

@@ -1,4 +1,5 @@
 header.site-header
+  h1.site-name == Setting.site_name
   nav.site-nav
     .links
       == link_to("Home", boards_url)
@@ -8,5 +9,5 @@ header.site-header
         .name == @current_user.email
         .role == @current_user.role
 
-        == link_to("[Manage]", '#')
+        == link_to("[Manage]", manage_path)
         == button_to("[Log out]", session_path(@current_user), :method => :delete)

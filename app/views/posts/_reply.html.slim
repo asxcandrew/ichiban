@@ -2,27 +2,25 @@
   article
     ==  simple_form_for([@board, @reply],
                         autocomplete: "off", 
-                        html: { multipart: true, id: "#{parent.id}_new_post" }) do |f|
+                        namespace: parent.id,
+                        html: { multipart: true }) do |f|
       - if parent.ancestor_id
         == f.hidden_field(:ancestor_id, 
-                          value: parent.ancestor_id, 
-                          id: "#{parent.id}_post_ancestor_id")
+                          value: parent.ancestor_id)
       - else
         == f.hidden_field(:ancestor_id, 
-                          value: parent.id,
-                          id: "#{parent.id}_post_parent_id")
+                          value: parent.id)
 
-      == f.hidden_field :parent_id, value: parent.id, id: "#{parent.id}_parent_id"
+      == f.hidden_field :parent_id, value: parent.id
 
       == f.input(:body, 
                  :as => :text, 
                  cols: nil, 
                  rows: nil, 
-                 placeholder: "Comment",
-                 input_html: { id: "#{parent.id}_post_body"} )
+                 placeholder: "Comment")
       .meter:span
 
-      == f.input :name, placeholder: "Name", input_html: { id: "#{parent.id}_post_name"}
+      == f.input :name, placeholder: "Name"
       
       == label_tag "#{parent.id}_post_email", "Email"
       == text_field_tag :email, '', id: "#{parent.id}_post_email"

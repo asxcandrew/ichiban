@@ -22,6 +22,9 @@ gem 'color'
 gem 'simple_form'
 gem 'numbers_and_words'
 
+# Management
+gem "rails-settings-cached"
+
 # Authentication
 gem 'bcrypt-ruby'
 gem 'cancan'
