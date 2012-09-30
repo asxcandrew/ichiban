@@ -10,9 +10,14 @@ User.create!({ email: "admin@example.com",
                    password: "password",
                    :role => :admin })
 
-Setting = { site_name: 'Ichiban!',
-            max_reports_per_IP: 6 }
+# Remember to use the correct data type for each entry.
+# => 1 != "1"
+site_settings = { site_name: 'Ichiban!',
+                  max_reports_per_IP: 6 }
 
+site_settings.each do |key, value|
+  Setting[key] = value
+end
 
 boards = [ 
   { name: "Video Games",
