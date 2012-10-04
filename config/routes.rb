@@ -41,10 +41,10 @@ Ichiban::Application.routes.draw do
   resources :reports
 
   scope '/manage' do
-    get '/' => 'management#index', :as => :manage
+    get '/' => 'management#show', :as => :manage
     put '/' => 'management#update', :as => :manage
   end
-  
+
   # A few nicities
   get 'login' => 'sessions#new'
   get 'logout' => 'sessions#destroy'

@@ -1,6 +1,6 @@
 class ManagementController < ApplicationController
   before_filter :verify_permissions
-  def index
+  def show
   end
 
   def update
