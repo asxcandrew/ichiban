@@ -1,13 +1,13 @@
 $ ->
-  $(document).on "click", ".reply-toggle", (e) ->
-    e.preventDefault()
-    toggleReply($(this).data('id'))
-  
+  updateReplyCounter()
+  controls = '.post footer'
   # The body limitation is also validated in
   # post model.
   $('textarea').limiter(maxLength: 800)
 
-  controls = '.post footer'
+  $(controls).on "click", ".reply-toggle", (e) ->
+    e.preventDefault()
+    toggleReply($(this).data('id'))
 
   $(controls).on "click", ".delete-post-with-tripcode", (e) ->
     e.preventDefault()
@@ -15,15 +15,15 @@ $ ->
 
   $(controls).on "click", ".delete-post", (e) ->
     e.preventDefault()
-    $this = $(this)
-    if $this.data('asked') == 'yes'
-      deletePost($this.data('id'), { askForTripcode: false })
+    $deleteLink = $(this)
+    if $deleteLink.data('asked') == 'yes'
+      deletePost($deleteLink.data('id'), { askForTripcode: false })
     else
-      $this.data('asked', 'yes')
-      $this.text('really?')
+      $deleteLink.data('asked', 'yes')
+      $deleteLink.text('really?')
       setTimeout (-> 
-        $this.text("delete")
-        $this.data('asked', 'no')), 3000
+        $deleteLink.text("delete")
+        $deleteLink.data('asked', 'no')), 3000
 
   $(controls).on "click", ".report-post", (e) ->
     e.preventDefault()
@@ -59,7 +59,7 @@ toggleReply = (id) ->
   
   # Jump to the reply
   $('body').animate { scrollTop: $(reply).offset().top }, 200, () ->
-    $("#{reply} textarea#post_body").focus()
+    $("#{reply} textarea:first").focus()
 
 deletePost = (postID, options) ->
   params = { _method: 'delete' }
@@ -77,7 +77,9 @@ deletePost = (postID, options) ->
         if response.redirect
           window.location = response.redirect
         else
-          $("##{postID}").hide(250)
+          $("##{postID}").hide 250, () ->
+            $(this).empty().remove()
+            updateReplyCounter()
           flash("notice", response.message)
       else
         flash("error", response.message)
@@ -114,3 +116,8 @@ sunspendPoster = (id) ->
 @updateMeter = (percentage, meter) ->
   percentage = Math.min(percentage, 100)
   $(meter).css("width", "#{percentage}%")
+
+updateReplyCounter = () ->
+  posts = $('.parent .post').length
+  label = if posts == 1 then "reply" else "replies"
+  $('#reply-counter').text("#{num2str(posts)} #{label}")

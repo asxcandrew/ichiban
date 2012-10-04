@@ -1,4 +1,4 @@
 menu.menu
   == link_to_board("<< Back to /#{@board.directory}/", @board)
-  h1#reply-counter.ghost-text.right == "#{@total_replies.to_words} #{pluralize_without_count(@total_replies, "reply")}"
+  h1#reply-counter.ghost-text.right
 == render partial: 'posts/parent', locals: { parent: @post }
