@@ -3,7 +3,10 @@ class Report < ActiveRecord::Base
 
   belongs_to :post
 
-  validates_presence_of :comment
+  validates_presence_of :comment, message: "A comment must be included with your report."
+  validates_length_of :comment, minimum: 4, message: "A descriptive comment must be included with your report."
+  validates_length_of :comment, maximum: 140, message: "Comments may not exceed 140 characters."
+
   validates_uniqueness_of :ip_address, 
                           :scope => :post_id,
                           message: "You have already reported that post."

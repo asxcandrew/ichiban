@@ -6,7 +6,7 @@ class Ability
     can(:manage, :all) if @user.admin?
 
     if @user.moderator?
-      can(:destroy, Post)
+      can(:manage, Post)
     end
     # Define abilities for the passed in user here. For example:
     #

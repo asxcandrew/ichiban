@@ -39,6 +39,8 @@ Ichiban::Application.routes.draw do
   resources :users
   resources :sessions
   resources :reports
+  resources :suspensions
+  
 
   scope '/manage' do
     get '/' => 'management#show', :as => :manage

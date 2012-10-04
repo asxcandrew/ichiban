@@ -7,12 +7,13 @@ $ ->
   # post model.
   $('textarea').limiter(maxLength: 800)
 
-  # FIX: issue where child posts are deleted.
-  $(".post footer").on "click", ".delete-post-with-tripcode", (e) ->
+  controls = '.post footer'
+
+  $(controls).on "click", ".delete-post-with-tripcode", (e) ->
     e.preventDefault()
     deletePost($(this).data('id'), { askForTripcode: true })
 
-  $(".post footer").on "click", ".delete-post", (e) ->
+  $(controls).on "click", ".delete-post", (e) ->
     e.preventDefault()
     $this = $(this)
     if $this.data('asked') == 'yes'
@@ -24,10 +25,13 @@ $ ->
         $this.text("delete")
         $this.data('asked', 'no')), 3000
 
-
-  $(".post footer").on "click", ".report-post", (e) ->
+  $(controls).on "click", ".report-post", (e) ->
     e.preventDefault()
     reportPost($(this).data('id'))
+
+  $(controls).on "click", ".suspend-poster", (e) ->
+    e.preventDefault()
+    sunspendPoster($(this).data('id'))
 
   $("figure").on "click", "a", (e) ->
     e.preventDefault()
@@ -79,17 +83,33 @@ deletePost = (postID, options) ->
         flash("error", response.message)
 
 reportPost = (id) ->
-  comment = prompt("Why are you reporting post ##{id}?")
+  params = 
+    _method: 'create',
+    report: 
+      post_id: id, 
+      comment: prompt("Why are you reporting post ##{id}?")
 
-  if comment != null && comment.length >= 4
-    $.post "/reports/", { _method: 'create', report: { post_id: id, comment } },
-      (response) ->
-        if response.success
-          flash("notice", response.message)
-        else
-          flash("error", response.message)
-  else
-    flash("error", "You must provide a comment with your report.")
+  $.post "/reports/", params, (response) ->
+    if response.success
+      flash("notice", response.message)
+    else
+      flash("error", response.message)
+
+sunspendPoster = (id) ->
+  $post = $(id)
+  params = 
+    _method: 'create',
+    suspension:
+      post_id: id
+      directory: $post.data('directory')
+      reason: prompt("Reason for suspension?")
+
+  $.post "/suspensions/", params, (response) ->
+    if response.success
+      flash("notice", response.message)
+    else
+      flash("error", response.message)
+
 
 @updateMeter = (percentage, meter) ->
   percentage = Math.min(percentage, 100)

@@ -1,5 +1,5 @@
-.post.parent(id=parent.id)
-  = post_article_tag(parent) do
+= post_tag(parent) do
+  = post_article_tag(parent.color) do
     header
       .subject = parent.subject
       .date
@@ -19,12 +19,15 @@
     hr.clearfix
 
     footer
-      span.name = parent.name
+      - if can?(:manage, Post)
+        abbr.name(title=parent.ip_address) = parent.name
+      - else
+        span.name = parent.name
 
       - if parent.tripcode
         span.tripcode == "!#{parent.tripcode}"
       .right
         == render partial: 'posts/controls', locals: { :post => parent }
-  
+
   == render partial: 'posts/reply', locals: { :parent => parent }
   == render partial: 'posts/child', collection: parent.children

@@ -1,5 +1,5 @@
-.post.child(id=child.id)
-  = post_article_tag(child) do
+= post_tag(child) do
+  = post_article_tag(child.color) do
     header
       .date
         == time_tag(child.created_at, human_date(child), title: child.created_at)
@@ -15,15 +15,16 @@
     hr.clearfix
     
     footer
-      span.name = child.name
+      - if can?(:manage, Post)
+        abbr.name(title=child.ip_address) = child.name
+      - else
+        span.name = child.name
 
       - if child.tripcode
         span.tripcode == "!#{child.tripcode}"
       
       .right 
         == render partial: 'posts/controls', locals: { :post => child }
-
-
 
   == render partial: "posts/reply", locals: { :parent => child }
   == render partial: 'posts/child', collection: child.children

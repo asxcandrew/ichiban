@@ -5,6 +5,7 @@ class Board < ActiveRecord::Base
   validates_uniqueness_of :directory
 
   has_many :posts
+  has_many :suspensions
 
   # Used to build RESTful routes
   def to_param

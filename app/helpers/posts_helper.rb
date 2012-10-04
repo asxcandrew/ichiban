@@ -1,11 +1,23 @@
 module PostsHelper
-  def post_article_tag(post, options={}, &block)
-    attributes = {}
-    options[:style] = "border-left-color: #{border_color(post.color)}"
-
+  def post_tag(post, options={}, &block)
     output = ActiveSupport::SafeBuffer.new
-    output.safe_concat(tag(:article, options, true))
 
+    options.merge!(
+      { class: "post #{post.parent ? 'child' : 'parent'}",
+        id: post.id,
+        "data-directory" => post.directory })
+    options["data-ip"] = post.ip_address if can?(:manage, Post)
+
+    output.safe_concat(tag(:div, options, true))
+    output << capture(&block)
+    output.safe_concat("</div>")
+  end
+
+  def post_article_tag(color, options={}, &block)
+    output = ActiveSupport::SafeBuffer.new
+    options[:style] = "border-left-color: #{border_color(color)}"
+
+    output.safe_concat(tag(:article, options, true))
     output << capture(&block)
     output.safe_concat("</article>")
   end

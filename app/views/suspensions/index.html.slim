@@ -1,0 +1,12 @@
+.suspensions
+  table
+    thead
+      th Created At
+      th Ends At
+      th IP
+  - if @suspensions.any?
+    - @suspensions.each do |suspension|
+      tr
+        td suspension.created_at
+        td suspension.ends_at
+        td suspension.ip_address

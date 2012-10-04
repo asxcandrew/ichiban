@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120929193611) do
+ActiveRecord::Schema.define(:version => 20121004203104) do
 
   create_table "attachinary_attachments", :force => true do |t|
     t.integer  "parent_id"
@@ -82,6 +82,16 @@ ActiveRecord::Schema.define(:version => 20120929193611) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], :name => "index_settings_on_thing_type_and_thing_id_and_var", :unique => true
+
+  create_table "suspensions", :force => true do |t|
+    t.string   "ip_address"
+    t.date     "ends_at"
+    t.integer  "post_id"
+    t.string   "directory"
+    t.text     "reason"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"

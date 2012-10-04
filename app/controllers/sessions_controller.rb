@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
 
       if @target.nil?
-        @target == root_url
+        @target = root_url
       else
         # Let's not leave old data in session.
         session[:redirect_to] = nil
