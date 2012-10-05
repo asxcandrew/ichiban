@@ -7,10 +7,10 @@ Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba
 # Developer Features
 * Written with the beautiful web framework, Ruby on Rails.
 * SASS.
-* Works out of the box.
+* Works out of the box with minor configuration.
 * Cloud friendly.
 * Posts via JSON.
-* Test driven.
+* ~~Test driven.~~ *Eventually...*
 * Built with ActiveRecord for easy database abstraction.
 * Image hosting via Cloudinary
 
@@ -33,6 +33,9 @@ Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba
 * Regex spam prevention.
 * Image deduplication.
 * Optional reCAPTCHA.
+* Reports:
+ * Prevents duplicates.
+ * Settable limit per IP.
 
 # Thread Architecture
 Traditionally, imageboards rely on quote anchors to reply to posts. A thread is simply a series of replies to a post in Ichiban, saving users from having to re-read posts.
