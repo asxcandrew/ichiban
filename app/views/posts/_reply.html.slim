@@ -12,6 +12,7 @@
                           value: parent.id)
 
       == f.hidden_field :parent_id, value: parent.id
+      == f.hidden_field :directory, value: parent.directory
 
       == f.input(:body, 
                  :as => :text, 

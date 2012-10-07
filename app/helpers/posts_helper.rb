@@ -3,7 +3,7 @@ module PostsHelper
     output = ActiveSupport::SafeBuffer.new
 
     options.merge!(
-      { class: "post #{post.parent ? 'child' : 'parent'}",
+      { class: "post #{options[:class]}",
         id: post.id,
         "data-directory" => post.directory })
     options["data-ip"] = post.ip_address if can?(:manage, Post)

@@ -8,7 +8,8 @@ gem 'unicorn'
 
 # File uploads
 gem 'cloudinary'
-gem 'attachinary'
+gem 'attachinary', '0.0.8'
+
 # Database
 gem 'pg'
 
@@ -17,10 +18,11 @@ gem 'heroku'
 
 # Templating
 gem 'slim'
-gem 'redcarpet'
+gem 'redcarpet' # Markdown
 gem 'color'
 gem 'simple_form'
 gem 'numbers_and_words'
+gem 'kaminari' # Pagination
 
 # Management
 gem "rails-settings-cached"

@@ -4,8 +4,7 @@ class PostsController < ApplicationController
     @reply = Post.new
     @board = Board.find_by_directory(params[:directory])
     @post = Post.find_by_id(params[:id])
-    @total_replies = Post.where(ancestor_id: params[:id]).size
-    
+    @child_limit = 5
     render 'errors/error_404' unless @board && @post
   end
 
@@ -14,15 +13,16 @@ class PostsController < ApplicationController
     @post  = Post.new(params[:post])
     path_options = {}
 
-    @post.directory = params[:directory]
-  
     # Simulate different IP addresses
     @post.ip_address = Rails.env.production? ? request.ip : Array.new(4){rand(256)}.join('.')
 
-    # TODO: Handle situation where parent doesn't exist.
     if @post.parent_id # Post is a reply.
-      @parent = Post.find(@post.parent_id)
-      @post.directory = @parent.directory
+      # We look for a matching directory in case someone is messing with the parameters.
+      @parent = Post.where(id: @post.parent_id, directory: @post.directory)
+      if @parent.nil?
+        flash[:errors] = "Parent ##{@post.parent_id} not found."
+        redirect_to request.referrer
+      end      
     end
 
     # Only a bot would see this field.

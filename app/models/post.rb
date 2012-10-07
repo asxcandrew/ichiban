@@ -21,6 +21,7 @@ class Post < ActiveRecord::Base
   has_attachment :upload, accept: [:jpg, :png, :gif]
 
   before_save :parse_name
+  after_save :touch_ancestor
   validates_presence_of :directory
   validates_presence_of :body, :if => :body_required?
   validates_presence_of :upload, :if => :upload_required?
@@ -49,6 +50,12 @@ class Post < ActiveRecord::Base
   end
 
   private
+    def touch_ancestor
+      if self.ancestor
+        self.ancestor.touch
+      end
+    end
+
     def board_existance
       unless Board.find_by_directory(self.directory)
         errors.add(:board_existance, "The board specified does not exist.")

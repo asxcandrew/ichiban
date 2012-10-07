@@ -1,4 +1,4 @@
-= post_tag(child) do
+= post_tag(child, class: "child") do
   = post_article_tag(child.color) do
     header
       .date
@@ -27,4 +27,10 @@
         == render partial: 'posts/controls', locals: { :post => child }
 
   == render partial: "posts/reply", locals: { :parent => child }
-  == render partial: 'posts/child', collection: child.children
+  - if @child_limit && child.children.any?
+    - if @child_limit > 0
+      - @child_limit -= 1
+      == render partial: 'posts/child', collection: child.children
+    - else
+      br
+      == link_to_post("Continue this thread ->", child)
