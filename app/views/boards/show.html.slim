@@ -5,7 +5,7 @@
 == render partial: 'posts/new'
 
 - if @posts
-	== paginate @posts
+  == paginate @posts
   == render partial: 'posts/parent', collection: @posts
 - else
 	p No posts!
