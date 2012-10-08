@@ -30,7 +30,10 @@ gem "rails-settings-cached"
 # Authentication
 gem 'bcrypt-ruby'
 gem 'cancan'
-gem 'simple_roles' 
+gem 'simple_roles'
+
+# Logging
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'pry'
