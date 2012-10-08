@@ -4,8 +4,8 @@ class Board < ActiveRecord::Base
   validates :name, :directory, presence: true
   validates_uniqueness_of :directory
 
-  has_many :posts
-  has_many :suspensions
+  has_many :posts, :dependent => :destroy
+  has_many :suspensions, :dependent => :destroy
 
   # Used to build RESTful routes
   def to_param

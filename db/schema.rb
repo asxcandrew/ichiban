@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008152407) do
+ActiveRecord::Schema.define(:version => 20121008152023) do
 
   create_table "boards", :id => false, :force => true do |t|
     t.string   "name"
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20121008152407) do
     t.string   "color"
     t.integer  "ancestor_id"
     t.boolean  "locked"
-    t.integer  "image_id"
   end
 
   add_index "posts", ["directory"], :name => "index_posts_on_directory"
