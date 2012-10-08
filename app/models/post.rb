@@ -18,14 +18,19 @@ class Post < ActiveRecord::Base
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
   has_many :reports, :dependent => :destroy
 
-  has_one :image
+  has_one :image, :dependent => :destroy
   accepts_nested_attributes_for :image
 
   before_save :parse_name
   after_save :touch_ancestor
   validates_presence_of :directory
-  # validates_presence_of :body, :if => :body_required?
-  # validates_presence_of :upload, :if => :upload_required?
+  validates_presence_of :parent, 
+                        :if => :parent_required?, 
+                        message: "Parent post not found. Was it deleted?"
+
+  validates_presence_of :image, 
+                        :if => :image_required?, 
+                        message: "An image is required when starting a thread or if comment is not added."
   validate :upload_file_size
   validate :board_existance
 
@@ -36,15 +41,6 @@ class Post < ActiveRecord::Base
   def date
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
   end
-
-  # OPTIMIZE: Attachinary won't seem to work with a before_destroy filter
-  #           so we use this method instead.
-  # def destroy
-  #   if self.upload
-  #     status = Cloudinary::Uploader.destroy(self.upload.public_id)
-  #   end
-  #   super
-  # end
 
   def verify_tripcode(input)
     !input.blank? && self.tripcode == crypt_tripcode(input)
@@ -57,6 +53,11 @@ class Post < ActiveRecord::Base
       end
     end
 
+    # Check the existance of a parent if a parent_id has been given.
+    def parent_required?
+      !!self.parent_id
+    end
+
     def board_existance
       unless Board.find_by_directory(self.directory)
         errors.add(:board_existance, "The board specified does not exist.")
@@ -66,17 +67,12 @@ class Post < ActiveRecord::Base
     def upload_file_size
     end
 
-    # A body is required if an image is not given.
-    def body_required?
-      return !self.upload?
-    end
-
     # An image is required if the post is a parent 
     # or if the body is blank.
-    def upload_required?
-      if self.parent # post is a reply
+    def image_required?
+      if self.parent_id # post is a reply
         return self.body.blank?
-      else
+      else 
         return true
       end
     end

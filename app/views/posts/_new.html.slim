@@ -12,7 +12,7 @@
     == label_tag :email
     == text_field_tag :email
     
-    == f.fields_for :image do |i|
-      == i.input :asset
+    == f.simple_fields_for :image_attributes do |i|
+      == i.input :asset, :as => :file
 
     == f.submit "Submit"

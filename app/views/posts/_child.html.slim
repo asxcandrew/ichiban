@@ -6,10 +6,10 @@
       .right
         .id == link_to_post(child)
 
-    - if child.upload?
+    - if child.image
       .left
         figure
-          == link_to_upload(child.upload.path)
+          == link_to_image(child.image.asset)
     .left
       .body == markdown(child.body)
     hr.clearfix
