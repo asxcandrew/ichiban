@@ -25,6 +25,7 @@
       
       == label_tag "#{parent.id}_post_email", "Email"
       == text_field_tag :email, '', id: "#{parent.id}_post_email"
-      == f.input :upload, :as => :attachinary, input_html: { id: "#{parent.id}_post_upload"}
+      == f.simple_fields_for :image_attributes do |i|
+        == i.input :asset, :as => :file
 
       == f.submit "Submit"

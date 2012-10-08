@@ -32,11 +32,9 @@ module PostsHelper
             board_post_path(@board, post))
   end
 
-  def link_to_upload(path)
-    cl_path = cl_image_path(path)
-
-    link_to(cl_path) do
-      cl_image_tag(path, { width: '250', :crop => :limit, 'data-toggle' => cl_path })
+  def link_to_image(asset)
+    link_to(asset.to_s) do
+      image_tag(asset.thumbnail, 'data-toggle' => asset)
     end
   end
 

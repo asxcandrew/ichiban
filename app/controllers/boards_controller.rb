@@ -29,8 +29,10 @@ class BoardsController < ApplicationController
     @post  = Post.new
     @reply = Post.new
     @child_limit = 2
+
     if @board
-      @posts = Post.where(directory: @board.directory, parent_id: nil).order("updated_at DESC").page(params[:page])
+      @posts = Post.where(directory: @board.directory, 
+                          parent_id: nil).order("updated_at DESC").page(params[:page])
       @prefix = "/#{@board.directory}/"
     else
       render 'errors/error_404'

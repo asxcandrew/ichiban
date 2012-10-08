@@ -7,8 +7,8 @@ gem 'rails', '3.2.8'
 gem 'unicorn'
 
 # File uploads
+gem 'carrierwave'
 gem 'cloudinary'
-gem 'attachinary', '0.0.8'
 
 # Database
 gem 'pg'

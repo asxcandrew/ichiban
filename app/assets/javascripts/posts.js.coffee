@@ -61,23 +61,24 @@ toggleReply = (id) ->
   $('body').animate { scrollTop: $(reply).offset().top }, 200, () ->
     $("#{reply} textarea:first").focus()
 
-deletePost = (postID, options) ->
-  params = { _method: 'delete' }
+deletePost = (id, options) ->
+  # Request a redirect if we're deleting the parent.
+  params = { _method: 'delete', redirect: $("##{id}").hasClass('parent') }
   valid = !options["askForTripcode"]
 
   if options["askForTripcode"] == true
-    params['tripcode'] = prompt("Enter your tripcode to delete post ##{postID}.")
+    params['tripcode'] = prompt("Enter your tripcode to delete post ##{id}.")
 
     valid = params['tripcode'] != null && params['tripcode'].length != 0
     flash("error", "No tripcode entered.") if not valid
 
   if valid
-    $.post "/posts/#{postID}", params, (response) ->
+    $.post "/posts/#{id}", params, (response) ->
       if response.success
         if response.redirect
           window.location = response.redirect
         else
-          $("##{postID}").hide 250, () ->
+          $("##{id}").hide 250, () ->
             $(this).empty().remove()
             updateReplyCounter()
           flash("notice", response.message)
