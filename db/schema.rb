@@ -11,29 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004203104) do
-
-  create_table "attachinary_attachments", :force => true do |t|
-    t.integer  "parent_id"
-    t.string   "parent_type"
-    t.integer  "file_id"
-    t.string   "scope"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "attachinary_attachments", ["parent_type", "parent_id", "scope"], :name => "by_scoped_parent"
-
-  create_table "attachinary_files", :force => true do |t|
-    t.string   "public_id"
-    t.string   "version"
-    t.integer  "width"
-    t.integer  "height"
-    t.string   "format"
-    t.string   "resource_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
+ActiveRecord::Schema.define(:version => 20121008152407) do
 
   create_table "boards", :id => false, :force => true do |t|
     t.string   "name"
@@ -44,6 +22,13 @@ ActiveRecord::Schema.define(:version => 20121004203104) do
   end
 
   add_index "boards", ["directory"], :name => "index_boards_on_directory", :unique => true
+
+  create_table "images", :force => true do |t|
+    t.integer  "post_id"
+    t.string   "asset"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "name"
@@ -58,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20121004203104) do
     t.string   "color"
     t.integer  "ancestor_id"
     t.boolean  "locked"
+    t.integer  "image_id"
   end
 
   add_index "posts", ["directory"], :name => "index_posts_on_directory"

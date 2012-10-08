@@ -30,9 +30,6 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.2)
     arel (3.0.2)
-    attachinary (0.0.8)
-      cloudinary (~> 1.0.30)
-      rails (~> 3.2)
     aws_cf_signer (0.1.1)
     bcrypt-ruby (3.0.1)
     builder (3.0.3)
@@ -47,6 +44,9 @@ GEM
     capybara-webkit (0.12.1)
       capybara (>= 1.0.0, < 1.2)
       json
+    carrierwave (0.6.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
     chunky_png (1.2.6)
@@ -223,11 +223,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  attachinary (= 0.0.8)
   bcrypt-ruby
   cancan
   capybara
   capybara-webkit
+  carrierwave
   cloudinary
   coffee-rails (~> 3.2.1)
   color

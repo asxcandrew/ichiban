@@ -10,10 +10,10 @@
         
         - if parent.parent
           .parent == link_to_parent(parent.parent)
-    - if parent.upload?
+    - if parent.image
       .left
         figure
-          == link_to_upload(parent.upload.path)
+          == link_to_image(parent.image.asset)
     .left
       .body == markdown(parent.body)
     hr.clearfix

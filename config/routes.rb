@@ -53,8 +53,6 @@ Ichiban::Application.routes.draw do
   
 
 
-  mount Attachinary::Engine => "/attachinary"
-
   unless Rails.application.config.consider_all_requests_local
     match '*not_found', to: 'errors#error_404'
   end

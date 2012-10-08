@@ -12,6 +12,7 @@
     == label_tag :email
     == text_field_tag :email
     
-    == f.input :upload, :as => :attachinary, required: true, input_html: { accept: '' }
+    == f.fields_for :image do |i|
+      == i.input :asset
 
     == f.submit "Submit"

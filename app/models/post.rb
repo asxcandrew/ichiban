@@ -8,9 +8,9 @@ class Post < ActiveRecord::Base
                   :directory,
                   :parent_id,
                   :ancestor_id,
-                  :upload)
+                  :image_attributes)
 
-  belongs_to :board
+  belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
   belongs_to :parent, class_name: 'Post'
   belongs_to :ancestor, class_name: 'Post'
 
@@ -18,13 +18,14 @@ class Post < ActiveRecord::Base
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
   has_many :reports, :dependent => :destroy
 
-  has_attachment :upload, accept: [:jpg, :png, :gif]
+  has_one :image
+  accepts_nested_attributes_for :image
 
   before_save :parse_name
   after_save :touch_ancestor
   validates_presence_of :directory
-  validates_presence_of :body, :if => :body_required?
-  validates_presence_of :upload, :if => :upload_required?
+  # validates_presence_of :body, :if => :body_required?
+  # validates_presence_of :upload, :if => :upload_required?
   validate :upload_file_size
   validate :board_existance
 
@@ -38,12 +39,12 @@ class Post < ActiveRecord::Base
 
   # OPTIMIZE: Attachinary won't seem to work with a before_destroy filter
   #           so we use this method instead.
-  def destroy
-    if self.upload
-      status = Cloudinary::Uploader.destroy(self.upload.public_id)
-    end
-    super
-  end
+  # def destroy
+  #   if self.upload
+  #     status = Cloudinary::Uploader.destroy(self.upload.public_id)
+  #   end
+  #   super
+  # end
 
   def verify_tripcode(input)
     !input.blank? && self.tripcode == crypt_tripcode(input)
