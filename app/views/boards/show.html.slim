@@ -1,3 +1,7 @@
+.directory-listing
+  .ghost-text
+    == link_to("boards/", boards_path)
+    == link_to_board("#{@board.directory}/", @board)
 == render partial: 'posts/new'
 
 - if @posts
