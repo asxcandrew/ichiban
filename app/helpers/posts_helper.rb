@@ -1,9 +1,11 @@
 module PostsHelper
   def post_tag(post, options={}, &block)
     output = ActiveSupport::SafeBuffer.new
+    classes = ["post", options[:class]]
+    classes << "ancestor" if post.is_ancestor?
 
     options.merge!(
-      { class: "post #{options[:class]}",
+      { class: classes,
         id: post.id,
         "data-directory" => post.directory })
     options["data-ip"] = post.ip_address if can?(:manage, Post)

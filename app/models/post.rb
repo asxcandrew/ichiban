@@ -46,6 +46,10 @@ class Post < ActiveRecord::Base
     !input.blank? && self.tripcode == crypt_tripcode(input)
   end
 
+  def is_ancestor?
+    self.ancestor_id.nil?
+  end
+
   private
     def touch_ancestor
       if self.ancestor
