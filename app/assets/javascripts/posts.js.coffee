@@ -99,14 +99,13 @@ reportPost = (id) ->
       flash("error", response.message)
 
 sunspendPoster = (id) ->
-  $post = $(id)
+  $post = $("##{id}")
   params = 
     _method: 'create',
     suspension:
-      post_id: id
-      directory: $post.data('directory')
+      post_id: id,
       reason: prompt("Reason for suspension?")
-
+    # ends_at: prompt("How long?")
   $.post "/suspensions/", params, (response) ->
     if response.success
       flash("notice", response.message)

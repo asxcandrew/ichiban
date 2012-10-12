@@ -18,11 +18,12 @@ gem 'heroku'
 
 # Templating
 gem 'slim'
-gem 'redcarpet' # Markdown
+gem 'redcarpet'           # Markdown.
 gem 'color'
 gem 'simple_form'
 gem 'numbers_and_words'
-gem 'kaminari' # Pagination
+gem 'kaminari'            # Pagination.
+gem 'chronic'             # Humanized time parsing. 
 
 # Management
 gem "rails-settings-cached"
@@ -31,9 +32,6 @@ gem "rails-settings-cached"
 gem 'bcrypt-ruby'
 gem 'cancan'
 gem 'simple_roles'
-
-# Logging
-gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'pry'
@@ -60,6 +58,11 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :production do
+  # Logging
+  gem 'newrelic_rpm'
 end
 
 gem 'jquery-rails'

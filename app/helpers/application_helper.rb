@@ -18,4 +18,8 @@ module ApplicationHelper
   def pluralize_without_count(count, noun, text = nil)
     count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
   end
+
+  def human_date(date)
+    "#{time_ago_in_words(date)} ago.".capitalize
+  end
 end

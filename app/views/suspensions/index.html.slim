@@ -7,6 +7,8 @@
   - if @suspensions.any?
     - @suspensions.each do |suspension|
       tr
-        td suspension.created_at
-        td suspension.ends_at
-        td suspension.ip_address
+        td
+          == time_tag(suspension.created_at, human_date(suspension.created_at), title: suspension.created_at)
+        td
+          == time_tag(suspension.ends_at, human_date(suspension.ends_at), title: suspension.ends_at)
+        td = suspension.post.ip_address

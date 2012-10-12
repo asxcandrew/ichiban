@@ -4,6 +4,8 @@ class Report < ActiveRecord::Base
   belongs_to :post
 
   validates_presence_of :comment, message: "A comment must be included with your report."
+  validates_presence_of :post, message: "Post not found. Was it deleted?"
+  
   validates_length_of :comment, minimum: 4, message: "A descriptive comment must be included with your report."
   validates_length_of :comment, maximum: 140, message: "Comments may not exceed 140 characters."
 
