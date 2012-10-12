@@ -19,7 +19,8 @@ module ApplicationHelper
     count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
   end
 
-  def human_date(date)
-    "#{time_ago_in_words(date)} ago.".capitalize
+  def human_time(time)
+    tense = Time.now > time ? "ago" : "from now"
+    "#{time_ago_in_words(time)} #{tense}.".capitalize
   end
 end

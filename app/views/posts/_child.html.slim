@@ -2,7 +2,7 @@
   = post_article_tag(child.color) do
     header
       .date
-        == time_tag(child.created_at, human_date(child.created_at), title: child.created_at)
+        == time_tag(child.created_at, human_time(child.created_at), title: child.created_at)
       .right
         .id == link_to_post(child)
 

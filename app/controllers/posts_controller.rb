@@ -15,7 +15,7 @@ class PostsController < ApplicationController
     path_options = {}
 
     # Simulate different IP addresses
-    @post.ip_address = Rails.env.production? ? request.ip : Array.new(4){rand(256)}.join('.')
+    @post.ip_address = Rails.env.development? ? request.ip : Array.new(4){rand(256)}.join('.')
     # Only a bot would see this field.
     if !params[:email].blank?
       redirect_to request.referrer

@@ -3,7 +3,7 @@
     header
       .subject = parent.subject
       .date
-        == time_tag(parent.created_at, human_date(parent.created_at), title: parent.created_at)
+        == time_tag(parent.created_at, human_time(parent.created_at), title: parent.created_at)
 
       .right
         .id == link_to_post(parent)

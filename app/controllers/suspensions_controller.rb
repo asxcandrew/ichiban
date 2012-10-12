@@ -1,6 +1,6 @@
 class SuspensionsController < ApplicationController
   def index
-    @suspensions = Suspension.all
+    @suspensions = Suspension.find(:all, order: "created_at")
   end
   
   def create
@@ -11,7 +11,7 @@ class SuspensionsController < ApplicationController
     if @suspension.save
       response.merge!(
         { success: true,
-          message: "Suspended #{@suspension.post.ip_address} until #{@suspension.ends_at}." })
+          message: "Suspended #{@suspension.ip_address} until #{@suspension.ends_at}." })
     else
       response[:message] = @suspension.errors.first[1]
     end

@@ -17,6 +17,7 @@ class Post < ActiveRecord::Base
   # OPTIMIZE: I'm concerned about the time it takes to delete each child.
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
   has_many :reports, :dependent => :destroy
+  has_many :suspensions
 
   has_one :image, :dependent => :destroy
   accepts_nested_attributes_for :image
@@ -33,6 +34,7 @@ class Post < ActiveRecord::Base
                         message: "An image is required when starting a thread or if comment is not added."
   validate :upload_file_size
   validate :board_existance
+  validate :active_suspensions
 
   # Maximum length is also limited 
   # in the post.js.coffeescript.
@@ -69,6 +71,16 @@ class Post < ActiveRecord::Base
     end
 
     def upload_file_size
+    end
+
+    def active_suspensions
+      suspensions = Suspension.where("ip_address = ? AND ends_at > ?", self.ip_address, Date.today)
+      
+      if suspensions.any?
+        suspensions.each do |suspension|
+          errors.add(:suspended, "Your posting privilages have been suspended for: #{suspension.reason}")
+        end
+      end
     end
 
     # An image is required if the post is a parent 

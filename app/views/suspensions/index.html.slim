@@ -1,14 +1,21 @@
+- if @suspensions 
+  h1#suspension-counter == pluralize(@suspensions.size, "Suspension")
+
 .suspensions
   table
     thead
       th Created At
       th Ends At
       th IP
-  - if @suspensions.any?
-    - @suspensions.each do |suspension|
-      tr
-        td
-          == time_tag(suspension.created_at, human_date(suspension.created_at), title: suspension.created_at)
-        td
-          == time_tag(suspension.ends_at, human_date(suspension.ends_at), title: suspension.ends_at)
-        td = suspension.post.ip_address
+      th Expired?
+    - if @suspensions
+      - @suspensions.each do |suspension|
+        tr(id=suspension.id data-postID=suspension.post_id)
+          td
+            == time_tag(suspension.created_at, human_time(suspension.created_at), title: suspension.created_at)
+          td
+            == time_tag(suspension.ends_at, human_time(suspension.ends_at), title: suspension.ends_at)
+          td = suspension.ip_address
+          td = suspension.expired?
+          td
+            a.delete-suspension(href='#' title="Delete Suspension" data-id=suspension.id) X

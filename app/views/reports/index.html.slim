@@ -21,7 +21,7 @@
             td = report.ip_address
             td = report.comment
             td
-              == time_tag(report.created_at, human_date(report), title: report.created_at)
+              == time_tag(report.created_at, human_time(report.created_at), title: report.created_at)
             td.controls
               a.delete-post(href='#' data-id=report.post_id) Delete Post
               a.ban-poster(href='#' data-id=report.id) Ban Poster

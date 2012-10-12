@@ -104,6 +104,7 @@ sunspendPoster = (id) ->
     _method: 'create',
     suspension:
       post_id: id,
+      ip_address: $post.data('ip')
       reason: prompt("Reason for suspension?")
     # ends_at: prompt("How long?")
   $.post "/suspensions/", params, (response) ->
