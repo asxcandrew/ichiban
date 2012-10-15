@@ -30,7 +30,7 @@
   - if @child_limit && child.children.any?
     - if @child_limit > 0
       - @child_limit -= 1
-      == render partial: 'posts/child', collection: child.children
+      == render partial: 'posts/child', collection: child.children.order("created_at ASC")
     - else
       br
       == link_to_post("Continue this thread ->", child)

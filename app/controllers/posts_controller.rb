@@ -2,8 +2,8 @@ class PostsController < ApplicationController
 
   def show
     @reply = Post.new
-    @board = Board.find_by_directory(params[:directory])
-    @post = Post.find_by_id(params[:id])
+    @post = Post.where(id: params[:id], directory: params[:directory]).first
+    @board = @post.board unless @post.nil?
     @child_limit = 5
 
     render 'errors/error_404' unless @board && @post

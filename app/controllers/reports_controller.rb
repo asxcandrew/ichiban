@@ -31,16 +31,20 @@ class ReportsController < ApplicationController
     response = { success: false }
 
     if @report
-      if @report.destroy
-        response.merge!(
-          { success: true,
-            message: "Report ##{@report.id} deleted.",
-            report_total:  Report.all.size })
+      if can?(:manage, Report)
+        if @report.destroy
+          response.merge!(
+            { success: true,
+              message: "Report ##{@report.id} deleted.",
+              report_total:  Report.all.size })
+        else
+          response[:message] = @report.errors.full_messages.to_sentence
+        end
       else
-        response[:message] = @report.errors.full_messages.to_sentence
+        response[:message] = "You are not permitted to delete report ##{params[:id]}."
       end
     else
-      response[:message] = "Report ##{params[:report][:id]} not found."
+      response[:message] = "Report ##{params[:id]} not found."
     end
 
     render json: response

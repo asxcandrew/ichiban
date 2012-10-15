@@ -30,4 +30,4 @@
         == render partial: 'posts/controls', locals: { :post => parent }
 
   == render partial: 'posts/reply', locals: { :parent => parent }
-  == render partial: 'posts/child', collection: parent.children
+  == render partial: 'posts/child', collection: parent.children.order("created_at ASC")

@@ -78,7 +78,9 @@ class Post < ActiveRecord::Base
 
       if suspensions.any?
         suspensions.each do |suspension|
-          errors.add(:suspended, "Your posting privilages have been suspended for: #{suspension.reason}")
+          errors.add(
+            :suspended, 
+            "Your posting privilages have been suspended until #{suspension.ends_at} for: #{suspension.reason}")
         end
       end
     end
