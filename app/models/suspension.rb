@@ -9,4 +9,8 @@ class Suspension < ActiveRecord::Base
   def expired?
     Date.today > self.ends_at
   end
+
+  def active?
+    Date.today < self.ends_at
+  end
 end
