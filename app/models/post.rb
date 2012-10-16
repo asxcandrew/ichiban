@@ -16,6 +16,7 @@ class Post < ActiveRecord::Base
 
   # OPTIMIZE: I'm concerned about the time it takes to delete each child.
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
+  has_many :descendants, class_name: 'Post', :foreign_key => :ancestor_id, :primary_key => :id
   has_many :reports, :dependent => :destroy
   has_many :suspensions, conditions: ["ends_at > ?", Date.today]
 

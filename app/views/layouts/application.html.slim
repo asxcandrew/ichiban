@@ -8,9 +8,7 @@ html(lang='en')
     == csrf_meta_tags
 
     == favicon_link_tag
-  body
-    == render partial: 'layouts/shared/header'
-    
+  == body_tag do
     .content
       == render partial: 'layouts/shared/flash_messages'
       == yield

@@ -1,16 +1,15 @@
+.post-navigation
+  position: fixed
+  right: 10px
+
 .post, .reply
   margin-left: +30px
 
+  .hide-parent
+    display: inline-block
+
   &.parent
-    margin-bottom: 20px
-
-  a
-    color: $link
-    text-decoration: none
-
-    &:hover
-      color: $link-hover
-      text-decoration: underline
+    border-bottom: 1px solid #ccc
 
   article
     min-width: 500px
@@ -94,13 +93,6 @@
 .reply
   display: none
 
-.ghost-text
-  +user-select(none)
-  font:
-    size: 5em
-    weight: bold
-    style: italic
-  opacity: 0.3
 
 .counter
   text-align: right

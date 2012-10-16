@@ -6,7 +6,11 @@ class PostsController < ApplicationController
     @board = @post.board unless @post.nil?
     @child_limit = 5
 
-    render 'errors/error_404' unless @board && @post
+    if @board && @post
+      @prefix = "Viewing post ##{@post.id} on #{@board.name}"
+    else
+      render 'errors/error_404'
+    end
   end
 
   def create

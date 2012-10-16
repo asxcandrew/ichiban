@@ -23,4 +23,20 @@ module ApplicationHelper
     tense = Time.now > time ? "ago" : "from now"
     "#{time_ago_in_words(time)} #{tense}.".capitalize
   end
+
+  def body_tag(options={}, &block)
+    output = ActiveSupport::SafeBuffer.new
+    classes = [options[:class]]
+
+    # Nothing to see here.    
+    classes << "kidz-zone" if Date.today.month == 2 && Date.today.day == 29
+
+    options.merge!(
+      { class: classes })
+
+
+    output.safe_concat(tag(:body, options, true))
+    output << capture(&block)
+    output.safe_concat("</body>")
+  end
 end

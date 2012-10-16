@@ -1,8 +1,11 @@
 menu.menu
   .directory-listing
-  .ghost-text
-    == link_to("boards/", boards_path)
-    == link_to_board("#{@board.directory}/", @board)
-    == link_to_post(@post.id, @post)
+    .ghost-text
+      == link_to("boards/", boards_path)
+      == link_to_board("#{@board.directory}/", @board)
+      == link_to_post(@post.id, @post)
     .counter#reply-counter
+.post-navigation
+  a.previous-parent(href="#") Previous&nbsp;
+  a.next-parent(href="#") Next
 == render partial: 'posts/parent', locals: { parent: @post }

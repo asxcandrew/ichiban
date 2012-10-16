@@ -1,7 +1,6 @@
 = post_tag(parent, class: 'parent') do
   = post_article_tag(parent.color) do
     header
-      .subject = parent.subject
       .date
         == time_tag(parent.created_at, human_time(parent.created_at), title: parent.created_at)
 
@@ -30,4 +29,5 @@
         == render partial: 'posts/controls', locals: { :post => parent }
 
   == render partial: 'posts/reply', locals: { :parent => parent }
-  == render partial: 'posts/child', collection: parent.children.order("created_at ASC")
+  == render(partial: 'posts/child', 
+            collection: parent.children.find(:all, order: "created_at ASC", limit: @preview_limit))

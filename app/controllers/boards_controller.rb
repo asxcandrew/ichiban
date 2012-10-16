@@ -29,6 +29,7 @@ class BoardsController < ApplicationController
     @post  = Post.new
     @reply = Post.new
     @child_limit = 2
+    @preview_limit = 1
 
     if @board
       @posts = Post.where(directory: @board.directory, 
