@@ -10,32 +10,42 @@ class Post < ActiveRecord::Base
                   :ancestor_id,
                   :image_attributes)
 
+  # Board relations
   belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
-  belongs_to :parent, class_name: 'Post'
-  belongs_to :ancestor, class_name: 'Post'
-
-  # OPTIMIZE: I'm concerned about the time it takes to delete each child.
-  has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
-  has_many :descendants, class_name: 'Post', :foreign_key => :ancestor_id, :primary_key => :id
-  has_many :reports, :dependent => :destroy
-  has_many :suspensions, conditions: ["ends_at > ?", Date.today]
-
-  has_one :image, :dependent => :destroy
-  accepts_nested_attributes_for :image
-
-  before_save :parse_name
-  after_save :touch_ancestor
+  validate :board_existance
   validates_presence_of :directory
+
+  # Lineage
+  # OPTIMIZE: I'm concerned about the time it takes to delete each child.
+  belongs_to :parent, class_name: 'Post'
   validates_presence_of :parent, 
                         :if => :parent_required?, 
                         message: "Parent post not found. Was it deleted?"
 
+  belongs_to :ancestor, class_name: 'Post'
+  accepts_nested_attributes_for :image
+  has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
+  has_many :descendants, class_name: 'Post', :foreign_key => :ancestor_id, :primary_key => :id
+
+  # Assets
+  has_one :image, :dependent => :destroy
+  accepts_nested_attributes_for :image
+  validate :upload_file_size
   validates_presence_of :image, 
                         :if => :image_required?, 
                         message: "An image is required when starting a thread or if comment is not added."
-  validate :upload_file_size
-  validate :board_existance
+
+  # Suspensions
+  has_many :suspensions, conditions: ["ends_at > ?", Date.today]
   validate :active_suspensions
+  
+  # Reports
+  has_many :reports, :dependent => :destroy
+
+  # Routines
+  before_save :parse_name
+  after_save :touch_ancestor
+
 
   # Maximum length is also limited 
   # in the post.js.coffeescript.
