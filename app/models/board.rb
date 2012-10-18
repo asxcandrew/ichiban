@@ -1,7 +1,8 @@
 class Board < ActiveRecord::Base
   attr_accessible :directory, :name, :description
 
-  validates :name, :directory, presence: true
+  validates_presence_of :name
+  validates_presence_of :directory
   validates_uniqueness_of :directory
 
   has_many :posts, :dependent => :destroy
@@ -10,9 +11,5 @@ class Board < ActiveRecord::Base
   # Used to build RESTful routes
   def to_param
     self.directory
-  end
-
-  def headline
-    "#{self.name} - /#{self.directory}/"
   end
 end

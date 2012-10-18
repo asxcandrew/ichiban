@@ -1,12 +1,9 @@
-h1 Management
-
-h2 Settings
-
 == simple_form_for :settings, url: '/manage/', :method => :put do |f|
-  h3 Site
-  == text_field_tag 'settings[site_name]', Setting[:site_name]
+  h1 Settings
+  == label_tag 'settings[site_name]', "Site name"
+  == text_field_tag 'settings[site_name]', Setting[:site_name], placeholder: "Site name"
 
-  h3 Reports
+  == label_tag 'settings[max_reports_per_IP]', 'Max reports per IP'
   == number_field_tag 'settings[max_reports_per_IP]', 
                       Setting[:max_reports_per_IP],
                       min: 1

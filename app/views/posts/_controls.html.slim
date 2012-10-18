@@ -1,7 +1,11 @@
 .controls
   a.reply-toggle(href='#' title="Reply to post ##{post.id}" data-id=post.id) reply
   - if can?(:destroy, Post)
-    a.delete-post.danger(href='#' title="Delete without tripcode" data-id=post.id data-asked='no') delete
+    a.delete-post-confirmation(href='#' title="Delete without tripcode") delete
+    span.confirmation-toggle
+      span really?
+      a.delete-post(href='#' data-id=post.id) yes
+      a.unconfirm(href='#') no
   - else
     a.delete-post-with-tripcode(href='#' title="Delete with tripcode" data-id=post.id) delete
 

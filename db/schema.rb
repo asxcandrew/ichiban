@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20121008152023) do
 
-  create_table "boards", :id => false, :force => true do |t|
+  create_table "boards", :force => true do |t|
     t.string   "name"
     t.string   "directory"
     t.text     "description"

@@ -1,6 +1,6 @@
 class CreateBoards < ActiveRecord::Migration
   def self.up
-    create_table :boards, id: false do |t|
+    create_table :boards do |t|
       t.string :name
       t.string :directory
       t.text :description

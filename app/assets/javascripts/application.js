@@ -13,3 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+window.controls = '.post footer'
+window.animationDuration = 250

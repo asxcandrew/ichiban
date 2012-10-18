@@ -10,6 +10,23 @@ $ ->
     reportID = $this.parent().parent().attr('id')
     postID = $this.data('id')
     deletePost(postID, reportID)
+    
+  $(window.controls).on "click", ".report-post", (e) ->
+    e.preventDefault()
+    reportPost($(this).data('id'))
+
+reportPost = (id) ->
+  params = 
+    _method: 'create',
+    report: 
+      post_id: id, 
+      comment: prompt("Why are you reporting post ##{id}?")
+
+  $.post "/reports/", params, (response) ->
+    if response.success
+      flash("notice", response.message)
+    else
+      flash("error", response.message)
 
 deleteReport = (id) ->
   $.post "/reports/#{id}", { _method: 'delete', getReportTotal: true },

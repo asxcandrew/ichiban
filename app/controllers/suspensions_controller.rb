@@ -6,8 +6,6 @@ class SuspensionsController < ApplicationController
   
   def create
     @suspension = Suspension.new(params[:suspension])
-    ends_at = Chronic.parse("2 days from now").to_date
-    @suspension.ends_at = ends_at
     response = { success: false }
     if @suspension.save
       response.merge!(
@@ -27,7 +25,7 @@ class SuspensionsController < ApplicationController
       if @suspension.destroy
         response.merge!(
           { success: true,
-            message: "Suspension for ##{@suspension.ip_address} deleted.",
+            message: "Suspension for #{@suspension.ip_address} deleted.",
             total: Suspension.all.size })
       else
         response[:message] = @suspension.errors.full_messages.to_sentence

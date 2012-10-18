@@ -37,10 +37,13 @@ form
       padding: 2px 4px
 
     &[type="submit"]
-      width: 100%
-
       background-color: $bold-accent
       color: $light
+      width: 100%
+
+      &:disabled
+        opacity: $translucent
+
 
       &:hover
         background-color: lighten($bold-accent, 10%)
@@ -65,9 +68,13 @@ form
       max-width: 100%
       background: $bold-accent
 
-.login, .register, .new-post
+.login, .register, .new-post, .settings
   width: 500px
   margin: 0 auto
 
 .login
   margin-top: 150px
+
+.settings
+  label
+    display: inline

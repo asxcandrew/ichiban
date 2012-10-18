@@ -16,7 +16,7 @@ $ ->
     $flash.text(text)
 
   $flash.show "slide", { direction: "down" }, 200, () ->
-    $flash.delay(5000).hide("slide", { direction: "down" }, 200)
+    $flash.delay(8000).hide("slide", { direction: "down" }, 200)
 
 @elementInViewport = (el) ->
   rect = el.getBoundingClientRect()

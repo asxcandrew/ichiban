@@ -31,7 +31,9 @@
         font-weight: bold
         a
           text-decoration: none
-
+  &.parent
+    article
+      background-color: $accent
   &.child
     margin-left: +30px
     article
@@ -57,6 +59,12 @@
       opacity: 0.3
       .danger
         color: red
+      .confirmation-toggle
+        display: none
+        & > *
+          display: inline-block
+          margin: 0 5px
+
       // Any child of the controls
       & > *
         margin: 0 5px
@@ -77,9 +85,15 @@
     code
       font-family: monospace
       white-space: pre
+    blockquote
+      border-left: 2px solid $blockquote
+      padding: 4px
+      color: $blockquote
 
 .reply
   margin-left: +30px
+  article
+    background-color: $accent
   display: none
 
 

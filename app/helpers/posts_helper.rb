@@ -30,7 +30,7 @@ module PostsHelper
   end
 
   def link_to_parent(post)
-    link_to(content_tag(:i, nil, class: "icon-chevron-up"), 
+    link_to(content_tag(:i, nil, class: "icon-chevron-up", title: "Parent"), 
             board_post_path(@board, post))
   end
 
