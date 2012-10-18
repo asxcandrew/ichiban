@@ -23,7 +23,6 @@ class Post < ActiveRecord::Base
                         message: "Parent post not found. Was it deleted?"
 
   belongs_to :ancestor, class_name: 'Post'
-  accepts_nested_attributes_for :image
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
   has_many :descendants, class_name: 'Post', :foreign_key => :ancestor_id, :primary_key => :id
 

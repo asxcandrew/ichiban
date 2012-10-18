@@ -1,13 +1,18 @@
 header.site-header
-  h1.site-name == Setting.site_name
-  nav.site-nav
-    .links
-      == link_to("Home", boards_url)
-      == link_to("Log in", new_session_path)
-      - if @current_user
-        .infotainment.right
-          .name == @current_user.email
-          .role == @current_user.role
+  .information
+    - if @board
+        h1.hero-text = link_to_board(@board.name, @board)
+        h3.description = @board.description
+    - else
+        h1.hero-text = link_to(Setting.site_name, root_path)
+        h3.description Modern Imageboard
 
-          == link_to("[Manage]", manage_path)
-          == button_to("[Log out]", session_path(@current_user), :method => :delete)
+  .infotainment
+    - if @current_user
+      .name(title=@current_user.role) == @current_user.email
+      == link_to("[Manage]", manage_path)
+      == link_to("[Log out]", session_path(@current_user), :method => :delete)
+    - else
+      - unless current_page?(controller: 'sessions', action: 'new')
+        .unimportant
+          == link_to("[Manage]", new_session_path )

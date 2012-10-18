@@ -9,8 +9,11 @@ html(lang='en')
 
     == favicon_link_tag
   == body_tag do
-    .content
-      == render partial: 'layouts/shared/flash_messages'
-      == yield
+    .container
+      .wrapper
+        == render partial: 'layouts/shared/header'
+        .content
+          == render partial: 'layouts/shared/flash_messages'
+          == yield
       
     == render partial: 'layouts/shared/footer'
