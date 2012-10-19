@@ -1,8 +1,9 @@
 .directory-listing
   .ghost-text
-    == link_to("boards/", boards_path)
-    == link_to_board("#{@board.directory}/", @board)
+    == link_to("&larr; Back to Directory Listing".html_safe, boards_path)
 == render partial: 'posts/new'
+
+hr 
 
 - if @posts
   == paginate @posts

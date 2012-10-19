@@ -2,7 +2,7 @@ class Suspension < ActiveRecord::Base
   attr_accessible :ends_at, :ip_address, :reason, :directory, :post_id
 
   belongs_to :post
-
+  belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
   validates_presence_of :post, message: "Post not found. Was it deleted?"
   validates_presence_of :reason, message: "A reason must be included with your supension."
   validates_presence_of :ends_at, message: "Could not parse end date. Try something like 'two days from now.'"

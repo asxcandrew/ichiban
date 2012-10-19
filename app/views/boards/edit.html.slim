@@ -1,0 +1,21 @@
+== link_to("&larr; Back to Directory Listing".html_safe, boards_path)
+
+.descriptive.compact-form
+  == simple_form_for @board do |f|
+    h1 Edit board
+    == hidden_field_tag :directory, @board.directory
+    == f.input :name, placeholder: "Board name"
+
+    == f.input :description, placeholder: "description"
+
+    == f.submit
+
+
+  .danger-zone
+    h3
+      strong Danger Zone
+    == button_to("Delete Board",
+                 @board, 
+                 :method => :delete, 
+                 confirm: "Are you sure? Deleting /#{@board.directory}/ will delete #{@stats[:posts]} posts!",
+                 class: 'danger')

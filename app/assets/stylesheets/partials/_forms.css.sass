@@ -2,9 +2,6 @@ form
   label
     display: none
 
-  &.new_post
-    width: 500px
-
   textarea
     width: 100%
     font-family: $fonts
@@ -44,10 +41,16 @@ form
       &:disabled
         opacity: $translucent
 
-
       &:hover
         background-color: lighten($bold-accent, 10%)
-  
+
+    &.danger
+      background-color: $danger
+
+      &:hover
+        background-color: lighten($danger, 10%)
+
+
   // Spam prevention
   // Only a bot would see this field.
   &.new_post
@@ -68,13 +71,21 @@ form
       max-width: 100%
       background: $bold-accent
 
-.login, .register, .new-post, .settings
+.compact-form
   width: 500px
   margin: 0 auto
 
 .login
   margin-top: 150px
 
-.settings
+.descriptive
   label
     display: inline
+
+.new-post
+  margin-bottom: 30px
+
+.danger-zone
+  padding: 5px
+  border: 1px dashed $danger
+  margin-top: 30px

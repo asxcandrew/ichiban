@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20121008152023) do
   create_table "suspensions", :force => true do |t|
     t.date     "ends_at"
     t.string   "ip_address"
+    t.string   "directory"
     t.integer  "post_id"
     t.text     "reason"
     t.datetime "created_at", :null => false

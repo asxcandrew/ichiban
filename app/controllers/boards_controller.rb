@@ -1,8 +1,8 @@
 class BoardsController < ApplicationController
-  before_filter :find_boards, except: [:create, :delete]
+  before_filter :find_boards, except: [:delete]
   before_filter :set_board, except: [:index, :new, :create]
   before_filter :verify_permissions,
-                only: [:new, :create, :delete, :update]
+                except: [:index, :show]
   
   def index
     @prefix = "Boards"
@@ -10,7 +10,7 @@ class BoardsController < ApplicationController
 
   def new
     @prefix = "Create a new board"
-    @board  = Board.new
+    @board = Board.new
   end
 
   def create
@@ -40,13 +40,26 @@ class BoardsController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
+    if @board.destroy
+      redirect_to root_path, notice: "/#{@board.directory}/ permanently deleted."
+    else
+      flash[:errors] = @board.errors.first[1]
+      render action: 'edit'
+    end
   end
 
   def edit
+    @stats = { posts: @board.posts.size }
   end
 
   def update
+    if @board.update_attributes(params[:board])
+      redirect_to edit_board_path(@board), notice: "Board settings have been successfully updated."
+    else
+      flash[:errors] = @board.errors.first[1]
+      render action: 'edit'
+    end
   end
 
   protected

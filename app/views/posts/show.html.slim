@@ -1,9 +1,7 @@
 menu.menu
   .directory-listing
     .ghost-text
-      == link_to("boards/", boards_path)
-      == link_to_board("#{@board.directory}/", @board)
-      == link_to_post(@post.id, @post)
+      == link_to_board("&larr; Back to #{@board.name.capitalize}".html_safe, @board)
     .counter#reply-counter
 .post-navigation
   a.previous-parent(href="#") Previous&nbsp;
