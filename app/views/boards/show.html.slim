@@ -5,8 +5,13 @@
 
 hr 
 
-- if @posts
+- if @posts.any?
   == paginate @posts
   == render partial: 'posts/parent', collection: @posts
+  == paginate @posts
+  
 - else
-	p No posts!
+  .blatant-notice
+    h3
+      | There aren't any posts on this page.&nbsp;
+      == link_to_board("Go back to the index?", @board)

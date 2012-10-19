@@ -17,11 +17,10 @@ class BoardsController < ApplicationController
     @board = Board.new(params[:board])
 
     if @board.save
-      flash[:notice] = 'Board created!'
-      redirect_to boards_path
+      redirect_to boards_path, notice: "/#{@board.directory}/ created!"
     else
-      flash[:errors] = @board.errors.full_messages.to_sentence
-      render new_board_path
+      flash[:errors] = @board.errors.first[1]
+      render action: 'new'
     end
   end
 

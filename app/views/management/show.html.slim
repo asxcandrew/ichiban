@@ -9,4 +9,7 @@
                         Setting[:max_reports_per_IP],
                         min: 1
 
+    == label_tag 'settings[save_IPs]', "Save IPs?"
+    == check_box_tag 'settings[save_IPs]', true, Setting[:save_IPs]
+
     == f.submit

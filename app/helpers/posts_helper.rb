@@ -26,12 +26,12 @@ module PostsHelper
 
   def link_to_post(*text, post)
     text = text.empty? ? "##{post.id}" : text.to_sentence
-    link_to(text, board_post_path(post.board, post))
+    link_to(text, post_path(post))
   end
 
   def link_to_parent(post)
     link_to(content_tag(:i, nil, class: "icon-chevron-up", title: "Parent"), 
-            board_post_path(@board, post))
+            post_path(post))
   end
 
   def link_to_image(asset)

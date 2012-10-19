@@ -1,5 +1,5 @@
 .new-post.compact-form
-  == simple_form_for([@board, @post],
+  == simple_form_for(@post,
                      autocomplete: "off", 
                      html: { multipart: true }) do |f|
     == f.hidden_field :directory, value: @board.directory

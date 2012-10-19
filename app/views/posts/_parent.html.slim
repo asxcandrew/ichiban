@@ -31,3 +31,4 @@
   == render partial: 'posts/reply', locals: { :parent => parent }
   == render(partial: 'posts/child', 
             collection: parent.children.find(:all, order: "created_at ASC", limit: @preview_limit))
+hr

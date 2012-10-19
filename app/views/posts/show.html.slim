@@ -1,9 +1,11 @@
 menu.menu
   .directory-listing
-    .ghost-text
-      == link_to_board("&larr; Back to #{@board.name.capitalize}".html_safe, @board)
+    == link_to_board("&larr; Back to #{@board.name.titleize}".html_safe, @board)
     .counter#reply-counter
 .post-navigation
   a.previous-parent(href="#") Previous&nbsp;
   a.next-parent(href="#") Next
 == render partial: 'posts/parent', locals: { parent: @post }
+
+- if @post.children.size > 1
+  == link_to_board("&larr; Back to #{@board.name.titleize}".html_safe, @board)

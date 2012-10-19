@@ -9,7 +9,8 @@ User.create!({ email: "admin@example.com",
 # Remember to use the correct data type for each entry.
 # => 1 != "1"
 site_settings = { site_name: 'Ichiban!',
-                  max_reports_per_IP: 6 }
+                  max_reports_per_IP: 6,
+                  store_IPs: true }
 
 site_settings.each do |key, value|
   Setting[key] = value

@@ -1,6 +1,6 @@
 .reply
   article
-    ==  simple_form_for([@board, @reply],
+    ==  simple_form_for(@reply,
                         autocomplete: "off", 
                         namespace: parent.id,
                         html: { multipart: true }) do |f|

@@ -1,6 +1,6 @@
 header.site-header
   .information
-    - if @board
+    - if @board && !@board.new_record?
         h1.hero-text = link_to_board(@board.name, @board)
         h3.description = @board.description
     - else

@@ -12,6 +12,8 @@ class ManagementController < ApplicationController
       Setting[key] = value.fixnum? ? value.to_i : value
     end
 
+    Setting[:save_IPs] = nil if params[:settings][:save_IPs].nil?
+
     redirect_to request.referer
   end
 end

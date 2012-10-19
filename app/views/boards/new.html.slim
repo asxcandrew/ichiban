@@ -1,9 +1,10 @@
-h1 Create a board
-== simple_form_for @board do |f|
-  == f.input :name, :placeholder => "Name"
-  
-  == f.input :description, :placeholder => "Description"
+.new-board.compact-form
+  h1 Create Board
+  == simple_form_for @board do |f|
+    == f.input :name, :placeholder => "Name"
+    
+    == f.input :description, :placeholder => "Description"
 
-  == f.input :directory, :placeholder => "Directory"
-  
-  == f.submit "Submit"
+    == f.input :directory, :placeholder => "Directory"
+    
+    == f.submit

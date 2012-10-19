@@ -2,10 +2,9 @@ class PostsController < ApplicationController
 
   def show
     @reply = Post.new
-    @post = Post.where(id: params[:id], directory: params[:directory]).first
+    @post = Post.find_by_id(params[:id])
     @board = @post.board unless @post.nil?
     @child_limit = 5
-
     if @board && @post
       @prefix = "Viewing post ##{@post.id} on #{@board.name}"
     else
@@ -14,12 +13,11 @@ class PostsController < ApplicationController
   end
 
   def create
-    @board = Board.find_by_directory(params[:directory])
     @post  = Post.new(params[:post])
     path_options = {}
 
     # Simulate different IP addresses
-    @post.ip_address = Rails.env.development? ? request.ip : Array.new(4){rand(256)}.join('.')
+    @post.ip_address = Setting.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
     # Only a bot would see this field.
     if !params[:email].blank?
       redirect_to request.referrer
@@ -30,7 +28,7 @@ class PostsController < ApplicationController
         if @post.parent
           redirect_to(request.referrer + "##{@post.id}")
         else
-          redirect_to board_post_path(@board, @post, anchor: @post.id)
+          redirect_to post_path(@post, anchor: @post.id)
         end
 
       else
