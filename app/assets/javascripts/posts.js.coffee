@@ -1,6 +1,6 @@
 $ ->  
   $("#new_post input:file").change (e) ->
-    if e.srcElement.value == ''
+    if e.target.value == ''
       $(".new_post input:submit").prop("disabled", true)
     else
       $("#new_post input:submit").prop("disabled", false)
