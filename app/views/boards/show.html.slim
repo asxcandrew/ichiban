@@ -7,13 +7,13 @@ hr
   == link_to("&larr; Back to Directory Listing".html_safe, boards_path)
 - if @posts.any?
   == paginate @posts
-  hr
+  hr.seperator
   == render partial: 'posts/parent', collection: @posts
   .left
     == link_to("&larr; Back to Directory Listing".html_safe, boards_path)
   == paginate @posts
 
-  hr
+  hr.seperator
 
 - else
   .blatant-notice
