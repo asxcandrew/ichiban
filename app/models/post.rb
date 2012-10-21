@@ -1,6 +1,7 @@
 class Post < ActiveRecord::Base
   include Tripcode
   include ColorDigest
+  include LoremIpsum
   attr_accessible(:name,
                   :subject,
                   :body,
@@ -43,6 +44,7 @@ class Post < ActiveRecord::Base
 
   # Routines
   before_save :parse_name
+  before_save :add_lorem_ipsum
   after_save :touch_ancestor
 
 
@@ -102,6 +104,12 @@ class Post < ActiveRecord::Base
         return self.body.blank?
       else 
         return true
+      end
+    end
+
+    def add_lorem_ipsum
+      if Rails.env.development? && self.body == "lorem"
+        self.body = generate_lorem_ipsum
       end
     end
 

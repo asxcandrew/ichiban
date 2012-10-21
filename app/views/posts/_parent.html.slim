@@ -13,8 +13,7 @@
       .left
         figure
           == link_to_image(parent.image.asset)
-    .left
-      .body == markdown(parent.body)
+    .body == markdown(parent.body)
     hr.clearfix
 
     footer
@@ -30,5 +29,6 @@
 
   == render partial: 'posts/reply', locals: { :parent => parent }
   == render(partial: 'posts/child', 
-            collection: parent.children.find(:all, order: "created_at ASC", limit: @preview_limit))
+            collection: parent.children.find(:all, order: "created_at ASC", limit: @previews),
+            locals: { child_limit: @child_limit })
 hr

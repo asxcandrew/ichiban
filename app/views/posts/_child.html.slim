@@ -10,8 +10,7 @@
       .left
         figure
           == link_to_image(child.image.asset)
-    .left
-      .body == markdown(child.body)
+    .body == markdown(child.body)
     hr.clearfix
     
     footer
@@ -27,10 +26,11 @@
         == render partial: 'posts/controls', locals: { :post => child }
 
   == render partial: "posts/reply", locals: { :parent => child }
-  - if @child_limit && child.children.any?
-    - if @child_limit > 0
-      - @child_limit -= 1
-      == render partial: 'posts/child', collection: child.children.order("created_at ASC")
-    - else
+  - if child.children.any?
+    - if child_limit > 0 && child.children.size < child_limit
+      == render(partial: 'posts/child', 
+                collection: child.children.find(:all, order: "created_at ASC", limit: child_limit),
+                locals: { child_limit: (child_limit - 1) })
+    - elsif @previews.nil?
       br
-      == link_to_post("Continue this thread ->", child)
+      == link_to_post("Continue this thread &rarr;".html_safe, child)
