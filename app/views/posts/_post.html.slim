@@ -1,0 +1,11 @@
+== post_article_tag(post.color) do
+  == render partial: 'posts/header', locals: { post: post }
+  - if post.image
+    .left
+      figure
+        == link_to_image(post.image.asset)
+  .body == markdown(post.body)
+  hr.clearfix
+  == render partial: 'posts/footer', locals: { post: post }
+
+== render partial: 'posts/reply', locals: { parent: post }

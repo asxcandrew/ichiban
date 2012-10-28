@@ -1,31 +1,6 @@
-= post_tag(child, class: "child") do
-  = post_article_tag(child.color) do
-    header
-      .date
-        == time_tag(child.created_at, human_time(child.created_at), title: child.created_at)
-      .right
-        .id == link_to_post(child)
+== post_tag(child, class: "child") do
+  == render partial: '/posts/post', locals: { post: child }
 
-    - if child.image
-      .left
-        figure
-          == link_to_image(child.image.asset)
-    .body == markdown(child.body)
-    hr.clearfix
-    
-    footer
-      - if can?(:manage, Post)
-        abbr.name(title=child.ip_address) = child.name
-      - else
-        span.name = child.name
-
-      - if child.tripcode
-        span.tripcode == "!#{child.tripcode}"
-      
-      .right 
-        == render partial: 'posts/controls', locals: { :post => child }
-
-  == render partial: "posts/reply", locals: { :parent => child }
   - if child.children.any?
     - if child_limit > 0 && child.children.size < child_limit
       == render(partial: 'posts/child', 

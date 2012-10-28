@@ -1,0 +1,10 @@
+footer
+  - if can?(:manage, Post)
+    abbr.name(title=post.ip_address) = post.name
+  - else
+    span.name = post.name
+
+  - if post.tripcode
+    span.tripcode == "!#{post.tripcode}"
+  .right
+    == render partial: 'posts/controls', locals: { post: post }

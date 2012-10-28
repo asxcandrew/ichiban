@@ -1,34 +1,5 @@
-= post_tag(parent, class: 'parent') do
-  = post_article_tag(parent.color) do
-    header
-      .date
-        == time_tag(parent.created_at, human_time(parent.created_at), title: parent.created_at)
-
-      .right
-        .id == link_to_post(parent)
-        
-        - if parent.parent
-          .parent == link_to_parent(parent.parent)
-    - if parent.image
-      .left
-        figure
-          == link_to_image(parent.image.asset)
-    .body == markdown(parent.body)
-    hr.clearfix
-
-    footer
-      - if can?(:manage, Post)
-        abbr.name(title=parent.ip_address) = parent.name
-      - else
-        span.name = parent.name
-
-      - if parent.tripcode
-        span.tripcode == "!#{parent.tripcode}"
-      .right
-        == render partial: 'posts/controls', locals: { :post => parent }
-
-  == render partial: 'posts/reply', locals: { :parent => parent }
+== post_tag(parent, class: 'parent') do
+  == render partial: '/posts/post', locals: { post: parent }
   == render(partial: 'posts/child', 
             collection: parent.children.find(:all, order: "created_at ASC", limit: @previews),
             locals: { child_limit: @child_limit })
-hr

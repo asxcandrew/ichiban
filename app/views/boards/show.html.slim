@@ -2,21 +2,18 @@
   .ghost-text
 == render partial: 'posts/new'
 
-hr
-.left
-  == link_to("&larr; Back to Directory Listing".html_safe, boards_path)
-- if @posts.any?
-  == paginate @posts
-  hr.seperator
-  == render partial: 'posts/parent', collection: @posts
-  .left
-    == link_to("&larr; Back to Directory Listing".html_safe, boards_path)
-  == paginate @posts
+== render partial: 'boards/navigation'
 
-  hr.seperator
+- if @posts.any?
+  == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
+  == render partial: 'boards/navigation'
 
 - else
   .blatant-notice
-    h3
-      | There aren't any posts on this page.&nbsp;
-      == link_to_board("Go back to the index?", @board)
+    - if @paged
+      h3
+        | There aren't any posts on this page.&nbsp;
+        == link_to_board("Go back to the index?", @board)
+    - else
+      h3
+        | There aren't any posts on this board yet.

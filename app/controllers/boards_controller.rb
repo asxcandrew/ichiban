@@ -33,6 +33,7 @@ class BoardsController < ApplicationController
     if @board
       @posts = Post.where(directory: @board.directory, 
                           parent_id: nil).order("updated_at DESC").page(params[:page])
+      @paged = params[:page] 
       @prefix = "#{@board.name}"
     else
       render 'errors/error_404'

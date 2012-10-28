@@ -1,0 +1,6 @@
+.navigation
+  .left
+    == link_to("&larr; Back to Directory Listing".html_safe, boards_path)
+
+  - if @posts.any?
+    == paginate @posts

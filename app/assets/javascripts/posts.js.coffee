@@ -28,11 +28,13 @@ toggleImageExpansion = ($link) ->
 
   # HACK: issue where image dimensions are not updated.
   # The following corrects the issue temporarily.
+  image.addClass('loading')
   image.attr('src': newSource).one('load', () ->
     if image.css('max-width') == 'none'
       image.css('max-width': '100%')
     else if image.css('max-width') == '100%'
-      image.css('max-width': 'none'))
+      image.css('max-width': 'none')
+    image.removeClass('loading'))
 
 toggleReply = (id) ->
   reply = "##{id} .reply:first"
