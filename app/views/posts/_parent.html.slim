@@ -1,4 +1,13 @@
 == post_tag(parent, class: 'parent') do
+  .thread-info.right
+    - if parent.is_ancestor?
+      .subject == link_to_post(parent.subject, parent)
+      .replies
+        == parent.descendants.size.to_words.titleize
+        == pluralize_without_count(parent.descendants.size, ' descendant')
+    - else
+      .subject == link_to_post(parent.ancestor.subject, parent)
+      .reply-counter
   == render partial: '/posts/post', locals: { post: parent }
   == render(partial: 'posts/child', 
             collection: parent.children.find(:all, order: "created_at ASC", limit: @previews),

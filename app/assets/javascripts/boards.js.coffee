@@ -25,3 +25,6 @@ $ ->
     rect.left >= 0 &&
     rect.bottom <= window.innerHeight &&
     rect.right <= window.innerWidth)
+
+@titleize = (text) ->
+  return text[0].toUpperCase() + text.slice(1)

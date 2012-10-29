@@ -26,16 +26,16 @@ module PostsHelper
 
   def link_to_post(*text, post)
     text = text.empty? ? "##{post.id}" : text.to_sentence
-    link_to(text, post_path(post), title: "Post #{post.id}")
+    link_to(text, post_path(post), title: "Post ##{post.id}")
   end
 
   def link_to_parent(post)
-    link_to(content_tag(:i, nil, class: "icon-chevron-up", title: "Parent"), 
+    link_to(content_tag(:i, nil, class: "icon-chevron-up", title: "Parent ##{post.id}"), 
             post_path(post))
   end
 
   def link_to_ancestor(post)
-    link_to(content_tag(:i, nil, class: "icon-sitemap", title: "Ancestor"), 
+    link_to(content_tag(:i, nil, class: "icon-sitemap", title: "Ancestor ##{post.id}"), 
             post_path(post))
   end
 

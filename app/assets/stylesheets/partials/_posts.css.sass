@@ -47,8 +47,6 @@
       display: inline-block
     .name
       color: green
-    .subject
-      font-weight: bold
     
     &:hover .controls
       +transition-property(opacity)
@@ -101,6 +99,13 @@
   display: none
 
 
-.counter
+.thread-info
   text-align: right
-  
+  font-weight: bold
+  font-style: italic
+
+  opacity: $translucent
+  .subject
+    font-size: 2.5em
+  .replies, .reply-counter
+    font-size: 2em

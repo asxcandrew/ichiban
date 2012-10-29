@@ -51,4 +51,5 @@ toggleReply = (id) ->
 updateReplyCounter = () ->
   posts = $('.parent .post').length
   label = if posts == 1 then "reply" else "replies"
-  $('#reply-counter').text("#{num2str(posts)} #{label}")
+  wordy_number = num2str(posts)
+  $('.reply-counter').text("#{titleize(wordy_number)} #{label}")

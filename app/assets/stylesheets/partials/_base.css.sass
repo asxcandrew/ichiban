@@ -78,10 +78,12 @@ a
   float: right
 
 .kidz-zone
-  font-family: "Comic Sans MS"
+  font-family: "Comic Sans MS", "Comic Sans"
 
 .unimportant
   opacity: $translucent
+  +transition-property(opacity)
+  +transition-duration($fast-transition) 
 
   &:hover
     opacity: $opaque

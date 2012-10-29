@@ -6,5 +6,6 @@ header
     // and if they even have a parent.
     - if @post == post && post.parent
       .parent == link_to_parent(post.parent)
-      .ancestor == link_to_ancestor(post.ancestor)
-    .id == link_to_post('#', post)
+      - if post.parent != post.ancestor
+        .ancestor == link_to_ancestor(post.ancestor)
+    .id == link_to_post(post)
