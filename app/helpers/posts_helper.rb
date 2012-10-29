@@ -51,10 +51,12 @@ module PostsHelper
     saturation_limit = 35.0
     lightness_limit = 48.8
     # HACK: There's gotta be better way to deal with this.
-    color = Color::RGB.from_html(hex).to_hsl
-    color.saturation = saturation_limit if color.saturation > saturation_limit
-    color.lightness = lightness_limit if color.lightness > lightness_limit
+    unless hex.nil?
+      color = Color::RGB.from_html(hex).to_hsl
+      color.saturation = saturation_limit if color.saturation > saturation_limit
+      color.lightness = lightness_limit if color.lightness > lightness_limit
 
-    color.html
+      color.html
+    end
   end
 end

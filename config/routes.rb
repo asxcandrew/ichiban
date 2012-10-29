@@ -18,6 +18,11 @@ Ichiban::Application.routes.draw do
     delete ':directory'         => 'boards#destroy', :as => :board
   end
 
+  scope 'tripcodes' do
+    get    ':tripcode/'       => 'tripcodes#show', :as => :tripcode
+    get    ':tripcode/:page' => 'tripcodes#show', :as => :tripcode
+  end
+
   resources :posts
   resources :users
   resources :sessions

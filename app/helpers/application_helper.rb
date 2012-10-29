@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def markdown(text)
-    text.nil? ? '' : $MarkdownRenderer.render(text).html_safe
+    text.nil? ? '' : $MarkdownRenderer.render(h(text))
   end
 
   def pluralize_without_count(count, noun, text = nil)

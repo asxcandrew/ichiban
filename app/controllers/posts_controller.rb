@@ -13,11 +13,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post  = Post.new(params[:post])
+    # Simulate different IP addresses
+    params[:post][:ip_address] = Setting.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
+    @post = Post.new(params[:post])
+
     path_options = {}
 
-    # Simulate different IP addresses
-    @post.ip_address = Setting.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
     # Only a bot would see this field.
     if !params[:email].blank?
       redirect_to request.referrer

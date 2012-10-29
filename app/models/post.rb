@@ -1,15 +1,14 @@
 class Post < ActiveRecord::Base
-  include Tripcode
   include ColorDigest
   include LoremIpsum
-  attr_accessible(:name,
+  attr_accessible(:ip_address,
                   :subject,
                   :body,
-                  :tripcode,
                   :directory,
                   :parent_id,
                   :ancestor_id,
-                  :image_attributes)
+                  :image_attributes,
+                  :name)
 
   # Board relations
   belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
@@ -42,15 +41,39 @@ class Post < ActiveRecord::Base
   # Reports
   has_many :reports, :dependent => :destroy
 
+  # Tripcodes
+  has_one :tripcode
+
   # Routines
-  before_save :parse_name
   before_save :add_lorem_ipsum
+  before_save :calculate_color
   after_save :touch_ancestor
 
 
   # Maximum length is also limited 
   # in the post.js.coffeescript.
   validates_length_of :body, maximum: 800
+
+  def name=(input)
+    # self.name will be nil if we're just 
+    # instantiating objects via Rake.
+    input = '' if input.nil?
+
+    hash_pos = input.index('#')
+
+    if hash_pos
+      name = hash_pos == 0 ? 'Anonymous' : input[0...hash_pos]
+      
+      # Everything after the hash.
+      password = input[ ((hash_pos + 1)..-1) ]
+      self.tripcode = Tripcode.new
+      self.tripcode.encryption = password
+
+      self[:name] = name
+    else
+      self[:name] = input.blank? ? "Anonymous" : input
+    end
+  end
 
   def date
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
@@ -65,6 +88,10 @@ class Post < ActiveRecord::Base
   end
 
   private
+    def calculate_color
+      self.color = input_to_color(self.tripcode ? self.tripcode.encryption : self.ip_address)
+    end
+    
     def touch_ancestor
       if self.ancestor
         self.ancestor.touch
@@ -112,29 +139,5 @@ class Post < ActiveRecord::Base
         self.body = generate_lorem_ipsum
       end
     end
-
-    def parse_name
-      # self.name will be nil if we're just 
-      # instantiating objects via Rake.
-      input = self.name || ''
-
-      hash_pos = input.index('#')
-
-      if hash_pos
-        name = hash_pos == 0 ? 'Anonymous' : input[0...hash_pos]
-        
-        # Everything after the hash.
-        password = input[ ((hash_pos + 1)..-1) ]
-
-        self.tripcode = crypt_tripcode(password)
-        self.color = input_to_color(self.tripcode)
-
-        self.name = name
-      else
-        self.name = input.blank? ? "Anonymous" : input
-        self.color = input_to_color(self.ip_address)
-      end
-    end
   #end_private
-
 end

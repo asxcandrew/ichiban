@@ -18,7 +18,7 @@ end
 
 boards = [ 
   { name: "Video Games",
-    description: "Vidya",
+    description: "HARDCORE GAYMEN",
     directory: 'gaming'},
 
   { name: "Technology",

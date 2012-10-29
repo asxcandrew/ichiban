@@ -1,9 +1,9 @@
-$ ->  
-  $("#new_post input:file").change (e) ->
-    if e.target.value == ''
-      $(".new_post input:submit").prop("disabled", true)
-    else
-      $("#new_post input:submit").prop("disabled", false)
+$ ->
+  $imageField = $("#new_post input:file")
+  checkImageField($imageField.attr('value'))
+
+  $imageField.change (e) ->
+    checkImageField(e.target.value)
 
   updateReplyCounter()
   # The body limitation is also validated in
@@ -53,3 +53,9 @@ updateReplyCounter = () ->
   label = if posts == 1 then "reply" else "replies"
   wordy_number = num2str(posts)
   $('.reply-counter').text("#{titleize(wordy_number)} #{label}")
+
+checkImageField = (value) ->
+  if value == ''
+    $("#new_post input:submit").prop("disabled", true)
+  else
+    $("#new_post input:submit").prop("disabled", false)

@@ -1,18 +1,19 @@
-.new-post.compact-form
-  == simple_form_for(@post,
-                     autocomplete: "off", 
-                     html: { multipart: true }) do |f|
-    == f.hidden_field :directory, value: @board.directory
+- if @board
+  .new-post.compact-form
+    == simple_form_for(@post,
+                       autocomplete: "off", 
+                       html: { multipart: true }) do |f|
+      == f.hidden_field :directory, value: @board.directory
 
-    == f.input :subject, placeholder: "Subject"
-    == f.input :body, :as => :text, placeholder: "Comment"
-    .meter:span
-    
-    == f.input :name, placeholder: "Name"
-    == label_tag :email
-    == text_field_tag :email
-    
-    == f.simple_fields_for :image_attributes do |i|
-      == i.input :asset, :as => :file
+      == f.input :subject, placeholder: "Subject"
+      == f.input :body, :as => :text, placeholder: "Comment"
+      .meter:span
+      
+      == f.input :name, placeholder: "Name"
+      == label_tag :email
+      == text_field_tag :email
+      
+      == f.simple_fields_for :image_attributes do |i|
+        == i.input :asset, :as => :file
 
-    == f.submit disabled: true
+      == f.submit disabled: true

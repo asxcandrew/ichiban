@@ -41,7 +41,7 @@ deletePost = (id, options) ->
         else
           $("##{id}").hide animationDuration, () ->
             $(this).empty().remove()
-            updateReplyCounter()
+            # updateReplyCounter()
           flash("notice", response.message)
       else
         flash("error", response.message)

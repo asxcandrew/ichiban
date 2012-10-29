@@ -34,7 +34,7 @@ gem 'cancan'
 gem 'simple_roles'
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'nyan-cat-formatter', '0.0.7' # Because I said so.

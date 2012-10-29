@@ -5,7 +5,6 @@ class CreatePosts < ActiveRecord::Migration
       t.string :subject
       t.string :ip_address
       t.text :body
-      t.string :tripcode
       t.string :directory
       t.integer :parent_id  
 
