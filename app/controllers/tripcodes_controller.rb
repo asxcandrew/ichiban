@@ -1,12 +1,12 @@
 class TripcodesController < ApplicationController
   def show
-    @post  = Post.new
     @reply = Post.new
-    @previews = 2
-    @child_limit = 2
+    @previews = 0
+    @child_limit = 0
 
-    @posts = Post.where(tripcode: params[:tripcode]).order("updated_at DESC").page(params[:page])
-    @paged = params[:page] 
+    context = params[:secure] ? :secure_tripcode : :tripcode
+    @posts = Post.where(context => params[:tripcode]).order("updated_at DESC").page(params[:page])
+    @paged = params[:page]
     @prefix = "Posts for #{params[:tripcode]}"
 
     render 'boards/show'

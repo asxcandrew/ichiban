@@ -1,5 +1,4 @@
 .controls
-  a.reply-toggle(href='#' title="Reply to post ##{post.id}" data-id=post.id) reply
   - if can?(:destroy, Post)
     a.delete-post-confirmation(href='#' title="Delete without tripcode") delete
     span.confirmation-toggle
@@ -14,3 +13,4 @@
   - else
     a.report-post(href='#' title="Report post ##{post.id}" data-id=post.id) report
   
+  a.reply-toggle(href='#' title="Reply to post ##{post.id}" data-id=post.id) reply

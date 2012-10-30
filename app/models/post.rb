@@ -1,6 +1,7 @@
 class Post < ActiveRecord::Base
   include ColorDigest
   include LoremIpsum
+  include Tripcode
   attr_accessible(:ip_address,
                   :subject,
                   :body,
@@ -8,6 +9,8 @@ class Post < ActiveRecord::Base
                   :parent_id,
                   :ancestor_id,
                   :image_attributes,
+                  :tripcode,
+                  :secure_tripcode,
                   :name)
 
   # Board relations
@@ -41,9 +44,6 @@ class Post < ActiveRecord::Base
   # Reports
   has_many :reports, :dependent => :destroy
 
-  # Tripcodes
-  has_one :tripcode
-
   # Routines
   before_save :add_lorem_ipsum
   before_save :calculate_color
@@ -54,24 +54,36 @@ class Post < ActiveRecord::Base
   # in the post.js.coffeescript.
   validates_length_of :body, maximum: 800
 
-  def name=(input)
-    # self.name will be nil if we're just 
-    # instantiating objects via Rake.
-    input = '' if input.nil?
-
+  def name=(input = '')
+    options = {}
+    default_name = "Anonymous"
+    # Check for tripcode
     hash_pos = input.index('#')
+    
+    # Check for secure tripcode
+    double_hash_pos = input.index('##')
 
-    if hash_pos
-      name = hash_pos == 0 ? 'Anonymous' : input[0...hash_pos]
-      
-      # Everything after the hash.
-      password = input[ ((hash_pos + 1)..-1) ]
-      self.tripcode = Tripcode.new
-      self.tripcode.encryption = password
+    options[:tripcode] = true if hash_pos && hash_pos != double_hash_pos
+    options[:secure_tripcode] = true if double_hash_pos
 
-      self[:name] = name
+    if options[:tripcode] || options[:secure_tripcode]
+      self[:name] = hash_pos == 0 ? default_name : input[0...hash_pos]
     else
-      self[:name] = input.blank? ? "Anonymous" : input
+      self[:name] = input.blank? ? default_name : input
+    end
+
+    if options[:secure_tripcode]
+      password = input[(double_hash_pos + 2)..-1]
+      self.secure_tripcode = generate_tripcode(password, secure: false)
+  
+      if options[:tripcode]
+        password = input[(hash_pos + 1)...double_hash_pos]
+        self.tripcode = generate_tripcode(password)
+      end
+
+    elsif options[:tripcode]
+      password = input[(hash_pos + 1)..-1]
+      self.tripcode = generate_tripcode(password)
     end
   end
 
@@ -89,7 +101,7 @@ class Post < ActiveRecord::Base
 
   private
     def calculate_color
-      self.color = input_to_color(self.tripcode ? self.tripcode.encryption : self.ip_address)
+      self.color = input_to_color(self.tripcode || self.ip_address)
     end
     
     def touch_ancestor

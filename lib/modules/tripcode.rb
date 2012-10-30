@@ -1,16 +1,19 @@
-class Tripcode < ActiveRecord::Base
-  attr_accessible :encryption, :post_id
-
-  belongs_to :post
-
+module Tripcode
   # Below is the canonical way to make 2ch style tripcodes.
   # I'm not sure who thought this was a good idea.
-  def encryption=(input)
+  def generate_tripcode(password, options = {})
     forbidden_in_salt = ':;<=>?@[\]^_`'
     forbidden_in_alternative = 'ABCDEFGabcdef'
 
-    # Password would be blank if only a hash was entered.
-    unless input.nil? || input.blank?
+    unless password.nil? || password.blank?
+      input = password.clone
+
+      # Secure tripcodes take the latter half of the input and append the secure tripcode salt.
+      if options[:secure]
+        midpoint = input.length / 2
+        input = input[midpoint..-1] + SECURE_TRIPCODE_SALT
+      end
+      
       # Take second and third characters from input and appends 'H.'
       salt = (input + 'H.')[1..2]
       
@@ -21,8 +24,8 @@ class Tripcode < ActiveRecord::Base
       # with the corresponding character from ABCDEFGabcdef.
       salt.tr!(forbidden_in_salt, forbidden_in_alternative)
 
-      # Call crypt and returns the last 10 characters.
-      self[:encryption] = input.crypt(salt)[-10..-1]
+      # Call crypt and return the last 10 characters.
+      return input.crypt(salt)[-10..-1]
     end
   end
 end

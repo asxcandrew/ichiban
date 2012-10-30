@@ -10,18 +10,24 @@ Ichiban::Application.routes.draw do
     get  '/' => 'boards#index',  :as => :boards
     post '/' => 'boards#create', :as => :boards
 
-    get 'new'             => 'boards#new',     :as => :new_board
-    get ':directory/edit' => 'boards#edit',    :as => :edit_board
-    get    ':directory'   => 'boards#show',    :as => :board
-    get    ':directory/:page'   => 'boards#show',    :as => :board
-    put    ':directory'         => 'boards#update',  :as => :board
-    delete ':directory'         => 'boards#destroy', :as => :board
+    get    'new'              => 'boards#new',     :as => :new_board
+    get    ':directory/edit'  => 'boards#edit',    :as => :edit_board
+    get    ':directory'       => 'boards#show',    :as => :board
+    get    ':directory/:page' => 'boards#show',    :as => :board
+    put    ':directory'       => 'boards#update',  :as => :board
+    delete ':directory'       => 'boards#destroy', :as => :board
   end
 
   scope 'tripcodes' do
-    get    ':tripcode/'       => 'tripcodes#show', :as => :tripcode
-    get    ':tripcode/:page' => 'tripcodes#show', :as => :tripcode
+    scope 'secure' do
+      get ':tripcode/'      => 'tripcodes#show', :as => :secure_tripcode, secure: true
+      get ':tripcode/:page' => 'tripcodes#show', :as => :secure_tripcode, secure: true
+    end
+
+    get ':tripcode/'       => 'tripcodes#show', :as => :tripcode
+    get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode
   end
+  
 
   resources :posts
   resources :users

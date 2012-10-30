@@ -5,8 +5,10 @@ class PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
     @board = @post.board unless @post.nil?
     @child_limit = 10
-    if @board && @post
-      @prefix = "Viewing post ##{@post.id} on #{@board.name}"
+    if @post && @board
+      @prefix = "Post ##{@post.id} on #{@board.name}"
+      appendage = @post.ancestor ? @post.ancestor.subject : @post.subject
+      @prefix << ": #{appendage}" if appendage
     else
       render 'errors/error_404'
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029034158) do
+ActiveRecord::Schema.define(:version => 20121008152023) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
@@ -34,11 +34,13 @@ ActiveRecord::Schema.define(:version => 20121029034158) do
     t.string   "name"
     t.string   "subject"
     t.string   "ip_address"
+    t.string   "tripcode"
+    t.string   "secure_tripcode"
     t.text     "body"
     t.string   "directory"
     t.integer  "parent_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "color"
     t.integer  "ancestor_id"
     t.boolean  "locked"
@@ -73,13 +75,6 @@ ActiveRecord::Schema.define(:version => 20121029034158) do
     t.string   "directory"
     t.integer  "post_id"
     t.text     "reason"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "tripcodes", :force => true do |t|
-    t.integer  "post_id"
-    t.string   "encryption"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

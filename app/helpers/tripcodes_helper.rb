@@ -1,6 +1,11 @@
 module TripcodesHelper
-  def link_to_tripcode(*text, tripcode)
-    text = text.empty? ? "!#{tripcode}" : text.to_sentence
-    link_to(text, 'tripcodes_path(tripcode)', title: "Browse posts made by #{tripcode}")
+  def link_to_tripcode(tripcode, options = {})
+    title = "Browse posts made with this " + (options[:secure] ? 'secure ' : '') + "tripcode."
+
+    # Append the decoractor.
+    decorated_tripcode = (options[:secure] ? '!!' : '!') + tripcode
+
+    path = url_for(controller: 'tripcodes', action: 'show', secure: options[:secure], tripcode: tripcode)
+    link_to(decorated_tripcode, path, title: title)
   end
 end

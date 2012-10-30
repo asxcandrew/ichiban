@@ -5,6 +5,9 @@ footer
     span.name = post.name
 
   - if post.tripcode
-    span.tripcode == link_to_tripcode(post.tripcode.encryption)
+    span.tripcode == link_to_tripcode(post.tripcode)
+  - if post.secure_tripcode
+    span.secure.tripcode == link_to_tripcode(post.secure_tripcode, secure: true)
+
   .right
     == render partial: 'posts/controls', locals: { post: post }

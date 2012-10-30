@@ -1,6 +1,6 @@
 .flash
   position: fixed
-  bottom: 0
+  top: 0
   left: 0
   width: 100%
   z-index: 9999
@@ -10,3 +10,7 @@
   padding: 10px
   a.close
     text-decoration: none
+  &.error
+    background-color: $error
+  &.notice
+    background-color: $notice

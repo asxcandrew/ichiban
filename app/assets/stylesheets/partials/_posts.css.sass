@@ -34,10 +34,12 @@
   &.parent
     article
       background-color: $accent
+
   &.child
     margin-left: +30px
     article
       background-color: $accent
+  
   footer
     margin-top: 5px
     padding-top: 6px
@@ -46,29 +48,34 @@
     & > *
       display: inline-block
     .name
-      color: green
+      color: $user-accent
     .tripcode
       a
-        color: $dark-base
-    
+        color: mix($user-accent, $warning, 70%)
+        &:hover
+          text-decoration: none
+          border-bottom: 1px dotted $light-touch
+
+      &.secure
+        color: mix($user-accent, $warning, 50%)
+        a
+          color: mix($user-accent, $warning, 50%)
+
+
     &:hover .controls
-      +transition-property(opacity)
-      +transition-duration($fast-transition)
-      opacity: 1.0
+      opacity: $opaque
       
     .controls
-      opacity: 0.3
-      .danger
-        color: red
-      .confirmation-toggle
-        display: none
-        & > *
-          display: inline-block
-          margin: 0 5px
-
+      +transition-property(opacity)
+      +transition-duration($fast-transition)
+      .reply-toggle
+        opacity: $opaque
       // Any child of the controls
       & > *
+        opacity: $translucent
         margin: 0 5px
+        &:hover
+          opacity: $opaque
 
   figure
     margin-right: 8px
@@ -110,5 +117,5 @@
   opacity: $translucent
   .subject
     font-size: 2.5em
-  .replies, .reply-counter
+  .descendants, .total-replies
     font-size: 2em

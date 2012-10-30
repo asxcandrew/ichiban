@@ -52,7 +52,7 @@ updateReplyCounter = () ->
   posts = $('.parent .post').length
   label = if posts == 1 then "reply" else "replies"
   wordy_number = num2str(posts)
-  $('.reply-counter').text("#{titleize(wordy_number)} #{label}")
+  $('.total-replies').text("#{titleize(wordy_number)} #{label} visible")
 
 checkImageField = (value) ->
   if value == ''
