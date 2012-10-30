@@ -14,7 +14,7 @@ gem 'cloudinary'
 gem 'pg'
 
 # Cloud stuff
-gem 'heroku'
+# gem 'heroku' Deprecated. Download the Heroku Toolbelt instead.
 
 # Templating
 gem 'slim'
