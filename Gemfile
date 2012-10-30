@@ -37,8 +37,9 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'database_cleaner'
-  gem 'nyan-cat-formatter', '0.0.7' # Because I said so.
-  
+end
+
+group :test do
   gem 'watchr'
   gem 'spork'
 

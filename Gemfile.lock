@@ -105,7 +105,6 @@ GEM
     numbers_and_words (0.4.0)
       activesupport
       i18n
-    nyan-cat-formatter (0.0.7)
     pg (0.14.1)
     polyglot (0.3.3)
     pry (0.9.10)
@@ -231,7 +230,6 @@ DEPENDENCIES
   kaminari
   newrelic_rpm
   numbers_and_words
-  nyan-cat-formatter (= 0.0.7)
   pg
   pry-rails
   rails (= 3.2.8)
