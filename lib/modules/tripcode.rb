@@ -8,12 +8,12 @@ module Tripcode
     unless password.nil? || password.blank?
       input = password.clone
 
-      # Secure tripcodes take the latter half of the input and append the secure tripcode salt.
+      # Secure tripcodes translate any characters with their corresponding match
+      # in the secure tripcode salt.
       if options[:secure]
-        midpoint = input.length / 2
-        input = input[midpoint..-1] + SECURE_TRIPCODE_SALT
+        input.tr!('a-zA-Z0-9', SECURE_TRIPCODE_SALT)
       end
-      
+
       # Take second and third characters from input and appends 'H.'
       salt = (input + 'H.')[1..2]
       
