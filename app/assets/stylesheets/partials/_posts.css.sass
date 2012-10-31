@@ -70,6 +70,13 @@
       +transition-duration($fast-transition)
       .reply-toggle
         opacity: $opaque
+      .confirmation-toggle
+        opacity: $opaque
+        display: none
+        & > *
+          margin: 0 3px
+          display: inline-block
+      
       // Any child of the controls
       & > *
         opacity: $translucent
