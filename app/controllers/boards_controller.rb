@@ -35,8 +35,15 @@ class BoardsController < ApplicationController
                           parent_id: nil).order("updated_at DESC").page(params[:page])
       @paged = params[:page] 
       @prefix = "#{@board.name}"
+      respond_to do |format|
+        format.html
+        format.json { render json: @posts }
+      end
     else
-      render 'errors/error_404'
+      respond_to do |format|
+        format.html { render 'errors/error_404' }
+        format.json { render json: { error: 404 }.to_json, :status => :unprocessable_entity }
+      end
     end
   end
 

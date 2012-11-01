@@ -14,7 +14,8 @@ $ ->
     $flash = $('.flash')
   else
     $flash.attr('class', "flash #{type}")
-    $flash.text("#{text} #{closeButton}")
+    $flash.text(text)
+    $flash.append(closeButton)
 
   $flash.show "slide", { direction: "up" }, 200, () ->
     $flash.delay(8000).hide("slide", { direction: "up" }, 200)

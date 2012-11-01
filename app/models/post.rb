@@ -37,6 +37,10 @@ class Post < ActiveRecord::Base
                         :if => :image_required?, 
                         message: "An image is required when starting a thread or if comment is not added."
 
+  # Attributes
+  validates_length_of :name, maximum: 64, message: "Names must be shorter than 65 characters."
+  validates_length_of :subject, maximum: 64, message: "Subject must be shorter than 65 characters."
+
   # Suspensions
   has_many :suspensions, conditions: ["ends_at > ?", Date.today]
   validate :active_suspensions
@@ -45,14 +49,38 @@ class Post < ActiveRecord::Base
   has_many :reports, :dependent => :destroy
 
   # Routines
-  before_save :add_lorem_ipsum
-  before_save :calculate_color
-  after_save :touch_ancestor
+  before_save :add_lorem_ipsum, :if => :new_record?
+  before_save :calculate_color, :if => :new_record?
+  after_validation :touch_ancestor
+  after_validation :increment_parent_replies!
+
+  after_initialize :init
+  after_destroy :decrement_parent_replies!
 
 
   # Maximum length is also limited 
-  # in the post.js.coffeescript.
+  # in the post.js.coffee file.
   validates_length_of :body, maximum: 800
+
+  # We only increment after_validation instead of after_save to avoid undoing
+  # the decrement method.
+  def increment_parent_replies!
+    if self.parent
+      self.parent.with_lock do
+        self.parent.increment!(:replies)
+        self.parent.increment_parent_replies!
+      end
+    end
+  end
+
+  def decrement_parent_replies!
+    if self.parent
+      self.parent.with_lock do
+        self.parent.decrement!(:replies)
+        self.parent.decrement_parent_replies!
+      end
+    end
+  end
 
   def name=(input = '')
     options = {}
@@ -100,6 +128,11 @@ class Post < ActiveRecord::Base
   end
 
   private
+    def init
+      # Will set the default value only if it's nil
+      self.replies ||= 0
+    end
+
     def calculate_color
       self.color = input_to_color(self.tripcode || self.ip_address)
     end

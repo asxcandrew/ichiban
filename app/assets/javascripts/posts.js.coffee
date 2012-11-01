@@ -5,7 +5,6 @@ $ ->
   $imageField.change (e) ->
     checkImageField(e.target.value)
 
-  updateReplyCounter()
   # The body limitation is also validated in
   # post model.
   $('textarea').limiter(maxLength: 800)
@@ -48,11 +47,14 @@ toggleReply = (id) ->
   percentage = Math.min(percentage, 100)
   $(meter).css("width", "#{percentage}%")
 
-updateReplyCounter = () ->
-  posts = $('.parent .post').length
-  label = if posts == 1 then "reply" else "replies"
-  wordy_number = num2str(posts)
-  $('.total-replies').text("#{titleize(wordy_number)} #{label} visible")
+@updateReplyCounter = (id) ->
+  id = $('.parent').attr('id')
+  $.getJSON "/posts/#{id}.json", (post) ->
+    post.replies
+
+    label = if post.replies == 1 then "reply" else "replies"
+    wordy_number = num2str(post.replies)
+    $("##{id} .replies").text("#{titleize(wordy_number)} #{label}")
 
 checkImageField = (value) ->
   if value == ''

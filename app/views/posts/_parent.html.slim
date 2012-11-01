@@ -2,14 +2,12 @@
   .thread-info.right
     - if parent.is_ancestor?
       .subject == link_to_post(parent.subject, parent)
-      .descendants
-        == parent.descendants.size.to_words.titleize
-        == pluralize_without_count(parent.descendants.size, ' descendant')
     - else
       .subject == link_to_post(parent.ancestor.subject, parent)
-    
-    - unless @previews
-      .total-replies
+  
+    .replies
+      == parent.replies.to_words.titleize
+      == pluralize_without_count(parent.replies, ' reply')
   
   == render partial: '/posts/post', locals: { post: parent }
   == render(partial: 'posts/child', 

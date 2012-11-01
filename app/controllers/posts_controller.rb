@@ -9,8 +9,16 @@ class PostsController < ApplicationController
       @prefix = "Post ##{@post.id} on #{@board.name}"
       appendage = @post.ancestor ? @post.ancestor.subject : @post.subject
       @prefix << ": #{appendage}" if appendage
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @post }
+      end
     else
-      render 'errors/error_404'
+      respond_to do |format|
+        format.html { render 'errors/error_404' }
+        format.json { render json: { error: 404 }.to_json, :status => :unprocessable_entity }
+      end
     end
   end
 

@@ -3,7 +3,7 @@ module ColorDigest
   # as a color variable.
   def input_to_color(input)
     unless input.blank?
-      Digest::MD5.hexdigest(input)[0..5]
+      Digest::MD5.hexdigest(input)[-6..-1]
     end
   end
 end

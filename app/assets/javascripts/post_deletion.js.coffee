@@ -27,6 +27,9 @@ deletePost = (id, options) ->
   params = { _method: 'delete', redirect: $("##{id}").hasClass('parent') }
   valid = !options["askForTripcode"]
 
+  unless params.redirect
+    $parent = $("##{id}").parents('.parent')
+
   if options["askForTripcode"] == true
     params['tripcode'] = prompt("Enter your tripcode to delete post ##{id}.")
 
@@ -41,7 +44,7 @@ deletePost = (id, options) ->
         else
           $("##{id}").hide animationDuration, () ->
             $(this).empty().remove()
-            # updateReplyCounter()
+            updateReplyCounter($parent.attr('id'))
           flash("notice", response.message)
       else
         flash("error", response.message)
