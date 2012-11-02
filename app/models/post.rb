@@ -16,14 +16,11 @@ class Post < ActiveRecord::Base
   # Board relations
   belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
   validate :board_existance
-  validates_presence_of :directory
 
   # Lineage
-  # OPTIMIZE: I'm concerned about the time it takes to delete each child.
   belongs_to :parent, class_name: 'Post'
-  validates_presence_of :parent, 
-                        :if => :parent_required?, 
-                        message: "Parent post not found. Was it deleted?"
+  validate :parent_existance,
+            :if => :parent_id
 
   belongs_to :ancestor, class_name: 'Post'
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
@@ -51,7 +48,7 @@ class Post < ActiveRecord::Base
   # Routines
   before_save :add_lorem_ipsum, :if => :new_record?
   before_save :calculate_color, :if => :new_record?
-  after_validation :touch_ancestor
+  after_validation :touch_ancestor!
   after_validation :increment_parent_replies!
 
   after_initialize :init
@@ -137,20 +134,22 @@ class Post < ActiveRecord::Base
       self.color = input_to_color(self.tripcode || self.ip_address)
     end
     
-    def touch_ancestor
+    def touch_ancestor!
       if self.ancestor
-        self.ancestor.touch
+        self.ancestor.touch!
       end
     end
 
-    # Check the existance of a parent if a parent_id has been given.
-    def parent_required?
-      !!self.parent_id
+    def parent_existance
+      unless Post.find_by_id(self.parent_id)
+        errors.add(:parent_existance, "Attempted to reply to ##{self.parent_id} but the post was not found. Was it deleted?")
+      end
     end
 
     def board_existance
       unless Board.find_by_directory(self.directory)
-        errors.add(:board_existance, "The board specified does not exist.")
+        error = self.directory ? "Could not find board '#{self.directory}'." : "Board was not specified."
+        errors.add(:board_existance, error)
       end
     end
 
