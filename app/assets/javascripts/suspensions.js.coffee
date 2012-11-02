@@ -16,7 +16,7 @@ sunspendPoster = (id) ->
       ip_address: $post.data('ip')
       reason: prompt("Reason for suspension?")
       
-  if typeof(params.suspension.reason) == 'undefined'
+  unless params.suspension.reason == null
     params.suspension.ends_at = prompt("How long until the suspension is over? ('two days', '1 week from now', etc.)")
 
   $.post "/suspensions/", params, (response) ->
