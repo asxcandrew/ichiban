@@ -1,13 +1,10 @@
 .controls
-  - if can?(:destroy, Post)
-    a.delete-post-confirmation(href='#' title=t('.delete_without_tripcode')) = t('.delete')
-    span.confirmation-toggle
-      span = t('.deletion_confirmation')
-      a.delete-post(href='#' data-id=post.id) = t('.confirm')
-      a.unconfirm(href='#') = t('.unconfirm')
-  - else
-    a.delete-post-with-tripcode(href='#' title=t('.delete_with_tripcode') data-id=post.id) = t('.delete')
-
+  a.delete-post-confirmation(href='#' title=t('.delete_post')) = t('.delete')
+  span.confirmation-toggle
+    span = t('.deletion_confirmation')
+    a.delete-post(href='#' data-id=post.id) = t('.confirm')
+    a.unconfirm(href='#') = t('.unconfirm')
+  
   - if can?(:suspend, Post)
     a.suspend-poster(href='#' title=t('.suspend_poster') data-id=post.id) = t('.suspend')
   - else

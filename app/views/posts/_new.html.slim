@@ -9,7 +9,7 @@
       == f.input :body, :as => :text, placeholder: "Comment"
       .meter:span
       
-      == f.input :name, placeholder: "Name"
+      == f.input :name, placeholder: "Name", input_html: { value: cookies.signed[:name] }
       == label_tag :email
       == text_field_tag :email
       

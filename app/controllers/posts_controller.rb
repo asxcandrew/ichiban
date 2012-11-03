@@ -34,6 +34,9 @@ class PostsController < ApplicationController
       redirect_to request.referrer
     else
       if @post.save
+        cookies.signed[@post.to_sha2] = @post.ip_address
+        cookies.signed[:name] = params[:post][:name]
+
         flash[:notice] = I18n.t('posts.create.created', id: @post.id)
 
         if @post.parent
@@ -55,20 +58,24 @@ class PostsController < ApplicationController
 
     if @post
       # No sense in keeping them on a page without a parent.
-      response[:redirect] = board_path(@post.board) if params[:redirect] == 'true'
-      
-      if can?(:destroy, Post) || @post.verify_tripcode(params[:tripcode])
+      response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
+      if can?(:destroy, Post) || cookies.signed[@post.to_sha2] == @post.ip_address
         if @post.destroy
           response.merge!(
             { success: true, 
-              message: "Deleted post ##{@post.id}." })
+              message: I18n.t('posts.destroy.deleted', id: @post.id) })
 
-          response[:report_total] = Report.all.size if params[:getReportTotal]
+          flash[:notice] = I18n.t('posts.destroy.deleted', id: @post.id) if params[:redirect] == 'true'
+          
+          # Better clean up after ourselves.
+          cookies.delete(@post.to_sha2)
         end
-      else
+
+      else # Authorization failed.
         response[:message] = I18n.t('posts.destroy.not_authorized', id: params[:id])
       end
-    else
+
+    else # Post doesn't exist.
       response[:message] = I18n.t('posts.destroy.not_found', id: params[:id])
     end
 

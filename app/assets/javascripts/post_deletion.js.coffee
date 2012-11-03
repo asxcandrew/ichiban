@@ -1,8 +1,4 @@
 $ ->  
-  $(window.controls).on "click", ".delete-post-with-tripcode", (e) ->
-    e.preventDefault()
-    deletePost($(this).data('id'), { askForTripcode: true })
-
   $(window.controls).on "click", ".delete-post-confirmation", (e) ->
     e.preventDefault()
     $this = $(this)
@@ -20,31 +16,25 @@ $ ->
 
   $(window.controls).on "click", ".delete-post", (e) ->
     e.preventDefault()
-    deletePost($(this).data('id'), { askForTripcode: false })
+    deletePost($(this).data('id'))
 
-deletePost = (id, options) ->
+deletePost = (id) ->
   # Request a redirect if we're deleting the parent.
   params = { _method: 'delete', redirect: $("##{id}").hasClass('parent') }
-  valid = !options["askForTripcode"]
 
   unless params.redirect
     $parent = $("##{id}").parents('.parent')
 
-  if options["askForTripcode"] == true
-    params['tripcode'] = prompt("Enter your tripcode to delete post ##{id}.")
-
-    valid = params['tripcode'] != null && params['tripcode'].length != 0
-    flash("error", "No tripcode entered.") if not valid
-
-  if valid
-    $.post "/posts/#{id}", params, (response) ->
-      if response.success
-        if response.redirect
-          window.location = response.redirect
-        else
-          $("##{id}").hide animationDuration, () ->
-            $(this).empty().remove()
-            updateReplyCounter($parent.attr('id'))
-          flash("notice", response.message)
+  $.post "/posts/#{id}", params, (response) ->
+    if response.success
+      if response.redirect
+        window.location = response.redirect
       else
-        flash("error", response.message)
+        $("##{id}").hide animationDuration, () ->
+          $(this).empty().remove()
+          updateReplyCounter($parent.attr('id'))
+        flash("notice", response.message)
+    else
+      flash("error", response.message)
+      $("##{id} .confirmation-toggle:first").hide()
+      $("##{id} .delete-post-confirmation:first").show()

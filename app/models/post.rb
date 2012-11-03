@@ -99,7 +99,7 @@ class Post < ActiveRecord::Base
 
     if options[:secure_tripcode]
       password = input[(double_hash_pos + 2)..-1]
-      self.secure_tripcode = generate_tripcode(password, secure: false)
+      self.secure_tripcode = generate_tripcode(password, secure: true)
   
       if options[:tripcode]
         password = input[(hash_pos + 1)...double_hash_pos]
@@ -112,6 +112,9 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def to_sha2
+    Digest::SHA2.hexdigest(SECRET_COOKIE_TOKEN + self.id.to_s)
+  end
   def date
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
   end
@@ -131,7 +134,7 @@ class Post < ActiveRecord::Base
     end
 
     def calculate_color
-      self.color = input_to_color(self.tripcode || self.ip_address)
+      self.color = input_to_color(self.tripcode || self.secure_tripcode || self.ip_address)
     end
     
     def touch_ancestor!

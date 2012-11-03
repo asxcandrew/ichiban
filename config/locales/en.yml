@@ -11,6 +11,7 @@ en:
     create:
       created: "Post #%{id} created!"
     destroy:
+      deleted: "Deleted post #%{id}!"
       not_authorized: "You are not authorized to delete post #%{id}."
       not_found: "Post #%{id} not found."
     child:
@@ -25,8 +26,7 @@ en:
       suspended: "Your posting privilages have been suspended until %{ends_at} for: %{reason}"
     controls:
       delete: "delete"
-      delete_without_tripcode: "Delete without tripcode"
-      delete_with_tripcode: "Delete with tripcode"
+      delete_post: "Delete tripcode"
       deletion_confirmation: "really?"
       confirm: "yes"
       unconfirm: "no"
@@ -44,6 +44,7 @@ en:
     navigation:
       back_to_directory: "Back to Directory Listing"
   sessions:
+    require_log_in: "You must login to perform that action."
     logged_in: "Logged in!"
     logged_out: "Logged out!"
     new:
