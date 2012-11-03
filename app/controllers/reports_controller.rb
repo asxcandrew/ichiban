@@ -3,6 +3,11 @@ class ReportsController < ApplicationController
   def index
     @prefix = "View Reports"
     @reports = Report.find(:all, order: "created_at")
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @reports }
+    end
   end
 
   def create

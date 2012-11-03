@@ -14,7 +14,7 @@
     tbody
       - if @reports
         - @reports.each do |report|
-          tr(id=report.id data-postID=report.post_id)
+          tr.report(id=report.id data-postID=report.post_id)
             td = report.id
             td = link_to_post(report.post)
             td = report.post.ip_address

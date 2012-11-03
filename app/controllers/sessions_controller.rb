@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def new
     redirect_to root_url , notice: I18n.t('sessions.errors.already_logged_in') if @current_user
+    session[:redirect_to] ||= request.referrer
   end
 
   def create

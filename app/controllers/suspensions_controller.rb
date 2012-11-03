@@ -1,4 +1,6 @@
 class SuspensionsController < ApplicationController
+  before_filter :verify_permissions
+  
   def index
     @prefix = "View suspensions"
     @suspensions = Suspension.find(:all, order: "created_at DESC")

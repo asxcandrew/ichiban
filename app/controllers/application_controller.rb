@@ -38,11 +38,12 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # TODO: This method gets called twice sometimes. Not sure why.
     def verify_permissions
       unless @current_user
         session[:redirect_to] = request.env["REQUEST_PATH"]
-        redirect_to(new_session_path, 
-                    notice: "You must login to perform that action.")
+        flash.now[:error] = I18n.t('sessions.require_log_in')
+        redirect_to(new_session_path)
       end
     end
 
