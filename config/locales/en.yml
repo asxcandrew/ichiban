@@ -2,6 +2,56 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  license: "%{link} is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License."
+  posts:
+    anonymous: "Anonymous"
+    show:
+      back_to_board: "Back to %{board}"
+      prefix: "Post #%{id} on %{board}"
+    create:
+      created: "Post #%{id} created!"
+    destroy:
+      not_authorized: "You are not authorized to delete post #%{id}."
+      not_found: "Post #%{id} not found."
+    child:
+      continue_thread: "Continue this thread &rarr;"
+    errors:
+      image_required: "An image is required when starting a thread or if comment is not added."
+      name_too_long: "Names must be shorter than 65 characters."
+      subject_too_long: "Subject must be shorter than 65 characters."
+      parent_existance: "Attempted to reply to #%{parent_id} but the post was not found. Was it deleted?"
+      board_not_found: "Could not find board '%{directory}'."
+      board_not_given: "Board was not specified."
+      suspended: "Your posting privilages have been suspended until %{ends_at} for: %{reason}"
+    controls:
+      delete: "delete"
+      delete_without_tripcode: "Delete without tripcode"
+      delete_with_tripcode: "Delete with tripcode"
+      deletion_confirmation: "really?"
+      confirm: "yes"
+      unconfirm: "no"
+      report: "report"
+      report_poster: "Report post #%{post_id}"
+      suspend: "suspend"
+      suspend_poster: "Suspend poster"
+      reply: 'reply'
+      reply_to_post: "Reply to post #%{post_id}"
+  boards:
+    show:
+      no_posts: "There aren't any posts."
+      empty_page: "There aren't any posts on this page."
+      back_to_index: "Go back to the index?"
+    navigation:
+      back_to_directory: "Back to Directory Listing"
+  sessions:
+    logged_in: "Logged in!"
+    logged_out: "Logged out!"
+    new:
+      log_in: "Log in"
+    errors:
+      already_logged_in: "You're already logged in."
+      invalid_email_or_password: "Invalid email or password."
+
   errors:
     messages:
       wrong_size: "is the wrong size (should be %{file_size})"

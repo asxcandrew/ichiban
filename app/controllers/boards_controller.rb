@@ -19,7 +19,7 @@ class BoardsController < ApplicationController
     if @board.save
       redirect_to boards_path, notice: "/#{@board.directory}/ created!"
     else
-      flash[:errors] = @board.errors.first[1]
+      flash[:error] = @board.errors.first[1]
       render action: 'new'
     end
   end
@@ -51,7 +51,7 @@ class BoardsController < ApplicationController
     if @board.destroy
       redirect_to root_path, notice: "/#{@board.directory}/ permanently deleted."
     else
-      flash[:errors] = @board.errors.first[1]
+      flash[:error] = @board.errors.first[1]
       render action: 'edit'
     end
   end
@@ -64,7 +64,7 @@ class BoardsController < ApplicationController
     if @board.update_attributes(params[:board])
       redirect_to edit_board_path(@board), notice: "Board settings have been successfully updated."
     else
-      flash[:errors] = @board.errors.first[1]
+      flash[:error] = @board.errors.first[1]
       render action: 'edit'
     end
   end

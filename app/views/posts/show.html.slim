@@ -1,8 +1,6 @@
-menu.menu
-  .directory-listing
-    == link_to_board("&larr; Back to #{@board.name.titleize}".html_safe, @board)
+== link_back_to_board
 
 == render partial: 'posts/parent', locals: { parent: @post }
 
-- if @post.children.size > 1
-  == link_to_board("&larr; Back to #{@board.name.titleize}".html_safe, @board)
+- if @post.replies > 1
+  == link_back_to_board

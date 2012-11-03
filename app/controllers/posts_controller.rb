@@ -6,7 +6,7 @@ class PostsController < ApplicationController
     @board = @post.board unless @post.nil?
     @child_limit = 10
     if @post && @board
-      @prefix = "Post ##{@post.id} on #{@board.name}"
+      @prefix = I18n.t('posts.show.prefix', id: @post.id, board: @board.name)
       appendage = @post.ancestor ? @post.ancestor.subject : @post.subject
       @prefix << ": #{appendage}" if appendage
 
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
       redirect_to request.referrer
     else
       if @post.save
-        flash[:notice] = "Post ##{@post.id} created!"
+        flash[:notice] = I18n.t('posts.create.created', id: @post.id)
 
         if @post.parent
           redirect_to(request.referrer + "##{@post.id}")
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
         end
 
       else
-        flash[:errors] = @post.errors.first[1]
+        flash[:error] = @post.errors.first[1]
         redirect_to request.referrer
       end
     end
@@ -66,10 +66,10 @@ class PostsController < ApplicationController
           response[:report_total] = Report.all.size if params[:getReportTotal]
         end
       else
-        response[:message] = "You are not authorized to delete post ##{params[:id]}."
+        response[:message] = I18n.t('posts.destroy.not_authorized', id: params[:id])
       end
     else
-      response[:message] = "Post ##{params[:id]} not found."
+      response[:message] = I18n.t('posts.destroy.not_found', id: params[:id])
     end
 
     render json: response

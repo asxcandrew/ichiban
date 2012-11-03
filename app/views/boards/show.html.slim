@@ -12,8 +12,9 @@
   .blatant-notice
     - if @paged
       h3
-        | There aren't any posts on this page.&nbsp;
-        == link_to_board("Go back to the index?", @board)
+        == t('.empty_page')
+        | &nbsp;
+        == link_to_board(t('.back_to_index'), @board)
     - else
       h3
-        | There aren't any posts.
+        == t('.no_posts')

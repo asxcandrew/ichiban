@@ -1,6 +1,5 @@
 == post_tag(child, class: "child") do
   == render partial: '/posts/post', locals: { post: child }
-
   - if child.children.any?
     - if child_limit > 0 && child.children.size < child_limit
       == render(partial: 'posts/child', 
@@ -8,4 +7,4 @@
                 locals: { child_limit: (child_limit - 1) })
     - elsif @previews.nil?
       br
-      == link_to_post("Continue this thread &rarr;".html_safe, child)
+      == link_to_post(t('.continue_thread').html_safe, child)

@@ -32,11 +32,11 @@ class Post < ActiveRecord::Base
   validate :upload_file_size
   validates_presence_of :image, 
                         :if => :image_required?, 
-                        message: "An image is required when starting a thread or if comment is not added."
+                        message: I18n.t('posts.errors.image_required')
 
   # Attributes
-  validates_length_of :name, maximum: 64, message: "Names must be shorter than 65 characters."
-  validates_length_of :subject, maximum: 64, message: "Subject must be shorter than 65 characters."
+  validates_length_of :name, maximum: 64, message: I18n.t('posts.errors.name_too_long')
+  validates_length_of :subject, maximum: 64, message: I18n.t('posts.errors.subject_too_long')
 
   # Suspensions
   has_many :suspensions, conditions: ["ends_at > ?", Date.today]
@@ -81,7 +81,7 @@ class Post < ActiveRecord::Base
 
   def name=(input = '')
     options = {}
-    default_name = "Anonymous"
+    default_name = I18n.t('posts.anonymous')
     # Check for tripcode
     hash_pos = input.index('#')
     
@@ -117,7 +117,7 @@ class Post < ActiveRecord::Base
   end
 
   def verify_tripcode(input)
-    !input.blank? && self.tripcode == crypt_tripcode(input)
+    !input.blank? && self.tripcode == generate_tripcode(input)
   end
 
   def is_ancestor?
@@ -136,20 +136,23 @@ class Post < ActiveRecord::Base
     
     def touch_ancestor!
       if self.ancestor
-        self.ancestor.touch!
+        self.ancestor.touch
       end
     end
 
     def parent_existance
       unless Post.find_by_id(self.parent_id)
-        errors.add(:parent_existance, "Attempted to reply to ##{self.parent_id} but the post was not found. Was it deleted?")
+        errors.add(:parent_existance, I18n.t('posts.errors.parent_existance', parent_id: parent_id))
       end
     end
 
     def board_existance
       unless Board.find_by_directory(self.directory)
-        error = self.directory ? "Could not find board '#{self.directory}'." : "Board was not specified."
-        errors.add(:board_existance, error)
+        if self.directory
+          errors.add(:board_not_found, I18n.t('posts.errors.board_not_found', directory: directory))
+        else
+          errors.add(:board_existance, I18n.t('posts.errors.board_not_given'))
+        end
       end
     end
 
@@ -162,8 +165,9 @@ class Post < ActiveRecord::Base
       if suspensions.any?
         suspensions.each do |suspension|
           errors.add(
-            :suspended, 
-            "Your posting privilages have been suspended until #{suspension.ends_at} for: #{suspension.reason}")
+                :suspended, I18n.t('posts.errors.suspended', 
+                ends_at: suspension.ends_at, 
+                reason: suspension.reason))
         end
       end
     end

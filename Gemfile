@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Rails
 gem 'rails', '3.2.8'
+gem 'rails-i18n'
 
 # Server
 gem 'unicorn'

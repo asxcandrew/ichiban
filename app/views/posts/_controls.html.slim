@@ -1,16 +1,16 @@
 .controls
   - if can?(:destroy, Post)
-    a.delete-post-confirmation(href='#' title="Delete without tripcode") delete
+    a.delete-post-confirmation(href='#' title=t('.delete_without_tripcode')) = t('.delete')
     span.confirmation-toggle
-      span really?
-      a.delete-post(href='#' data-id=post.id) yes
-      a.unconfirm(href='#') no
+      span = t('.deletion_confirmation')
+      a.delete-post(href='#' data-id=post.id) = t('.confirm')
+      a.unconfirm(href='#') = t('.unconfirm')
   - else
-    a.delete-post-with-tripcode(href='#' title="Delete with tripcode" data-id=post.id) delete
+    a.delete-post-with-tripcode(href='#' title=t('.delete_with_tripcode') data-id=post.id) = t('.delete')
 
   - if can?(:suspend, Post)
-    a.suspend-poster(href='#' title="Suspend poster" data-id=post.id) suspend
+    a.suspend-poster(href='#' title=t('.suspend_poster') data-id=post.id) = t('.suspend')
   - else
-    a.report-post(href='#' title="Report post ##{post.id}" data-id=post.id) report
+    a.report-post(href='#' title=t('.report_poster', post_id: post.id) data-id=post.id) = t('.report')
   
-  a.reply-toggle(href='#' title="Reply to post ##{post.id}" data-id=post.id) reply
+  a.reply-toggle(href='#' title=t('.reply_to_post', post_id: post.id) data-id=post.id) = t('.reply')

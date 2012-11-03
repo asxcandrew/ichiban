@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    redirect_to root_url , notice: "You're already logged in." if @current_user
+    redirect_to root_url , notice: I18n.t('sessions.errors.already_logged_in') if @current_user
   end
 
   def create
@@ -17,15 +17,15 @@ class SessionsController < ApplicationController
         session[:redirect_to] = nil
       end
 
-      redirect_to @target, notice: "Logged in!"
+      redirect_to @target, notice: I18n.t('sessions.logged_in')
     else
-      flash.now.alert = "Invalid email or password."
+      flash.now.alert = I18n.t('sessions.errors.invalid_email_or_password')
       render "new"
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, notice: "Logged out!"
+    redirect_to root_url, notice: I18n.t('sessions.logged_out')
   end
 end
