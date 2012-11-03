@@ -35,6 +35,7 @@ class Post < ActiveRecord::Base
                         message: I18n.t('posts.errors.image_required')
 
   # Attributes
+  validates_presence_of :ip_address, message: I18n.t('posts.errors.ip_address')
   validates_length_of :name, maximum: 64, message: I18n.t('posts.errors.name_too_long')
   validates_length_of :subject, maximum: 64, message: I18n.t('posts.errors.subject_too_long')
 

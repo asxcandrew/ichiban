@@ -20,6 +20,7 @@ en:
       image_required: "An image is required when starting a thread or if comment is not added."
       name_too_long: "Names must be shorter than 65 characters."
       subject_too_long: "Subject must be shorter than 65 characters."
+      ip_address: "Post must have an IP address."
       parent_existance: "Attempted to reply to #%{parent_id} but the post was not found. Was it deleted?"
       board_not_found: "Could not find board '%{directory}'."
       board_not_given: "Board was not specified."
