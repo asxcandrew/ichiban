@@ -1,8 +1,7 @@
 class BoardsController < ApplicationController
   before_filter :find_boards, except: [:delete]
   before_filter :set_board, except: [:index, :new, :create]
-  before_filter :verify_permissions,
-                except: [:index, :show]
+  load_and_authorize_resource
   
   def index
     @prefix = "Boards"

@@ -1,4 +1,6 @@
 class TripcodesController < ApplicationController
+  load_and_authorize_resource
+
   def show
     @reply = Post.new
     @previews = 0

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :verify_permissions
+  load_and_authorize_resource
+  
   def new
     @user = User.new
   end

@@ -1,5 +1,5 @@
 class SuspensionsController < ApplicationController
-  before_filter :verify_permissions
+  load_and_authorize_resource
   
   def index
     @prefix = "View suspensions"

@@ -3,11 +3,28 @@ class Ability
 
   def initialize(user)
     @user = user || User.new
-    can(:manage, :all) if @user.admin?
+
+    # Normal Users
+    can(:read, [Board, Post, Tripcode])
+    can(:create, Post)
+    # Users can delete a post if they have they have created the post.
+    # Take a look at posts#destroy for an explanation.
+
+    if @user.janitor?
+      can(:destroy, Post)
+      can(:manage, Report)
+    end
 
     if @user.moderator?
       can(:manage, Post)
+      can(:manage, Report)
+      can(:manage, Suspension)
     end
+
+    if @user.admin?
+      can(:manage, :all)
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

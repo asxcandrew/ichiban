@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  load_and_authorize_resource except: [:destroy]
 
   def show
     @reply = Post.new

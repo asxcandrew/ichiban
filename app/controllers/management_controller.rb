@@ -1,5 +1,5 @@
 class ManagementController < ApplicationController
-  before_filter :verify_permissions
+  
   def show
   end
 

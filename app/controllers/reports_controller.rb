@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
-  before_filter :verify_permissions, except: [:create]
+  load_and_authorize_resource
+  
   def index
     @prefix = "View Reports"
     @reports = Report.find(:all, order: "created_at")
