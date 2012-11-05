@@ -1,33 +1,46 @@
 class Board < ActiveRecord::Base
-  attr_accessible :directory, :name, :description
+  attr_accessible :directory, :name, :description, :file_size_limit, :save_IPs
 
   
   validates :name, length: { maximum: 100, 
-                             too_long: "A board's name must not exceed 300 characters." }
-  validates_presence_of :name, message: "A board must have a name."
+                             too_long: I18n.t('boards.errors.name_too_long') }
+  validates_presence_of :name, message: I18n.t('boards.errors.name')
 
 
   validates(:directory, 
             :format => { :with => /^[a-z0-9]+[-a-z0-9]*[a-z0-9]+$/i,
-            message: "A board's directory must be alphanumeric and at least 2 characters." })
-  validates_presence_of :directory, message: "A board must have a directory."
+            message: I18n.t('boards.errors.directory_format') })
+
+  validates_presence_of :directory, message: I18n.t('boards.errors.directory')
+  
   validates_uniqueness_of(:directory,
                           case_sensitive: false,
-                          message: "A board's directory must be unique.")
+                          message: I18n.t('boards.errors.directory_uniqueness'))
 
   has_many :posts, primary_key: 'directory', foreign_key: 'directory', :dependent => :destroy
   has_many :suspensions, primary_key: 'directory', foreign_key: 'directory', :dependent => :destroy
+
+  after_initialize :init
+
 
   # Used to build RESTful routes
   def to_param
     self.directory
   end
+    
 
-  def directory=(input)
+  def directory=(directory)
     if new_record?
-      write_attribute(:directory, input)
+      self[:directory] = directory
     else
-      raise 'Board directory cannot be changed.'
+      raise I18n.t('boards.errors.directory_modification')
     end
   end 
+
+  private
+    def init
+      self.save_IPs ||= true
+      self.file_size_limit ||= 1.0
+    end
+  #end_private
 end

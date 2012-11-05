@@ -6,7 +6,6 @@ en:
   posts:
     anonymous: "Anonymous"
     show:
-      back_to_board: "Back to %{board}"
       prefix: "Post #%{id} on %{board}"
     create:
       created: "Post #%{id} created!"
@@ -25,6 +24,7 @@ en:
       board_not_found: "Could not find board '%{directory}'."
       board_not_given: "Board was not specified."
       suspended: "Your posting privilages have been suspended until %{ends_at} for: %{reason}"
+      file_size_limit: "Images cannot be larger than %{limit} megabytes."
     controls:
       delete: "delete"
       delete_post: "Delete tripcode"
@@ -43,7 +43,15 @@ en:
       empty_page: "There aren't any posts on this page."
       back_to_index: "Go back to the index?"
     navigation:
+      back_to_board: "Back to %{board}"
       back_to_directory: "Back to Directory Listing"
+    errors:
+      name: "A board must have a name."
+      name_too_long: "A board's name must not exceed 100 characters."
+      directory_format: "A board's directory must be alphanumeric and at least 2 characters."
+      directory: "A board must have a directory."
+      directory_uniqueness: "A board's directory must be unique."
+      directory_modification: "A board's directory cannot be changed."
   sessions:
     require_log_in: "You must login to perform that action."
     logged_in: "Logged in!"
@@ -53,9 +61,9 @@ en:
     errors:
       already_logged_in: "You're already logged in."
       invalid_email_or_password: "Invalid email or password."
-
-  errors:
-    messages:
-      wrong_size: "is the wrong size (should be %{file_size})"
-      size_too_small: "is too small (should be at least %{file_size})"
-      size_too_big: "is too big (should be at most %{file_size})"
+  simple_form:
+    labels:
+      defaults:
+        Name: "Name"
+        save_IPs: "Save IPs"
+        file_size_limit: "File Size Limit (MB)"

@@ -1,4 +1,4 @@
-== link_to("&larr; Back to Directory Listing".html_safe, boards_path)
+== link_back_to_board
 
 .descriptive.compact-form
   == simple_form_for @board do |f|
@@ -8,12 +8,15 @@
 
     == f.input :description, placeholder: "description"
 
+    == f.input :file_size_limit
+
+    == f.input :save_IPs
+
     == f.submit
 
 
-  .danger-zone
-    h3
-      strong Danger Zone
+  fieldset.danger-zone
+    legend Danger Zone
     == button_to("Delete Board",
                  @board, 
                  :method => :delete, 

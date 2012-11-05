@@ -29,10 +29,10 @@ class Post < ActiveRecord::Base
   # Assets
   has_one :image, :dependent => :destroy
   accepts_nested_attributes_for :image
-  validate :upload_file_size
   validates_presence_of :image, 
                         :if => :image_required?, 
                         message: I18n.t('posts.errors.image_required')
+  validate :check_file_size, :if => :new_record?
 
   # Attributes
   validates_presence_of :ip_address, message: I18n.t('posts.errors.ip_address')
@@ -113,6 +113,11 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # Only an ancestor can have a subject.
+  def subject=(subject)
+    self[:subject] = subject if self.is_ancestor?
+  end
+
   def to_sha2
     Digest::SHA2.hexdigest(SECRET_COOKIE_TOKEN + self.id.to_s)
   end
@@ -132,6 +137,15 @@ class Post < ActiveRecord::Base
     def init
       # Will set the default value only if it's nil
       self.replies ||= 0
+    end
+
+    def check_file_size
+      if self.image
+        limit = self.board.file_size_limit
+        if self.image.asset.size > limit.megabytes.to_i
+          errors.add(:file_size_limit, I18n.t('posts.errors.file_size_limit', limit: limit))
+        end
+      end
     end
 
     def calculate_color
@@ -158,9 +172,6 @@ class Post < ActiveRecord::Base
           errors.add(:board_existance, I18n.t('posts.errors.board_not_given'))
         end
       end
-    end
-
-    def upload_file_size
     end
 
     def active_suspensions
