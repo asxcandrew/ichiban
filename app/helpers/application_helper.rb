@@ -19,14 +19,9 @@ module ApplicationHelper
 
   def body_tag(options={}, &block)
     output = ActiveSupport::SafeBuffer.new
-    classes = [options[:class]]
 
     # Nothing to see here.    
-    classes << "kidz-zone" if Date.today.month == 2 && Date.today.day == 29
-
-    options.merge!(
-      { class: classes })
-
+    options[:class] << " kidz-zone" if Date.today.month == 2 && Date.today.day == 29
 
     output.safe_concat(tag(:body, options, true))
     output << capture(&block)
