@@ -36,13 +36,13 @@ class PostsController < ApplicationController
       redirect_to request.referrer
     else
       if @post.save
-        cookies.signed[:unformatted_name] = params[:post][:name]
-        cookies.signed[:name] = @post.name
-        cookies.signed[:tripcode] = @post.tripcode
-        cookies.signed[:secure_tripcode] = @post.secure_tripcode
+        cookies.signed[:unformatted_name] = { value: params[:post][:name], expires: 1.week.from_now }
+        cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
+        cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
+        cookies.signed[:secure_tripcode] = { value: @post.secure_tripcode, expires: 1.week.from_now }
 
         # Used to delete posts.
-        cookies.signed[@post.to_sha2] = @post.ip_address
+        cookies.signed[@post.to_sha2] = {value: @post.ip_address, expires: 1.week.from_now }
 
         flash[:notice] = I18n.t('posts.create.created', id: @post.id)
 
