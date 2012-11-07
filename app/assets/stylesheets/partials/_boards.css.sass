@@ -15,3 +15,15 @@
 //     weight: bold
 //     style: italic
 //   opacity: 0.3
+
+.tripcode
+  a
+    color: mix($user-accent, $warning, 70%)
+    &:hover
+      text-decoration: none
+      border-bottom: 1px dotted $light-touch
+
+  &.secure
+    color: mix($user-accent, $warning, 50%)
+    a
+      color: mix($user-accent, $warning, 50%)

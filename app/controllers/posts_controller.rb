@@ -6,6 +6,7 @@ class PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
     @board = @post.board unless @post.nil?
     @child_limit = 10
+
     if @post && @board
       @prefix = I18n.t('posts.show.prefix', id: @post.id, board: @board.name)
       appendage = @post.ancestor ? @post.ancestor.subject : @post.subject
@@ -35,15 +36,20 @@ class PostsController < ApplicationController
       redirect_to request.referrer
     else
       if @post.save
+        cookies.signed[:unformatted_name] = params[:post][:name]
+        cookies.signed[:name] = @post.name
+        cookies.signed[:tripcode] = @post.tripcode
+        cookies.signed[:secure_tripcode] = @post.secure_tripcode
+
+        # Used to delete posts.
         cookies.signed[@post.to_sha2] = @post.ip_address
-        cookies.signed[:name] = params[:post][:name]
 
         flash[:notice] = I18n.t('posts.create.created', id: @post.id)
 
         if @post.parent
           redirect_to(request.referrer + "##{@post.id}")
         else
-          redirect_to post_path(@post, anchor: @post.id)
+          redirect_to post_path(@post)
         end
 
       else

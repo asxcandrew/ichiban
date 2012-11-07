@@ -18,6 +18,7 @@ Ichiban::Application.routes.draw do
     delete ':directory'       => 'boards#destroy', :as => :board
   end
 
+  # FIXME: Fix issue where tripcodes with periods cause routing errors.
   scope 'tripcodes' do
     scope 'secure' do
       get ':tripcode/'      => 'tripcodes#show', :as => :secure_tripcode, secure: true

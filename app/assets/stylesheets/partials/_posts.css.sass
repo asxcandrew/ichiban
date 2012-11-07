@@ -3,6 +3,16 @@
   right: 10px
 
 .post
+  // Highlight a post when an anchor is present.
+  &:target
+    &:before
+      // Arrow
+      content: "\21B3"
+
+      display: inline-block
+      margin: 10px 5px 10px -10px
+      float: left
+      font-size: 2.2em
   article
     min-width: 500px
     max-width: 50%
@@ -50,18 +60,6 @@
       display: inline-block
     .name
       color: $user-accent
-    .tripcode
-      a
-        color: mix($user-accent, $warning, 70%)
-        &:hover
-          text-decoration: none
-          border-bottom: 1px dotted $light-touch
-
-      &.secure
-        color: mix($user-accent, $warning, 50%)
-        a
-          color: mix($user-accent, $warning, 50%)
-
 
     &:hover .controls
       opacity: $opaque
