@@ -6,6 +6,7 @@ class Ability
 
     # Normal Users
     can(:read, [Board, Post, Tripcode])
+    can(:create, Report)
     can(:create, Post)
     # Users can delete a post if they have they have created the post.
     # Take a look at posts#destroy for an explanation.
