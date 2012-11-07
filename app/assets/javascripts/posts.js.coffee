@@ -40,8 +40,9 @@ toggleReply = (id) ->
   $(reply).toggle(window.animationDuration)
   
   # Jump to the reply
-  $('body').animate { scrollTop: $(reply).offset().top }, 200, () ->
-    $("#{reply} textarea:first").focus()
+  if $(reply).is(':visible')
+    $('body').animate { scrollTop: $("##{id}").offset().top }, 200, () ->
+      $("#{reply} textarea:first").focus()
 
 @updateMeter = (percentage, meter) ->
   percentage = Math.min(percentage, 100)
