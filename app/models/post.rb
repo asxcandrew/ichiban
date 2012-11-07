@@ -118,6 +118,10 @@ class Post < ActiveRecord::Base
     self[:subject] = subject if self.is_ancestor?
   end
 
+  def subject
+    subject = self.is_ancestor? ? self[:subject] : self.ancestor.subject
+  end
+
   def to_sha2
     Digest::SHA2.hexdigest(SECRET_COOKIE_TOKEN + self.id.to_s)
   end

@@ -9,8 +9,8 @@ class PostsController < ApplicationController
 
     if @post && @board
       @prefix = I18n.t('posts.show.prefix', id: @post.id, board: @board.name)
-      appendage = @post.ancestor ? @post.ancestor.subject : @post.subject
-      @prefix << ": #{appendage}" if appendage
+
+      @prefix << ": #{@post.subject}" if @post.subject && !@post.subject.blank?
 
       respond_to do |format|
         format.html
