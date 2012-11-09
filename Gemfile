@@ -35,6 +35,7 @@ gem 'cancan'
 gem 'simple_roles'
 
 group :development, :test do
+  gem 'therubyracer', :platforms => :ruby
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'database_cleaner'
@@ -57,7 +58,6 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'compass-rails'
   gem 'font-awesome-sass-rails'
-  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
