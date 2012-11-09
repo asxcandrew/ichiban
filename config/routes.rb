@@ -21,12 +21,19 @@ Ichiban::Application.routes.draw do
   # FIXME: Fix issue where tripcodes with periods cause routing errors.
   scope 'tripcodes' do
     scope 'secure' do
-      get ':tripcode/'      => 'tripcodes#show', :as => :secure_tripcode, secure: true
-      get ':tripcode/:page' => 'tripcodes#show', :as => :secure_tripcode, secure: true
+      get ':tripcode/' => 'tripcodes#show', 
+          :as => :secure_tripcode, 
+          secure: true, 
+          constraints: { tripcode: /[^\/]+/ }
+
+      get ':tripcode/:page' => 'tripcodes#show', 
+          :as => :secure_tripcode, 
+          secure: true, 
+          constraints: { tripcode: /[^\/]+/ }
     end
 
-    get ':tripcode/'       => 'tripcodes#show', :as => :tripcode
-    get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode
+    get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
+    get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
   end
   
 
