@@ -12,7 +12,9 @@ class SuspensionsController < ApplicationController
     if @suspension.save
       response.merge!(
         { success: true,
-          message: "Suspended #{@suspension.ip_address} until #{@suspension.ends_at}." })
+          message: I18n.t('suspensions.create.success', 
+                          ip_address: @suspension.ip_address, 
+                          ends_at: @suspension.ends_at) })
     else
       response[:message] = @suspension.errors.first[1]
     end

@@ -1,6 +1,6 @@
 header
   .date
-    == time_tag(post.created_at, human_time(post.created_at), title: post.created_at)
+    == time_tag(post.created_at, title: post.created_at)
   .right
     // Only show a parent link if the post in question is the parent of the thread
     // and if they even have a parent.

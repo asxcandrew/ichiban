@@ -7,7 +7,7 @@ module PostsHelper
     options.merge!(
       { class: classes,
         id: post.id,
-        "data-directory" => post.directory })
+        "data-directory" => post.board.directory })
     options["data-ip"] = post.ip_address if can?(:manage, Post)
 
     output.safe_concat(tag(:div, options, true))

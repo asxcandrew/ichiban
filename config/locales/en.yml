@@ -4,6 +4,8 @@
 en:
   license: "%{link} is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License."
   posts:
+    parent:
+      last_reply: "Last reply was "
     anonymous: "Anonymous"
     show:
       prefix: "Post #%{id} on %{board}"
@@ -21,7 +23,7 @@ en:
       subject_too_long: "Subject must be shorter than 65 characters."
       ip_address: "Post must have an IP address."
       parent_existance: "Attempted to reply to #%{parent_id} but the post was not found. Was it deleted?"
-      board_not_found: "Could not find board '%{directory}'."
+      board_not_found: "Could not find board #'%{board_id}'."
       board_not_given: "Board was not specified."
       suspended: "Your posting privilages have been suspended until %{ends_at} for: %{reason}"
       file_size_limit: "Images cannot be larger than %{limit} megabytes."
@@ -52,6 +54,15 @@ en:
       directory: "A board must have a directory."
       directory_uniqueness: "A board's directory must be unique."
       directory_modification: "A board's directory cannot be changed."
+  suspensions:
+    create:
+      success: "Suspended %{ip_address} until %{ends_at}"
+    errors:
+      no_ip_address: "An IP address must be given."
+      post_not_found: "Post not found. Was it deleted?"
+      no_reason_given: "A reason must be included with your supension."
+      date_parsing: "Could not parse end date. Try something like 'two days from now.'"
+      past_date: "You can only make suspensions for a future date."
   sessions:
     require_log_in: "You must login to perform that action."
     logged_in: "Logged in!"

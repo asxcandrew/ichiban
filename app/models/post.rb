@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   attr_accessible(:ip_address,
                   :subject,
                   :body,
-                  :directory,
+                  :board_id,
                   :parent_id,
                   :ancestor_id,
                   :image_attributes,
@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
                   :name)
 
   # Board relations
-  belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
+  belongs_to :board
   validate :board_existance
 
   # Lineage
@@ -169,9 +169,9 @@ class Post < ActiveRecord::Base
     end
 
     def board_existance
-      unless Board.find_by_directory(self.directory)
-        if self.directory
-          errors.add(:board_not_found, I18n.t('posts.errors.board_not_found', directory: directory))
+      unless Board.find_by_id(self.board_id)
+        if self.board_id
+          errors.add(:board_not_found, I18n.t('posts.errors.board_not_found', board_id: self.board_id))
         else
           errors.add(:board_existance, I18n.t('posts.errors.board_not_given'))
         end

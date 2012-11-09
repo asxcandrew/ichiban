@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105164955) do
+ActiveRecord::Schema.define(:version => 20121108225131) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(:version => 20121105164955) do
     t.string   "tripcode"
     t.string   "secure_tripcode"
     t.text     "body"
-    t.string   "directory"
     t.integer  "parent_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -48,9 +47,9 @@ ActiveRecord::Schema.define(:version => 20121105164955) do
     t.integer  "ancestor_id"
     t.boolean  "locked"
     t.integer  "replies"
+    t.integer  "board_id"
   end
 
-  add_index "posts", ["directory"], :name => "index_posts_on_directory"
   add_index "posts", ["parent_id"], :name => "index_posts_on_parent_id"
 
   create_table "reports", :force => true do |t|
@@ -76,11 +75,11 @@ ActiveRecord::Schema.define(:version => 20121105164955) do
   create_table "suspensions", :force => true do |t|
     t.date     "ends_at"
     t.string   "ip_address"
-    t.string   "directory"
     t.integer  "post_id"
     t.text     "reason"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "board_id"
   end
 
   create_table "users", :force => true do |t|

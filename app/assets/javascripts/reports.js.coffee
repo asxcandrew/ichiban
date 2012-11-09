@@ -10,12 +10,18 @@ $ ->
     reportID = $this.parent().parent().attr('id')
     postID = $this.data('id')
     deletePost(postID, reportID)
-    
+
+  $(".reports").on "click", ".suspend-poster", (e) ->
+    e.preventDefault()
+    $this = $(this)
+    # REWRITE: Remove reports after suspension is sent through.
+    suspendPoster($this.data('postid'))
+
   $(window.controls).on "click", ".report-post", (e) ->
     e.preventDefault()
     reportPost($(this).data('id'))
 
-reportPost = (id) ->
+@reportPost = (id) ->
   params = 
     _method: 'create',
     report: 
@@ -35,8 +41,6 @@ deleteReport = (id) ->
       $("##{id}").hide animationDuration, () ->
         $(this).empty().remove()
         updateReportCounter()
-
-      flash("notice", response.message)
     else
       flash("error", response.message)
 

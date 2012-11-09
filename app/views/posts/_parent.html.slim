@@ -6,8 +6,11 @@
       .subject == link_to_post(parent.ancestor.subject, parent)
   
     .replies
-      == parent.replies.to_words.titleize
+      == parent.replies
       == pluralize_without_count(parent.replies, ' reply')
+    .last-reply 
+      == t('.last_reply')
+      == time_tag(parent.updated_at, title: parent.updated_at )
   
   == render partial: '/posts/post', locals: { post: parent }
   == render(partial: 'posts/child', 

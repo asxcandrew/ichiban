@@ -1,4 +1,6 @@
 $ ->
+  $('time').timeago()
+
   $flash = $('.flash')
   if $flash
     $flash.delay(8000).hide("slide", { direction: "up" }, 200)

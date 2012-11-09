@@ -12,6 +12,7 @@ module ApplicationHelper
     count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
   end
 
+  # Try to calculate time on the client side when you can.
   def human_time(time)
     tense = Time.now > time ? "ago" : "from now"
     "#{time_ago_in_words(time)} #{tense}.".capitalize

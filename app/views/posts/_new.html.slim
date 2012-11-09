@@ -3,7 +3,7 @@
     == simple_form_for(@post,
                        autocomplete: "off", 
                        html: { multipart: true }) do |f|
-      == f.hidden_field :directory, value: @board.directory
+      == f.hidden_field :board_id, value: @board.id
 
       == f.input :subject, placeholder: "Subject"
       == f.input :body, :as => :text, placeholder: "Comment"

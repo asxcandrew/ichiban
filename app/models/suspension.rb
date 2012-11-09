@@ -2,10 +2,14 @@ class Suspension < ActiveRecord::Base
   attr_accessible :ends_at, :ip_address, :reason, :directory, :post_id
 
   belongs_to :post
-  belongs_to :board, foreign_key: 'directory', primary_key: 'directory'
-  validates_presence_of :post, message: "Post not found. Was it deleted?"
-  validates_presence_of :reason, message: "A reason must be included with your supension."
-  validates_presence_of :ends_at, message: "Could not parse end date. Try something like 'two days from now.'"
+  belongs_to :board
+
+  validates_presence_of :ip_address, message: I18n.t('suspensions.errors.no_ip_address')
+  validates_presence_of :post, message: I18n.t('suspensions.errors.post_not_found')
+  validates_presence_of :reason, message: I18n.t('suspensions.errors.no_reason_given')
+  validates_presence_of :ends_at, message: I18n.t('suspensions.errors.date_parsing')
+
+  validate :future_end_date
 
   def ends_at=(user_input)
     time = Chronic.parse(user_input)
@@ -20,5 +24,11 @@ class Suspension < ActiveRecord::Base
 
   def active?
     Date.today < self.ends_at
+  end
+
+  def future_end_date
+    if self.ends_at < Date.today
+      errors.add(:future_end_date, I18n.t('suspensions.errors.past_date'))
+    end
   end
 end

@@ -12,9 +12,9 @@
       - @suspensions.each do |suspension|
         = suspension_tr_tag(suspension) do
           td
-            == time_tag(suspension.created_at, human_time(suspension.created_at), title: suspension.created_at)
+            == time_tag(suspension.created_at, suspension.created_at, title: suspension.created_at)
           td
-            == time_tag(suspension.ends_at, human_time(suspension.ends_at), title: suspension.ends_at)
+            == time_tag(suspension.ends_at, suspension.ends_at, title: suspension.ends_at)
           td = suspension.ip_address
           td = suspension.reason
           td

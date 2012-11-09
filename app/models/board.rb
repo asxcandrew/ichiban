@@ -17,8 +17,8 @@ class Board < ActiveRecord::Base
                           case_sensitive: false,
                           message: I18n.t('boards.errors.directory_uniqueness'))
 
-  has_many :posts, primary_key: 'directory', foreign_key: 'directory', :dependent => :destroy
-  has_many :suspensions, primary_key: 'directory', foreign_key: 'directory', :dependent => :destroy
+  has_many :posts, :dependent => :destroy
+  has_many :suspensions, :dependent => :destroy
 
   after_initialize :init
 
