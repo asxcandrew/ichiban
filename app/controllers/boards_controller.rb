@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
     @previews = 2
     @child_limit = 2
     if @board
-      @posts = @board.posts.order("updated_at DESC").page(params[:page])
+      @posts = Post.where(board_id: @board.id, parent_id: nil).order("updated_at DESC").page(params[:page])
 
       @paged = params[:page] 
       @prefix = "#{@board.name}"
