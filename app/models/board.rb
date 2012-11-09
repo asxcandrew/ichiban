@@ -40,7 +40,7 @@ class Board < ActiveRecord::Base
   private
     def init
       self.save_IPs ||= true
-      self.file_size_limit ||= 1.0
+      self.file_size_limit ||= 3.0
     end
   #end_private
 end
