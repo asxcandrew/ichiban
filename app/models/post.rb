@@ -16,6 +16,7 @@ class Post < ActiveRecord::Base
   # Board relations
   belongs_to :board
   validate :board_existance
+  has_many :users, :through => :board
 
   # Lineage
   belongs_to :parent, class_name: 'Post'
@@ -55,7 +56,6 @@ class Post < ActiveRecord::Base
   after_initialize :init
   after_destroy :decrement_parent_replies!
 
-
   # Maximum length is also limited 
   # in the post.js.coffee file.
   validates_length_of :body, maximum: 800
@@ -78,6 +78,14 @@ class Post < ActiveRecord::Base
         self.parent.decrement_parent_replies!
       end
     end
+  end
+
+  def self.owned_by(user)
+    user.posts
+  end
+
+  def self.threads_for(board)
+    where("parent_id IS NULL AND board_id = ?", board.id)
   end
 
   def name=(input = '')

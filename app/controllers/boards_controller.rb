@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
     @previews = 2
     @child_limit = 2
     if @board
-      @posts = Post.where(board_id: @board.id, parent_id: nil).order("updated_at DESC").page(params[:page])
+      @posts = Post.threads_for(@board).order("updated_at DESC").page(params[:page])
 
       @paged = params[:page] 
       @prefix = "#{@board.name}"
@@ -56,7 +56,11 @@ class BoardsController < ApplicationController
   end
 
   def edit
-    @stats = { posts: @board.posts.size }
+    if @current_user.boards.include?(@board)
+      @stats = { posts: @board.posts.size }
+    else
+      raise CanCan::AccessDenied
+    end
   end
 
   def update

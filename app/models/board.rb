@@ -19,6 +19,7 @@ class Board < ActiveRecord::Base
 
   has_many :posts, :dependent => :destroy
   has_many :suspensions, :dependent => :destroy
+  has_and_belongs_to_many :users
 
   after_initialize :init
 

@@ -17,7 +17,12 @@ class Ability
     end
 
     if @user.moderator?
-      can(:manage, Post)
+      can :manage, User
+
+      can :destroy, Post, users: { id: @user.post_ids }
+
+      can :edit, Board
+
       can(:manage, Report)
       can(:manage, Suspension)
     end

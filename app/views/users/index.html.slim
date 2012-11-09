@@ -1,0 +1,25 @@
+- if @users 
+  h1#user-counter == pluralize(@users.size, "User")
+
+.users
+  table
+    thead
+      tr
+        th #
+        th Email
+        th Role
+        th Boards
+        th Creation Date
+        th Last Login
+    tbody
+      - if @users
+        - @users.each do |user|
+          tr(id=user.id)
+            td == user.id
+            td == user.email
+            td == user.role.to_s.titleize
+            td
+              - user.boards.each do |board|
+                == link_to_board(board)
+            td == time_tag(user.created_at, title: user.created_at)
+            td == time_tag(user.last_login, title: user.last_login)

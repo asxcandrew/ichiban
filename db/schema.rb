@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108225131) do
+ActiveRecord::Schema.define(:version => 20121109202826) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,11 @@ ActiveRecord::Schema.define(:version => 20121108225131) do
   end
 
   add_index "boards", ["directory"], :name => "index_boards_on_directory", :unique => true
+
+  create_table "boards_users", :id => false, :force => true do |t|
+    t.integer "board_id"
+    t.integer "user_id"
+  end
 
   create_table "images", :force => true do |t|
     t.integer  "post_id"
@@ -88,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20121108225131) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "role"
+    t.datetime "last_login"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
