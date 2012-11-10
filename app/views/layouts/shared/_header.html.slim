@@ -18,7 +18,6 @@ header.site-header
     - else
       .name == cookies.signed[:name] if cookies.signed[:name]
       span.tripcode == link_to_tripcode(cookies.signed[:tripcode]) if cookies.signed[:tripcode]
-      span.secure.tripcode == link_to_tripcode(cookies.signed[:secure_tripcode], secure: true) if cookies.signed[:secure_tripcode]
 
       - unless current_page?(controller: 'sessions', action: 'new')
         .unimportant

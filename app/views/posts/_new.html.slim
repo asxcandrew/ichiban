@@ -5,11 +5,12 @@
                        html: { multipart: true }) do |f|
       == f.hidden_field :board_id, value: @board.id
 
-      == f.input :subject, placeholder: "Subject"
-      == f.input :body, :as => :text, placeholder: "Comment"
+      == f.input :subject
+      == f.input :body, :as => :text
       .meter:span
       
-      == f.input :name, placeholder: "Name", input_html: { value: cookies.signed[:unformatted_name] }
+      == f.input :name, input_html: { value: cookies.signed[:name] }
+      == f.input :tripcode, input_html: { value: cookies.signed[:passphrase] }
       == label_tag :email
       == text_field_tag :email
       

@@ -1,12 +1,16 @@
 module Tripcode
+  def generate_tripcode_v2(passphrase)
+    Digest::SHA2.hexdigest(SECURE_TRIPCODE_SALT + passphrase)[-6..-1]
+  end
+
   # Below is the canonical way to make 2ch style tripcodes.
   # I'm not sure who thought this was a good idea.
-  def generate_tripcode(password, options = {})
+  def generate_tripcode(passphrase, options = {})
     forbidden_in_salt = ':;<=>?@[\]^_`'
     forbidden_in_alternative = 'ABCDEFGabcdef'
 
-    unless password.nil? || password.blank?
-      input = password.clone
+    unless passphrase.nil? || passphrase.blank?
+      input = passphrase.clone
 
       # Secure tripcodes translate any characters with their corresponding match
       # in the secure tripcode salt.

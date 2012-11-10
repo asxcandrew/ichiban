@@ -17,11 +17,11 @@
       == f.input(:body, 
                  :as => :text, 
                  cols: nil, 
-                 rows: nil, 
-                 placeholder: "Comment")
+                 rows: nil)
       .meter:span
 
-      == f.input :name, placeholder: "Name", input_html: { value: cookies.signed[:unformatted_name] }
+      == f.input :name, input_html: { value: cookies.signed[:name] }
+      == f.input :tripcode, input_html: { value: cookies.signed[:passphrase] }
       
       == label_tag "#{parent.id}_post_email", "Email"
       == text_field_tag :email, '', id: "#{parent.id}_post_email"

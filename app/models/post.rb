@@ -1,5 +1,4 @@
 class Post < ActiveRecord::Base
-  include ColorDigest
   include LoremIpsum
   include Tripcode
   attr_accessible(:ip_address,
@@ -49,7 +48,6 @@ class Post < ActiveRecord::Base
 
   # Routines
   before_save :add_lorem_ipsum, :if => :new_record?
-  before_save :calculate_color, :if => :new_record?
   after_validation :touch_ancestor!
   after_validation :increment_parent_replies!
 
@@ -88,37 +86,12 @@ class Post < ActiveRecord::Base
     where("parent_id IS NULL AND board_id = ?", board.id)
   end
 
-  def name=(input = '')
-    options = {}
-    default_name = I18n.t('posts.anonymous')
-    # Check for tripcode
-    hash_pos = input.index('#')
-    
-    # Check for secure tripcode
-    double_hash_pos = input.index('##')
+  def name
+    self[:name] && self[:name].present? ? self[:name] : I18n.t('posts.anonymous')
+  end
 
-    options[:tripcode] = true if hash_pos && hash_pos != double_hash_pos
-    options[:secure_tripcode] = true if double_hash_pos
-
-    if options[:tripcode] || options[:secure_tripcode]
-      self[:name] = hash_pos == 0 ? default_name : input[0...hash_pos]
-    else
-      self[:name] = input.blank? ? default_name : input
-    end
-
-    if options[:secure_tripcode]
-      password = input[(double_hash_pos + 2)..-1]
-      self.secure_tripcode = generate_tripcode(password, secure: true)
-  
-      if options[:tripcode]
-        password = input[(hash_pos + 1)...double_hash_pos]
-        self.tripcode = generate_tripcode(password)
-      end
-
-    elsif options[:tripcode]
-      password = input[(hash_pos + 1)..-1]
-      self.tripcode = generate_tripcode(password)
-    end
+  def tripcode=(passphrase)
+    self[:tripcode] = generate_tripcode_v2(passphrase || self.ip_address)
   end
 
   # Only an ancestor can have a subject.
@@ -133,6 +106,7 @@ class Post < ActiveRecord::Base
   def to_sha2
     Digest::SHA2.hexdigest(SECRET_COOKIE_TOKEN + self.id.to_s)
   end
+
   def date
     self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
   end
@@ -158,10 +132,6 @@ class Post < ActiveRecord::Base
           errors.add(:file_size_limit, I18n.t('posts.errors.file_size_limit', limit: limit))
         end
       end
-    end
-
-    def calculate_color
-      self.color = input_to_color(self.tripcode || self.secure_tripcode || self.ip_address)
     end
     
     def touch_ancestor!

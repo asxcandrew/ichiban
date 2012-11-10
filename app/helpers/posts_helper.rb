@@ -17,7 +17,7 @@ module PostsHelper
 
   def post_article_tag(color, options={}, &block)
     output = ActiveSupport::SafeBuffer.new
-    options[:style] = "border-left-color: #{border_color(color)}"
+    options[:style] = "border-left-color: #{border_color(color)}" if color
 
     output.safe_concat(tag(:article, options, true))
     output << capture(&block)

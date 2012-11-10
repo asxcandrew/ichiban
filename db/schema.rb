@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121109202826) do
+ActiveRecord::Schema.define(:version => 20121110011423) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20121109202826) do
     t.integer  "parent_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.string   "color"
     t.integer  "ancestor_id"
     t.boolean  "locked"
     t.integer  "replies"

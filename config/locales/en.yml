@@ -75,6 +75,12 @@ en:
   simple_form:
     labels:
       defaults:
-        Name: "Name"
+        name: "Name"
         save_IPs: "Save IPs"
         file_size_limit: "File Size Limit (MB)"
+    placeholders:
+      post:
+        name: "Name"
+        subject: "Subject"
+        body: "Comment"
+        tripcode: "Tripcode"
