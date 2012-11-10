@@ -74,7 +74,7 @@ class BoardsController < ApplicationController
 
   protected
     def find_boards
-      @boards = Board.all
+      @boards = Board.order("name ASC").all
     end
 
     def set_board
