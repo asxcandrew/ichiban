@@ -64,11 +64,15 @@ class BoardsController < ApplicationController
   end
 
   def update
-    if @board.update_attributes(params[:board])
-      redirect_to edit_board_path(@board), notice: "Board settings have been successfully updated."
+    if @current_user.boards.include?(@board)
+      if @board.update_attributes(params[:board])
+        redirect_to edit_board_path(@board), notice: "Board settings have been successfully updated."
+      else
+        flash[:error] = @board.errors.first[1]
+        render action: 'edit'
+      end
     else
-      flash[:error] = @board.errors.first[1]
-      render action: 'edit'
+      raise CanCan::AccessDenied
     end
   end
 
