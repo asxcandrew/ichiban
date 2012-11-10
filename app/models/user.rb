@@ -12,4 +12,9 @@ class User < ActiveRecord::Base
   def last_login
     self[:last_login].nil? ? self.created_at : self[:last_login]
   end
+
+  # Operators have all boards.
+  def boards
+    self.operator? ? Board.all : super
+  end
 end

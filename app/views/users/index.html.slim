@@ -19,7 +19,10 @@
             td == user.email
             td == user.role.to_s.titleize
             td
-              - user.boards.each do |board|
-                == link_to_board(board)
+              - if user.operator?
+                | n/a
+              - else
+                - user.boards.each do |board|
+                  == link_to_board(board)
             td == time_tag(user.created_at, title: user.created_at)
             td == time_tag(user.last_login, title: user.last_login)

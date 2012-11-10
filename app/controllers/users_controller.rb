@@ -18,6 +18,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    if params[:directory]
+      @board = Board.find_by_directory(params[:directory])
+      @users = @board.users
+    elsif @current_user.operator?
+      @users = User.all
+    end
   end
 end
