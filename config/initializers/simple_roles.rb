@@ -1,4 +1,4 @@
 SimpleRoles.configure do
-  valid_roles :admin, :moderator, :janitor
+  valid_roles :operator, :administrator, :moderator, :janitor
   strategy :one
 end

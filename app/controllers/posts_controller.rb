@@ -62,11 +62,13 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find_by_id(params[:id])
     response = { success: false }
-
     if @post
       # No sense in keeping them on a page without a parent.
       response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
-      if can?(:destroy, Post) || cookies.signed[@post.to_sha2] == @post.ip_address
+
+      if (can?(:destroy Post) && @current_user.boards.include?(@post.board)) \
+          || cookies.signed[@post.to_sha2] == @post.ip_address
+
         if @post.destroy
           response.merge!(
             { success: true, 

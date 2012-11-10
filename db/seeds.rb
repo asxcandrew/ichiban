@@ -1,16 +1,9 @@
 # This file contains all default values needed to seed the database.
 # The data can be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-User.create!({ email: "admin@example.com",
-               password: "password",
-               :role => :admin,
-               role: :admin })
-
 # Remember to use the correct data type for each entry.
 # => 1 != "1"
-site_settings = { site_name: 'Ichiban!',
-                  max_reports_per_IP: 6,
-                  store_IPs: true }
+site_settings = { site_name: 'Ichiban!' }
 
 site_settings.each do |key, value|
   Setting[key] = value
@@ -38,3 +31,22 @@ boards.each do |board|
   Board.create!(board)
 end
 
+User.create!({ email: "operator@example.com",
+               password: "password",
+               :role => :operator })
+
+User.create!({ email: "admin@example.com",
+               password: "password",
+               :role => :administrator })
+
+User.create!({ email: "moderator@example.com",
+               password: "password",
+               :role => :moderator })
+
+User.create!({ email: "janitor@example.com",
+               password: "password",
+               :role => :janitor })
+
+User.find_by_email("admin@example.com").boards << Board.find_by_directory("test") 
+User.find_by_email("moderator@example.com").boards << Board.find_by_directory("test")
+User.find_by_email("janitor@example.com").boards << Board.find_by_directory("test")

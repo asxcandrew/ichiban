@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
+      user.touch(:last_login)
 
       if @target.nil?
         @target = root_url
