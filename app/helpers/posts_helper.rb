@@ -17,7 +17,7 @@ module PostsHelper
 
   def post_article_tag(color, options={}, &block)
     output = ActiveSupport::SafeBuffer.new
-    options[:style] = "border-left-color: #{border_color(color)}" if color
+    options[:style] = "border-color: #{border_color(color)}; background-color: #{background_color(color)}" if color
 
     output.safe_concat(tag(:article, options, true))
     output << capture(&block)
@@ -55,6 +55,15 @@ module PostsHelper
       color = Color::RGB.from_html(hex).to_hsl
       color.saturation = saturation_limit if color.saturation > saturation_limit
       color.lightness = lightness_limit if color.lightness > lightness_limit
+
+      color.html
+    end
+  end
+
+  def background_color(hex)
+    unless hex.nil?
+      color = Color::RGB.from_html(hex).to_hsl
+      color.lightness = 95.0
 
       color.html
     end

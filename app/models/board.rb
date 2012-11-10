@@ -40,7 +40,8 @@ class Board < ActiveRecord::Base
 
   private
     def init
-      self.save_IPs ||= true
+      # save_IPs will be nil in initialization.
+      self.save_IPs.nil? ? true : self[:save_IPs]
       self.file_size_limit ||= 3.0
     end
   #end_private

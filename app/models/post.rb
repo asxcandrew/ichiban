@@ -48,6 +48,7 @@ class Post < ActiveRecord::Base
 
   # Routines
   before_save :add_lorem_ipsum, :if => :new_record?
+  before_save :set_tripcode, :if => :new_record?
   after_validation :touch_ancestor!
   after_validation :increment_parent_replies!
 
@@ -86,12 +87,17 @@ class Post < ActiveRecord::Base
     where("parent_id IS NULL AND board_id = ?", board.id)
   end
 
+  def set_tripcode
+    # Is passphrase declared? Not blank? Otherwise use the post's IP address
+    self.tripcode = self[:ip_address] if self[:tripcode].nil? || self[:tripcode].blank?
+  end
+
   def name
     self[:name] && self[:name].present? ? self[:name] : I18n.t('posts.anonymous')
   end
 
   def tripcode=(passphrase)
-    self[:tripcode] = generate_tripcode_v2(passphrase || self.ip_address)
+    self[:tripcode] = generate_tripcode_v2(passphrase)
   end
 
   # Only an ancestor can have a subject.

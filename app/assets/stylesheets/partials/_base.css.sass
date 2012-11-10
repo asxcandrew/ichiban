@@ -3,7 +3,7 @@ $slow-transition: 500ms
 $fast-transition: 200ms
 
 $opaque: 1.0
-$translucent: 0.4
+$translucent: 0.6
 
 // Fonts
 $fonts: "DejaVu Sans", Arial, Helvetica, sans-serif
@@ -16,12 +16,12 @@ $footer-height: 40px
   +box-sizing(border-box)
 
 html, body
-  height: 100%
-  background-color: $base
+  // +background-image(+linear-gradient(left top, #fff, #ddd))
   color: $dark-base
   font:
     family: $fonts
-
+  height: 100%
+  background-color: lighten($base, 30%)
 
 hr
   border: 1px solid darken($base, 5%)
@@ -48,6 +48,7 @@ a
   visibility: hidden
 
 .container
+  +background-image(linear-gradient(lighten($base, 10%), lighten($base, 15%)))
   min-height: 100%
 
 .wrapper

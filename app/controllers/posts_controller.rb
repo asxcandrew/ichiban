@@ -25,10 +25,11 @@ class PostsController < ApplicationController
   end
 
   def create
+    @board = Board.find_by_id(params[:post][:board_id])
     # Simulate different IP addresses
-    params[:post][:ip_address] = Setting.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
+    params[:post][:ip_address] = @board.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
+    
     @post = Post.new(params[:post])
-
     path_options = {}
 
     # Only a bot would see this field.
@@ -43,7 +44,7 @@ class PostsController < ApplicationController
         # Used to delete posts.
         cookies.signed[@post.to_sha2] = {value: @post.ip_address, expires: 1.week.from_now }
 
-        flash[:notice] = I18n.t('posts.create.created', id: @post.id)
+        # flash[:notice] = I18n.t('posts.create.created', id: @post.id)
 
         if @post.parent
           redirect_to(request.referrer + "##{@post.id}")

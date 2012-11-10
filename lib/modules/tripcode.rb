@@ -1,6 +1,8 @@
 module Tripcode
   def generate_tripcode_v2(passphrase)
-    Digest::SHA2.hexdigest(SECURE_TRIPCODE_SALT + passphrase)[-6..-1]
+    unless passphrase.nil? || passphrase.blank?
+      Digest::SHA2.hexdigest(SECURE_TRIPCODE_SALT + passphrase)[-6..-1]
+    end
   end
 
   # Below is the canonical way to make 2ch style tripcodes.
