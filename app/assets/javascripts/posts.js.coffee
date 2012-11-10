@@ -54,8 +54,8 @@ toggleReply = (id) ->
     post.replies
 
     label = if post.replies == 1 then "reply" else "replies"
-    wordy_number = num2str(post.replies)
-    $("##{id} .replies").text("#{titleize(wordy_number)} #{label}")
+    # wordy_number = num2str(post.replies)
+    $("##{id} .replies").text("#{post.replies} #{label}")
 
 checkImageField = (value) ->
   if value == ''
