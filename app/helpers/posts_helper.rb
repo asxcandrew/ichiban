@@ -17,7 +17,11 @@ module PostsHelper
 
   def post_article_tag(color, options={}, &block)
     output = ActiveSupport::SafeBuffer.new
-    options[:style] = "border-color: #{border_color(color)}; background-color: #{background_color(color)}" if color
+    if color
+      options[:style] = 
+        "border-color: #{post_color(color)}; 
+         background-color: #{background_color(color)};"
+    end
 
     output.safe_concat(tag(:article, options, true))
     output << capture(&block)
@@ -45,7 +49,7 @@ module PostsHelper
     end
   end
 
-  def border_color(hex)
+  def post_color(hex)
     # We can take the tripcode hex for what it is but the color
     # may be too strong for our layout.
     saturation_limit = 35.0
