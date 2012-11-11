@@ -53,7 +53,7 @@ module PostsHelper
     # We can take the tripcode hex for what it is but the color
     # may be too strong for our layout.
     saturation_limit = 35.0
-    lightness_limit = 48.8
+    lightness_limit = 55.0
     # HACK: There's gotta be better way to deal with this.
     unless hex.nil?
       color = Color::RGB.from_html(hex).to_hsl
