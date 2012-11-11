@@ -1,6 +1,8 @@
-== link_back_to_board
+.navigation-back
+  == link_back_to_board
 
 == render partial: 'posts/parent', locals: { parent: @post }
 
-- if @post.replies > 1
-  == link_back_to_board
+- if @post.replies > 2
+  .navigation-back
+    == link_back_to_board
