@@ -27,6 +27,8 @@ en:
       board_not_given: "Board was not specified."
       suspended: "Your posting privilages have been suspended until %{ends_at} for: %{reason}"
       file_size_limit: "Images cannot be larger than %{limit} megabytes."
+      throttle_limit: "You're posting too fast!"
+      creation_limit: "You're posting too much!"
     controls:
       delete: "delete"
       delete_post: "Delete tripcode"

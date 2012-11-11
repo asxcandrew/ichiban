@@ -59,6 +59,25 @@ class Post < ActiveRecord::Base
   # in the post.js.coffee file.
   validates_length_of :body, maximum: 800
 
+  # Posting limitations
+  validate :throttle_limit, :if => :new_record?
+  # validate :creation_limit, :if => :new_record?
+
+  def throttle_limit
+    unless Rails.env.development?
+      posts = Post.limit(1).where("ip_address = ? AND created_at >= ?", self.ip_address, Time.now - 1.minute)
+      errors.add(:throttle_limit, I18n.t('posts.errors.throttle_limit')) if posts.any?
+    end
+  end
+
+  # TODO: This feature needs more work.
+  # def creation_limit
+  #   posts = Post.limit(5).where("ip_address = ? AND created_at >= ?", self.ip_address, Time.now - 5.minutes)
+  #   if posts.size == 5
+  #     errors.add(:creation_limit, I18n.t('posts.errors.creation_limit'))
+  #   end
+  # end
+
   # We only increment after_validation instead of after_save to avoid undoing
   # the decrement method.
   def increment_parent_replies!
@@ -77,10 +96,6 @@ class Post < ActiveRecord::Base
         self.parent.decrement_parent_replies!
       end
     end
-  end
-
-  def self.owned_by(user)
-    user.posts
   end
 
   def self.threads_for(board)
