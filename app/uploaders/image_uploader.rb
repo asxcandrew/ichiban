@@ -7,10 +7,17 @@ class ImageUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::IsolatedHelper
   include Cloudinary::CarrierWave        
 
+  version :formatted do
+    cloudinary_transformation :angle => :exif
+  end
+
   version :thumbnail do
     process resize_to_limit: [250, 250]
     process convert: 'jpg'
-    # process :store_geometry => :thumbnail
+
+    # This isn't documented anywhere. Thanks Cloudinary.
+    cloudinary_transformation quality: 90
+    cloudinary_transformation :angle => :exif
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

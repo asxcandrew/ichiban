@@ -40,8 +40,8 @@ module PostsHelper
   end
 
   def link_to_image(asset)
-    link_to(asset.to_s) do
-      image_tag(asset.thumbnail, 'data-toggle' => asset)
+    link_to(asset.formatted.to_s) do
+      image_tag(asset.thumbnail.to_s, 'data-toggle' => asset.formatted.to_s)
     end
   end
 
