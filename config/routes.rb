@@ -23,18 +23,6 @@ Ichiban::Application.routes.draw do
   end
 
   scope 'tripcodes' do
-    scope 'secure' do
-      get ':tripcode/' => 'tripcodes#show', 
-          :as => :secure_tripcode, 
-          secure: true, 
-          constraints: { tripcode: /[^\/]+/ }
-
-      get ':tripcode/:page' => 'tripcodes#show', 
-          :as => :secure_tripcode, 
-          secure: true, 
-          constraints: { tripcode: /[^\/]+/, page: /\d+/ }
-    end
-
     get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
     get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/, page: /\d+/ }
   end
