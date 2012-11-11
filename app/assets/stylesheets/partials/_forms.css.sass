@@ -7,10 +7,11 @@ form
     max-width: 100%
     font-family: $fonts
     border: 0
+    border: 1px solid lighten($dark-base, 70%)
+
 
     // width: 350px
     height: 70px
-
     padding: 2px 4px
   
   .selection
@@ -21,6 +22,10 @@ form
       width: auto
       margin-right: 10px
 
+  .input
+    // simple_form wraps everything in divs.
+    // This will fix the style issue for now.
+    display: inline
 
   input
     width: 100%
@@ -30,9 +35,14 @@ form
     
     margin: 5px 0
 
+    &.name, &.tripcode
+      display: inline-block    
+      width: 50%
+
     &[type="text"], &[type="password"], &[type="email"]
       background-color: $light
       padding: 2px 4px
+      border: 1px solid lighten($dark-base, 70%)
 
     &[type="checkbox"]
       display: inline-block

@@ -20,8 +20,8 @@
                  rows: nil)
       .meter:span
 
-      == f.input :name, input_html: { value: cookies.signed[:name] }
-      == f.input :tripcode, input_html: { value: cookies.signed[:passphrase] }
+      == f.input :name, input_html: { value: cookies.signed[:name], class: 'name'}
+      == f.input :tripcode, input_html: { :type => :password, value: cookies.signed[:passphrase], class: 'tripcode'}
       
       == label_tag "#{parent.id}_post_email", "Email"
       == text_field_tag :email, '', id: "#{parent.id}_post_email"

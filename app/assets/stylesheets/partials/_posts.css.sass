@@ -85,8 +85,17 @@
     img
       border: 1px solid darken($accent, 25%)
       max-width: none
+
       &.loading
         opacity: $translucent
+        animation: pulsate 1s ease-out
+        animation-iteration-count: infinite
+
+        -webkit-animation: pulsate 1s ease-out
+        -webkit-animation-iteration-count: infinite
+
+        -moz-animation: pulsate 1s ease-out
+        -moz-animation-iteration-count: infinite
 
     a
       display: inline-block
@@ -107,6 +116,7 @@
 
 .reply
   margin-left: +30px
+  max-width: 500px
   article
     background-color: lighten($accent, 20%)
   display: none
