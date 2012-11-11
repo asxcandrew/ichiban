@@ -1,7 +1,7 @@
 - if @board
   .new-post.compact-form
     == simple_form_for(@post,
-                       autocomplete: "off", 
+                       :autocomplete => :off, 
                        html: { multipart: true }) do |f|
       == f.hidden_field :board_id, value: @board.id
 
@@ -9,8 +9,15 @@
       == f.input :body, :as => :text
       .meter:span
       
-      == f.input :name, input_html: { value: cookies.signed[:name], class: 'name'}
-      == f.input :tripcode, input_html: { :type => :password, value: cookies.signed[:passphrase], class: 'tripcode'}
+      == f.input(:name, 
+                 input_html: { value: cookies.signed[:name], 
+                               class: 'name', 
+                               :autocomplete => :off })
+      == f.input(:tripcode, 
+                 input_html: { :type => :password, 
+                               value: cookies.signed[:passphrase], 
+                               class: 'tripcode',
+                               :autocomplete => :off })
       == label_tag :email
       == text_field_tag :email
       
