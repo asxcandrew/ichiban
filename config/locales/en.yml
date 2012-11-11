@@ -4,6 +4,8 @@
 en:
   license: "%{link} is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License."
   posts:
+    tripcodes:
+      browse: "Browse posts made by this user."
     parent:
       last_reply: "Last reply was "
     anonymous: "Anonymous"
@@ -75,6 +77,7 @@ en:
       already_logged_in: "You're already logged in."
       invalid_email_or_password: "Invalid email or password."
   simple_form:
+    disable_submit: "Submitting!"
     labels:
       defaults:
         name: "Name"

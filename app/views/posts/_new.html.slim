@@ -17,4 +17,4 @@
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file
 
-      == f.submit disabled: true
+      == f.submit disabled: true, disable_with: t('simple_form.disable_submit')

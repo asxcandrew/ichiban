@@ -28,4 +28,5 @@
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file
 
-      == f.submit "Submit", style: "background-color: #{post_color(cookies.signed[:tripcode])}"
+      == f.submit(disable_with: t('simple_form.disable_submit'), 
+                  style: "background-color: #{post_color(cookies.signed[:tripcode])}")
