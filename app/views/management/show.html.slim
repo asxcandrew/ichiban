@@ -4,12 +4,7 @@
     == label_tag 'settings[site_name]', "Site name"
     == text_field_tag 'settings[site_name]', Setting[:site_name], placeholder: "Site name"
 
-    == label_tag 'settings[max_reports_per_IP]', 'Max reports per IP'
-    == number_field_tag 'settings[max_reports_per_IP]', 
-                        Setting[:max_reports_per_IP],
-                        min: 1
-
-    == label_tag 'settings[save_IPs]', "Save IPs?"
-    == check_box_tag 'settings[save_IPs]', true, Setting[:save_IPs]
+    == label_tag 'settings[tag_line]', "Tag line"
+    == text_field_tag 'settings[tag_line]', Setting[:tag_line], placeholder: "Tag line"
 
     == f.submit

@@ -5,7 +5,7 @@ header.site-header
         h3.description = @board.description
     - else
         h1.hero-text = link_to(Setting.site_name, root_path)
-        h3.description Modern Imageboard
+        h3.description = Setting.tag_line
 
   .infotainment
     - if @current_user
