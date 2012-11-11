@@ -37,8 +37,8 @@ class PostsController < ApplicationController
       redirect_to request.referrer
     else
       if @post.save
-        cookies.signed[:name] = { value: params[:post][:name], expires: 1.week.from_now }
         cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
+        cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
         cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
 
         # Used to delete posts.

@@ -1,13 +1,7 @@
 footer
-  - if can?(:manage, Post)
-    abbr.name(title=post.ip_address) = post.name
-  - else
-    span.name = post.name
-
-  - if post.tripcode
-    span.tripcode == link_to_tripcode(post.tripcode)
-  - if post.secure_tripcode
-    span.secure.tripcode == link_to_tripcode(post.secure_tripcode, secure: true)
+  == link_to_tripcode(post.tripcode) do
+    .name = post.name
+    .tripcode = post.tripcode_symbol
 
   .right
     == render partial: 'posts/controls', locals: { post: post }

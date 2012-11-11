@@ -1,6 +1,9 @@
 header
   .date
     == time_tag(post.created_at, title: post.created_at)
+  - if can?(:manage, Post)
+    .ip-address = post.ip_address
+
   .right
     // Only show a parent link if the post in question is the parent of the thread
     // and if they even have a parent.

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Post < ActiveRecord::Base
   include LoremIpsum
   include Tripcode
@@ -65,14 +66,18 @@ class Post < ActiveRecord::Base
 
   def throttle_limit
     unless Rails.env.development?
-      posts = Post.limit(1).where("ip_address = ? AND created_at >= ?", self.ip_address, Time.now - 1.minute)
+      posts = Post.limit(1).where("ip_address = ? AND created_at >= ?", 
+                                  self.ip_address,
+                                  Time.now - 1.minute)
       errors.add(:throttle_limit, I18n.t('posts.errors.throttle_limit')) if posts.any?
     end
   end
 
   # TODO: This feature needs more work.
   # def creation_limit
-  #   posts = Post.limit(5).where("ip_address = ? AND created_at >= ?", self.ip_address, Time.now - 5.minutes)
+  #   posts = Post.limit(5).where("ip_address = ? AND created_at >= ?", 
+  #                                self.ip_address, 
+  #                                Time.now - 5.minutes)
   #   if posts.size == 5
   #     errors.add(:creation_limit, I18n.t('posts.errors.creation_limit'))
   #   end
@@ -110,6 +115,12 @@ class Post < ActiveRecord::Base
   def name
     self[:name] && self[:name].present? ? self[:name] : I18n.t('posts.anonymous')
   end
+
+  def tripcode_symbol
+    i = self[:tripcode].hex % TRIPCODE_SYMBOLS.size
+    TRIPCODE_SYMBOLS[i]
+  end
+
 
   def tripcode=(passphrase)
     self[:tripcode] = generate_tripcode_v2(passphrase)

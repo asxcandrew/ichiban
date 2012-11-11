@@ -13,6 +13,7 @@
       margin: 10px 5px 10px -10px
       float: left
       font-size: 2.2em
+
   article
     border: 1px solid $bold-accent
     min-width: 500px
@@ -29,14 +30,25 @@
       &:hover .date
         +transition-property(opacity)
         +transition-duration($fast-transition)
-        opacity: 1.0
-      .date
+        opacity: $opaque
+
+      &:hover .ip-address
+        +transition-property(opacity)
+        +transition-duration($fast-transition)
+        text-shadow: none
+        opacity: $opaque
+
+      
+      .date, .ip-address
         display: inline-block
-        opacity: 0.25
+        opacity: $translucent
         
         font:
           size: 0.8em
           style: italic
+      .ip-address
+        opacity: $translucent - 0.5
+
       .ancestor, .parent, .id
         margin-left: 7px
         display: inline-block
@@ -55,8 +67,12 @@
     // Any child of the footer
     & > *
       display: inline-block
+
     .name
       color: $user-accent
+
+    .name, .tripcode
+      display: inline
 
     &:hover .controls
       opacity: $opaque
