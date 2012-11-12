@@ -1,13 +1,22 @@
 module ApplicationHelper
   include IchibanAuthorization
-  
+
   def title
     text = @prefix ? "#{@prefix} :: #{Setting.site_name}" : Setting.site_name
     content_tag("title", text)
   end
 
   def markdown(text)
-    text.nil? ? '' : $MarkdownRenderer.render(h(text))
+    # HACK: Recarpet's html filter is lackluster. We can filter using Rails but this breaks quotes.
+    text = h(text)
+    text.gsub!("&gt;", '>')
+
+    # Double newline should break as expected.
+    text.gsub!(/\r\n\r\n/, "<br><br>")
+
+    # Single newline should break as expected.
+    text.gsub!(/\r\n/, "\n\n")
+    text.nil? ? '' : $MarkdownRenderer.render(text)
   end
 
   def pluralize_without_count(count, noun, text = nil)

@@ -4,5 +4,8 @@ options = { hard_wrap: true,
             autolink: true,
             no_intraemphasis: true,
             fenced_code: true,
+            safe_links_only: true,
+            strikethrough: true,
+            superscript: true,
             gh_blockcode: true }
 $MarkdownRenderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, options)
