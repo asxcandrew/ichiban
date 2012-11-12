@@ -6,7 +6,7 @@
     thead
       tr
         td #
-        th Post ID
+        th Post
         th Poster IP
         th Reporter IP
         th Comment
@@ -16,7 +16,7 @@
         - @reports.each do |report|
           tr.report(id=report.id data-postID=report.post_id)
             td = report.id
-            td = link_to_post(report.post)
+            td = link_to_post("#{report.post.board.directory}##{report.post.id}", report.post)
             td = report.post.ip_address
             td = report.ip_address
             td = report.comment

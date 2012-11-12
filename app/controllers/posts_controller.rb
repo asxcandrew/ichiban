@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     @child_limit = 10
 
     if @post && @board
-      @prefix = I18n.t('posts.show.prefix', id: @post.id, board: @board.name)
+      @prefix = I18n.t('posts.show.prefix', post_id: @post.id, board: @board.name)
 
       @prefix << ": #{@post.subject}" if @post.subject && !@post.subject.blank?
 
@@ -44,7 +44,7 @@ class PostsController < ApplicationController
         # Used to delete posts.
         cookies.signed[@post.to_sha2] = {value: @post.ip_address, expires: 1.week.from_now }
 
-        # flash[:notice] = I18n.t('posts.create.created', id: @post.id)
+        # flash[:notice] = I18n.t('posts.create.created', post_id: @post.id)
 
         if @post.parent
           redirect_to(request.referrer + "##{@post.id}")
@@ -66,26 +66,25 @@ class PostsController < ApplicationController
       # No sense in keeping them on a page without a parent.
       response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
 
-      if (can?(:destroy, Post) && @current_user.boards.include?(@post.board)) \
-          || cookies.signed[@post.to_sha2] == @post.ip_address
+      if check_if_user?(can?(:destroy, Post), @post) || cookies.signed[@post.to_sha2] == @post.ip_address
 
         if @post.destroy
           response.merge!(
             { success: true, 
-              message: I18n.t('posts.destroy.deleted', id: @post.id) })
+              message: I18n.t('posts.destroy.deleted', post_id: @post.id) })
 
-          flash[:notice] = I18n.t('posts.destroy.deleted', id: @post.id) if params[:redirect] == 'true'
+          flash[:notice] = I18n.t('posts.destroy.deleted', post_id: @post.id) if params[:redirect] == 'true'
           
           # Better clean up after ourselves.
           cookies.delete(@post.to_sha2)
         end
 
       else # Authorization failed.
-        response[:message] = I18n.t('posts.destroy.not_authorized', id: params[:id])
+        response[:message] = I18n.t('posts.destroy.not_authorized', post_id: params[:id])
       end
 
     else # Post doesn't exist.
-      response[:message] = I18n.t('posts.destroy.not_found', id: params[:id])
+      response[:message] = I18n.t('posts.destroy.not_found', post_id: params[:id])
     end
 
     render json: response

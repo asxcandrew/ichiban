@@ -1,5 +1,6 @@
-
 class ApplicationController < ActionController::Base
+  include IchibanAuthorization
+
   protect_from_forgery
   before_filter :current_user
   rescue_from CanCan::AccessDenied do |exception|

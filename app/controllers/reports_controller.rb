@@ -2,8 +2,8 @@ class ReportsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @prefix = "View Reports"
-    @reports = Report.find(:all, order: "created_at")
+    @prefix = I18n.t('reports.index.prefix')
+    @reports = @current_user.reports.order('created_at')
 
     respond_to do |format|
       format.html
@@ -21,12 +21,12 @@ class ReportsController < ApplicationController
       if @report.save
         response.merge!(
           { success: true,
-            message: "Report submitted!" })
+            message: I18n.t('reports.create.success') })
       else
         response[:message] = @report.errors.first[1]
       end
     else
-      response[:message] = "Post ##{params[:report][:post_id]} not found."
+      response[:message] = I18n.t('reports.create.post_not_found', post_id: params[:report][:post_id])
     end
 
     render json: response
@@ -37,20 +37,20 @@ class ReportsController < ApplicationController
     response = { success: false }
 
     if @report
-      if can?(:manage, Report)
+      if check_if_user?(can?(:destroy, Report), @report)
         if @report.destroy
           response.merge!(
             { success: true,
-              message: "Report ##{@report.id} deleted.",
+              message: I18n.t('reports.destroy.success', report_id: @report.id),
               report_total:  Report.all.size })
         else
           response[:message] = @report.errors.full_messages.to_sentence
         end
       else
-        response[:message] = "You are not permitted to delete report ##{params[:id]}."
+        response[:message] = I18n.t('reports.destroy.not_authorized', report_id: params[:id])
       end
     else
-      response[:message] = "Report ##{params[:id]} not found."
+      response[:message] = I18n.t('reports.destroy.report_not_found', report_id: params[:id])
     end
 
     render json: response

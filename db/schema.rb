@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(:version => 20121110011423) do
     t.string   "name"
     t.string   "directory"
     t.text     "description"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.float    "file_size_limit"
-    t.integer  "max_reports"
+    t.integer  "max_reports_per_IP"
     t.boolean  "save_IPs"
   end
 

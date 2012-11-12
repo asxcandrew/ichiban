@@ -64,7 +64,7 @@ class BoardsController < ApplicationController
   end
 
   def update
-    if @current_user.boards.include?(@board)
+    if check_if_user?(can?(:update, Board), @board)
       if @board.update_attributes(params[:board])
         redirect_to edit_board_path(@board), notice: "Board settings have been successfully updated."
       else

@@ -10,13 +10,13 @@ en:
       last_reply: "Last reply was "
     anonymous: "Anonymous"
     show:
-      prefix: "Post #%{id} on %{board}"
+      prefix: "Post #%{post_id} on %{board}"
     create:
-      created: "Post #%{id} created!"
+      created: "Post #%{post_id} created!"
     destroy:
-      deleted: "Deleted post #%{id}!"
-      not_authorized: "You are not authorized to delete post #%{id}."
-      not_found: "Post #%{id} not found."
+      deleted: "Deleted post #%{post_id}!"
+      not_authorized: "You are not authorized to delete post #%{post_id}."
+      not_found: "Post #%{post_id} not found."
     child:
       continue_thread: "Continue this thread &rarr;"
     errors:
@@ -58,6 +58,23 @@ en:
       directory: "A board must have a directory."
       directory_uniqueness: "A board's directory must be unique."
       directory_modification: "A board's directory cannot be changed."
+  reports:
+    index:
+      prefix: "View Reports"
+    create:
+      success: "Report submitted!"
+      post_not_found: "Post #%{post_id} not found."
+    destroy:
+      success: "Report #%{report_id} deleted."
+      report_not_found: "Report #%{report_id} not found."
+      not_authorized: "You are not permitted to delete report #%{report_id}."
+    errors:
+      comment: "A comment must be included with your report."
+      post_not_found: "Post not found. Was it deleted?"
+      descriptive_comment: "A descriptive comment must be included with your report."
+      comment_too_long: "Comments may not exceed 140 characters."
+      duplicate_report: "You have already reported that post."
+      max_reports_per_IP: "You have too many open reports."
   suspensions:
     create:
       success: "Suspended %{ip_address} until %{ends_at}"
@@ -76,16 +93,3 @@ en:
     errors:
       already_logged_in: "You're already logged in."
       invalid_email_or_password: "Invalid email or password."
-  simple_form:
-    disable_submit: "Submitting!"
-    labels:
-      defaults:
-        name: "Name"
-        save_IPs: "Save IPs"
-        file_size_limit: "File Size Limit (MB)"
-    placeholders:
-      post:
-        name: "Name"
-        subject: "Subject"
-        body: "Comment"
-        tripcode: "Tripcode"

@@ -8,13 +8,23 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :boards
   has_many :posts, :through => :boards
+  has_many :reports, :through => :posts
 
   def last_login
     self[:last_login].nil? ? self.created_at : self[:last_login]
   end
 
-  # Operators have all boards.
+  # Operators have access to everything.
+  # TODO: Refactor to be a little less...cumbersome.
   def boards
-    self.operator? ? Board.all : super
+    self.operator? ? Board.where(nil) : super
+  end
+
+  def posts
+    self.operator? ? Post.where(nil) : super
+  end
+
+  def reports
+    self.operator? ? Report.where(nil) : super
   end
 end

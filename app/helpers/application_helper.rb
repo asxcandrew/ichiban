@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include IchibanAuthorization
+  
   def title
     text = @prefix ? "#{@prefix} :: #{Setting.site_name}" : Setting.site_name
     content_tag("title", text)

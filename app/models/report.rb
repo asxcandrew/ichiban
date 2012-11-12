@@ -3,15 +3,15 @@ class Report < ActiveRecord::Base
 
   belongs_to :post
 
-  validates_presence_of :comment, message: "A comment must be included with your report."
-  validates_presence_of :post, message: "Post not found. Was it deleted?"
+  validates_presence_of :comment, message: I18n.t('reports.errors.comment')
+  validates_presence_of :post, message: I18n.t('reports.errors.post_not_found')
   
-  validates_length_of :comment, minimum: 4, message: "A descriptive comment must be included with your report."
-  validates_length_of :comment, maximum: 140, message: "Comments may not exceed 140 characters."
+  validates_length_of :comment, minimum: 4, message: I18n.t('reports.errors.descriptive_comment')
+  validates_length_of :comment, maximum: 140, message: I18n.t('reports.errors.comment_too_long')
 
   validates_uniqueness_of :ip_address, 
                           :scope => :post_id,
-                          message: "You have already reported that post."
+                          message: I18n.t('reports.errors.duplicate_report')
   validate :max_reports_per_IP
 
 
@@ -22,8 +22,9 @@ class Report < ActiveRecord::Base
   private
     # TODO: Replace max amount of reports number with variable from admin panel.
     def max_reports_per_IP
-      if Report.where(ip_address: self.ip_address).size >= Setting[:max_reports_per_IP]
-        errors.add(:max_reports, "You have too many open reports.")
+      post = Post.find_by_id(self.post_id)
+      if Report.where(ip_address: self.ip_address).size >= post.board.max_reports_per_IP
+        errors.add(:max_reports, I18n.t('reports.errors.max_reports_per_IP'))
       end
     end
   #end_private
