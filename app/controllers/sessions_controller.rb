@@ -30,4 +30,10 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_url, notice: I18n.t('sessions.logged_out')
   end
+
+  def show
+    # Users arrive here if they try to view a session.
+    # This usually happens if they middle clicked a link with a destroy method.
+    destroy
+  end
 end
