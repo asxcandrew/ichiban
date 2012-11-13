@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   include IchibanAuthorization
-
   protect_from_forgery
   before_filter :current_user
+
   rescue_from CanCan::AccessDenied do |exception|
     if @current_user
       flash[:error] = exception.message
@@ -14,6 +14,16 @@ class ApplicationController < ActionController::Base
       flash[:error] = I18n.t('sessions.require_log_in')
       redirect_to(new_session_path)
     end
+  end
+
+  rescue_from RestClient::ServerBrokeConnection do |exception|
+    flash[:error] = "The server broke the connection. Did the request timeout?"
+    redirect_to request.referrer
+  end
+
+  rescue_from Cloudinary::CarrierWave::UploadError do |exception|
+    flash[:error] = exception.message
+    redirect_to request.referrer
   end
 
   unless Rails.application.config.consider_all_requests_local
