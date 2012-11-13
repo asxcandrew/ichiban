@@ -25,6 +25,7 @@ Ichiban::Application.routes.draw do
 
     scope ':directory' do
       resources :users
+      resources :reports
     end
   end
 

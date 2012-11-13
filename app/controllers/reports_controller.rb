@@ -1,9 +1,23 @@
 class ReportsController < ApplicationController
   load_and_authorize_resource
-  
+
   def index
     @prefix = I18n.t('reports.index.prefix')
-    @reports = @current_user.reports.order('created_at')
+
+    if params[:directory]
+      @board = Board.find_by_directory(params[:directory])
+
+      if check_if_user?(can?(:manage, Board), @board)
+        @reports = @board.reports.order('created_at')
+      else
+        raise CanCan::AccessDenied
+      end
+
+    elsif @current_user.operator?
+      @reports = @current_user.reports.order('created_at')
+    else
+      raise CanCan::AccessDenied
+    end
 
     respond_to do |format|
       format.html
