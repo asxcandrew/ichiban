@@ -39,7 +39,8 @@ class UsersController < ApplicationController
 
     if @user
       if check_if_user?(can?(:destroy, User), @user)
-        if @destroy
+        if @user.destroy
+          response[:success] = true
           response[:message] = I18n.t('users.destroy.success', email: @user.email)
         else 
           response[:message] = @user.errors.full_messages.to_sentence

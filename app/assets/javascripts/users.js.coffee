@@ -14,5 +14,14 @@ deleteUser = (id) ->
     $.post "/users/#{id}", params, (response) ->
       if response.success
         flash("notice", response.message)
+        
+        $("##{id}").hide animationDuration, () ->
+          $(this).empty().remove()
+          updateUserCounter()
       else
         flash("error", response.message)
+
+updateUserCounter = () ->
+  total = $('.users .user').length
+  label = if total == 1 then "User" else "Users"
+  $('#user-counter').text("#{total} #{label}")

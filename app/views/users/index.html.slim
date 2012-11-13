@@ -14,7 +14,7 @@
     tbody
       - if @users
         - @users.each do |user|
-          tr(id=user.id)
+          tr.user(id=user.id)
             td.id == user.id
             td.email == user.email
             td.role == user.role.to_s.titleize
