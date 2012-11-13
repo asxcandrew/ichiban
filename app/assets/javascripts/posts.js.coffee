@@ -18,19 +18,23 @@ $ ->
     toggleImageExpansion($(this))
 
 toggleImageExpansion = ($link) ->
+  # Hide the animation element
+  $link.toggleClass('expanded')
+
   image = $link.children("img")
   max_width = $link.parents('article').width()
 
+  # Get sources
   oldSource = image.attr('src')
   newSource = image.data('toggle')
 
+  # Store old source
   image.data('toggle': oldSource)
 
-  # HACK: issue where image dimensions are not updated.
-  # The following corrects the issue temporarily.
+  # Add loading decorator.
   image.addClass('loading')
+
   image.css('max-width': max_width)
-  
   image.attr('src': newSource).one('load', () ->
     image.removeClass('loading'))
 

@@ -101,7 +101,6 @@
     margin-right: 8px
     img
       border: 1px solid darken($accent, 25%)
-      max-width: none
 
       &.loading
         opacity: $translucent
@@ -113,11 +112,18 @@
 
         -moz-animation: pulsate 1s ease-out
         -moz-animation-iteration-count: infinite
-
     a
       display: inline-block
-    figcaption
-      margin-bottom: 4px
+      &.animated:before
+        position: absolute
+        padding: 6px
+        color: $light
+        font-size: 0.6em
+        content: "animated"
+        background-color: hsla(0%,0%,0%, 0.125)
+        opacity: $translucent
+      &.expanded:before
+        visibility: hidden
 
   .body
     line-height: 20px
