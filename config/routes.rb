@@ -1,5 +1,11 @@
 Ichiban::Application.routes.draw do
 
+  resources :posts
+  resources :users
+  resources :sessions
+  resources :reports
+  resources :suspensions
+
   # We declare our routes manually instead of using the
   # resource method because our primary key is the
   # board's directory.
@@ -27,12 +33,6 @@ Ichiban::Application.routes.draw do
     get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/, page: /\d+/ }
   end
   
-
-  resources :posts
-  resources :users
-  resources :sessions
-  resources :reports
-  resources :suspensions
   
 
   scope '/manage' do

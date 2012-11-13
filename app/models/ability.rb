@@ -27,6 +27,7 @@ class Ability
       can :manage, Report
       can :manage, Suspension
       can :manage, Board
+      can :manage, User
     end
 
     can(:manage, :all) if @user.operator?

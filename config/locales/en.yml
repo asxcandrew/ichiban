@@ -58,6 +58,14 @@ en:
       directory: "A board must have a directory."
       directory_uniqueness: "A board's directory must be unique."
       directory_modification: "A board's directory cannot be changed."
+  users:
+    create:
+      success: "Created %{role} %{email}!"
+    destroy:
+      success: "Successfully deleted %{email}."
+    errors:
+      not_authorized: "You are not authorized to delete %{email}."
+      user_not_found: "User #%{id} not found. Were they deleted already?"
   reports:
     index:
       prefix: "View Reports"
