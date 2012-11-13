@@ -13,6 +13,7 @@ $ ->
       _method: 'create'
       suspension:
         post_id: post.id
+        board_id: post.board_id
         ip_address: post.ip_address
         reason: prompt("Reason for suspension?")
         

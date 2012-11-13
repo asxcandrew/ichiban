@@ -8,6 +8,9 @@
       th Ends At
       th IP
       th Reason
+      - unless params[:directory]
+        th Board
+
     - if @suspensions
       - @suspensions.each do |suspension|
         = suspension_tr_tag(suspension) do
@@ -17,5 +20,7 @@
             == time_tag(suspension.ends_at, suspension.ends_at, title: suspension.ends_at)
           td = suspension.ip_address
           td = suspension.reason
+          - unless params[:directory]
+            td = link_to_board(suspension.board)
           td
             a.delete-suspension(href='#' title="Delete Suspension" data-id=suspension.id) X

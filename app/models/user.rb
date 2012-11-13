@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :boards
   has_many :posts, :through => :boards
+  has_many :suspensions, :through => :boards
   has_many :reports, :through => :posts
   has_many :users, :through => :boards
 
@@ -27,6 +28,10 @@ class User < ActiveRecord::Base
 
   def reports
     self.operator? ? Report.where(nil) : super
+  end
+
+  def suspensions
+    self.operator? ? Suspension.where(nil) : super
   end
 
   def users

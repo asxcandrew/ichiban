@@ -79,7 +79,7 @@ en:
       post_not_found: "Post #%{post_id} not found."
     destroy:
       success: "Report #%{report_id} deleted."
-      report_not_found: "Report #%{report_id} not found."
+      report_not_found: "Report #%{report_id} not found. Was it deleted?"
       not_authorized: "You are not permitted to delete report #%{report_id}."
     errors:
       comment: "A comment must be included with your report."
@@ -89,10 +89,17 @@ en:
       duplicate_report: "You have already reported that post."
       max_reports_per_IP: "You have too many open reports."
   suspensions:
+    prefix: "View suspensions"
     create:
       success: "Suspended %{ip_address} until %{ends_at}"
+      not_authorized: "You are not authorized to create suspensions for this board."
+    destroy:
+      success: "Suspension for %{ip_address} deleted!"
+      not_authorized: "You are not authorized to delete the suspension for %{ip_address}."
     errors:
+      suspension_not_found: "Suspension #%{suspension_id} not found. Was it deleted?"
       no_ip_address: "An IP address must be given."
+      board_not_found: "Board not found. Was it deleted?"
       post_not_found: "Post not found. Was it deleted?"
       no_reason_given: "A reason must be included with your supension."
       date_parsing: "Could not parse end date. Try something like 'two days from now.'"

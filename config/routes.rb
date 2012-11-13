@@ -1,14 +1,16 @@
 Ichiban::Application.routes.draw do
 
   resources :posts
-  resources :users
   resources :sessions
+
+  # Operators can view all records using the following routes.
+  resources :users
   resources :reports
   resources :suspensions
+  ##
 
   # We declare our routes manually instead of using the
-  # resource method because our primary key is the
-  # board's directory.
+  # resource method because our directory acts the identifier for public use.
 
   # Boards
   root to: 'boards#index'
@@ -26,6 +28,7 @@ Ichiban::Application.routes.draw do
     scope ':directory' do
       resources :users
       resources :reports
+      resources :suspensions
     end
   end
 
@@ -33,7 +36,6 @@ Ichiban::Application.routes.draw do
     get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
     get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/, page: /\d+/ }
   end
-  
   
 
   scope '/manage' do
