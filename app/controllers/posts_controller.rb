@@ -34,6 +34,7 @@ class PostsController < ApplicationController
 
     # Only a bot would see this field.
     if !params[:email].blank?
+      logger.info "Spam Bot detected"
       redirect_to request.referrer
     else
       if @post.save
