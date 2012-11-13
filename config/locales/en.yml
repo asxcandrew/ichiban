@@ -48,10 +48,15 @@ en:
       no_posts: "There aren't any posts."
       empty_page: "There aren't any posts on this page."
       back_to_index: "Go back to the index?"
+    update:
+      success: "Board settings have been successfully updated."
+    destroy:
+      success: "/%{directory}/ permanently deleted."
     navigation:
       back_to_board: "Back to %{board}"
       back_to_directory: "Back to Directory Listing"
     errors:
+      board_not_found: "Could not find board #%{board_id}. Was it deleted?"
       name: "A board must have a name."
       name_too_long: "A board's name must not exceed 100 characters."
       directory_format: "A board's directory must be alphanumeric and at least 2 characters."

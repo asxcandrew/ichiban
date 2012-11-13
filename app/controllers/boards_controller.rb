@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
-  before_filter :find_boards, except: [:delete]
-  before_filter :set_board, except: [:index, :new, :create]
+  before_filter :find_boards, except: [:destroy]
+  before_filter :set_board, only: [:edit, :update, :show]
   load_and_authorize_resource
   
   def index
@@ -47,11 +47,21 @@ class BoardsController < ApplicationController
   end
 
   def destroy
-    if @board.destroy
-      redirect_to root_path, notice: "/#{@board.directory}/ permanently deleted."
+    @board = Board.find_by_id(params[:id])
+
+    if @board
+      if check_if_user?(can?(:manage, Board), @board)
+        if @board.destroy
+          redirect_to root_path, notice: I18n.t('boards.destroy.success', directory: @board.directory)
+        else
+          flash[:error] = @board.errors.first[1]
+          render action: 'edit'
+        end
+      else
+        raise CanCan::AccessDenied
+      end
     else
-      flash[:error] = @board.errors.first[1]
-      render action: 'edit'
+      redirect_to root_path, error: I18n.t('boards.errors.board_not_found', board_id: params[:id])
     end
   end
 
@@ -66,7 +76,7 @@ class BoardsController < ApplicationController
   def update
     if check_if_user?(can?(:update, Board), @board)
       if @board.update_attributes(params[:board])
-        redirect_to edit_board_path(@board), notice: "Board settings have been successfully updated."
+        redirect_to edit_board_path(@board), notice: I18n.t('boards.update.success')
       else
         flash[:error] = @board.errors.first[1]
         render action: 'edit'
