@@ -2,8 +2,12 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :role
   has_secure_password
   
-  validates_presence_of :password, :on => :create
-  validates_uniqueness_of :email, case_sensitive: false
+  validates(:password, presence: { :on => :create })
+
+  validates(:email, 
+            format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create },
+            uniqueness: { case_sensitive: false })
+
   simple_roles # It's that simple :)
 
   has_and_belongs_to_many :boards
