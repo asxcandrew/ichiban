@@ -1,5 +1,5 @@
 - flash.each do |type, value|
-  .flash.alert(class=type)
+  .flash.alert(class=type data-type=type)
     = value
     a.close(data-dismiss="alert" href="#")
       i.icon-remove
