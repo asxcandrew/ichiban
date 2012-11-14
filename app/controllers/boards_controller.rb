@@ -66,11 +66,7 @@ class BoardsController < ApplicationController
   end
 
   def edit
-    if @current_user.boards.include?(@board)
-      @stats = { posts: @board.posts.size }
-    else
-      raise CanCan::AccessDenied
-    end
+    raise CanCan::AccessDenied unless check_if_user?(can?(:update, Board), @board)
   end
 
   def update
