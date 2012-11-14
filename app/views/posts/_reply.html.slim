@@ -3,7 +3,7 @@
     ==  simple_form_for(@reply,
                         autocomplete: "off", 
                         namespace: parent.id,
-                        html: { multipart: true }) do |f|
+                        html: { multipart: true,  'data-postType' => :reply }) do |f|
       - if parent.ancestor_id
         == f.hidden_field(:ancestor_id, 
                           value: parent.ancestor_id)
@@ -35,5 +35,7 @@
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file
 
-      == f.submit(disable_with: t('simple_form.disable_submit'), 
+      == f.submit(disabled: true, 
+                  disable_with: t('simple_form.disable_submit'),
+                  title: t('posts.show.reply_requirements.'),
                   style: "background-color: #{post_color(cookies.signed[:tripcode])}")

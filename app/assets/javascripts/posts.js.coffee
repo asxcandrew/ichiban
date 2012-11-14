@@ -1,9 +1,12 @@
 $ ->
-  $imageField = $("#new_post input:file")
-  checkImageField($imageField.attr('value'))
+  # An upload is required for creating a new post.
+  $uploadField = $(".new_post input:file")
+  $submitField = $(".new_post input:submit")
+  checkUploadField($uploadField.attr('value'), $submitField)
 
-  $imageField.change (e) ->
-    checkImageField(e.target.value)
+  $uploadField.change (e) ->
+    $submitField = $(this).parents('.new_post').find("input[type='submit']")
+    checkUploadField(e.target.value, $submitField)
 
   # The body limitation is also validated in
   # post model.
@@ -60,8 +63,8 @@ toggleReply = (id) ->
     # wordy_number = num2str(post.replies)
     $("##{id} .replies").text("#{post.replies} #{label}")
 
-checkImageField = (value) ->
+@checkUploadField = (value, submitField) ->
   if value == ''
-    $("#new_post input:submit").prop("disabled", true)
+    $(submitField).prop("disabled", true)
   else
-    $("#new_post input:submit").prop("disabled", false)
+    $(submitField).prop("disabled", false)

@@ -2,7 +2,7 @@
   .new-post.compact-form
     == simple_form_for(@post,
                        :autocomplete => :off, 
-                       html: { multipart: true }) do |f|
+                       html: { multipart: true, 'data-postType' => :parent }) do |f|
       == f.hidden_field :board_id, value: @board.id
 
       == f.input :subject
@@ -23,5 +23,4 @@
       
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file
-
-      == f.submit disabled: true, disable_with: t('simple_form.disable_submit')
+      == f.submit disabled: true, disable_with: t('simple_form.disable_submit'), title: t('boards.show.image_required')

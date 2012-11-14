@@ -14,9 +14,19 @@ $.fn.limiter = (opts) ->
 
     percentage = Math.floor((characters / opts.maxLength) * 100)
 
-    form = $(this).parent().parent()
-    meter = $(form).find('.meter span')
-    updateMeter(percentage, meter)
+    $form = $(this).parents('form')
+    $submitField = $form.find('input[type=submit]')
+    $uploadField = $form.find('input[type=file]')
+    $meter = $form.find('.meter span')
+
+    updateMeter(percentage, $meter)
+    
+    # A comment or upload is required for replying.
+    if $form.data('posttype') == 'reply'
+      if characters > 1
+        $($submitField).prop("disabled", false)
+      else
+        $($submitField).prop("disabled", true)
 
     true
 

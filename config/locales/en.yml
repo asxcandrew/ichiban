@@ -11,6 +11,7 @@ en:
     anonymous: "Anonymous"
     show:
       prefix: "Post #%{post_id} on %{board}"
+      reply_requirements: "A comment or upload must be included when replying to a thread."
     create:
       created: "Post #%{post_id} created!"
     destroy:
@@ -51,6 +52,7 @@ en:
       reply_to_post: "Reply to post #%{post_id}"
   boards:
     show:
+      image_required: "An image is required when starting a thread." 
       no_posts: "There aren't any posts."
       empty_page: "There aren't any posts on this page."
       back_to_index: "Go back to the index?"
