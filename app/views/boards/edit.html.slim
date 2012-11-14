@@ -22,5 +22,5 @@
     == button_to("Delete Board",
                  @board, 
                  :method => :delete, 
-                 confirm: "Are you sure? Deleting /#{@board.directory}/ will delete #{@stats[:posts]} posts!",
+                 confirm: "Are you sure? Deleting /#{@board.directory}/ will delete #{@board.posts.size} posts!",
                  class: 'danger')
