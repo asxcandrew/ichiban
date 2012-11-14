@@ -56,6 +56,7 @@ en:
       back_to_board: "Back to %{board}"
       back_to_directory: "Back to Directory Listing"
     errors:
+      max_file_size_limit: "A board cannot have a file limit larger than %{limit} megabytes."
       board_not_found: "Could not find board #%{board_id}. Was it deleted?"
       name: "A board must have a name."
       name_too_long: "A board's name must not exceed 100 characters."

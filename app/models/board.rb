@@ -2,20 +2,19 @@ class Board < ActiveRecord::Base
   attr_accessible :directory, :name, :description, :file_size_limit, :save_IPs, :max_reports_per_IP
 
   
-  validates :name, length: { maximum: 100, 
-                             too_long: I18n.t('boards.errors.name_too_long') }
-  validates_presence_of :name, message: I18n.t('boards.errors.name')
+  validates(:name, 
+            length:  { maximum: 100, 
+                       too_long: I18n.t('boards.errors.name_too_long') },
+           presence: { message: I18n.t('boards.errors.name') })
 
+  validate :max_file_size_limit
 
   validates(:directory, 
-            :format => { :with => /^[a-z0-9]+[-a-z0-9]*[a-z0-9]+$/i,
-            message: I18n.t('boards.errors.directory_format') })
-
-  validates_presence_of :directory, message: I18n.t('boards.errors.directory')
-  
-  validates_uniqueness_of(:directory,
-                          case_sensitive: false,
-                          message: I18n.t('boards.errors.directory_uniqueness'))
+            format:     { with: /^[a-z0-9]+[-a-z0-9]*[a-z0-9]+$/i,
+                          message: I18n.t('boards.errors.directory_format') },
+            presence:   { message: I18n.t('boards.errors.directory') },
+            uniqueness: { case_sensitive: false,
+                          message: I18n.t('boards.errors.directory_uniqueness') })
 
   has_many :posts, :dependent => :destroy
   has_many :suspensions, :dependent => :destroy
@@ -36,7 +35,15 @@ class Board < ActiveRecord::Base
     else
       raise I18n.t('boards.errors.directory_modification')
     end
-  end 
+  end
+
+  def max_file_size_limit
+    # TODO: Set in management panel.
+    limit = 6
+    if self.file_size_limit > limit
+      errors.add(:max_file_size_limit, I18n.t('boards.errors.max_file_size_limit', limit: limit))
+    end
+  end
 
   private
     def init
