@@ -4,15 +4,8 @@
                         autocomplete: "off", 
                         namespace: parent.id,
                         html: { multipart: true }) do |f|
-      - if parent.ancestor_id
-        == f.hidden_field(:ancestor_id, 
-                          value: parent.ancestor_id)
-      - else
-        == f.hidden_field(:ancestor_id, 
-                          value: parent.id)
 
       == f.hidden_field :parent_id, value: parent.id
-      == f.hidden_field :board_id, value: parent.board.id
 
       == f.input(:body, 
                  :as => :text, 

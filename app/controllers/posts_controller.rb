@@ -2,14 +2,13 @@ class PostsController < ApplicationController
   load_and_authorize_resource except: [:destroy]
 
   def show
-    @reply = Post.new
     @post = Post.find_by_id(params[:id])
+    @reply = Post.new
     @board = @post.board unless @post.nil?
     @child_limit = 10
 
     if @post && @board
       @prefix = I18n.t('posts.show.prefix', post_id: @post.id, board: @board.name)
-
       @prefix << ": #{@post.subject}" if @post.subject && !@post.subject.blank?
 
       respond_to do |format|
@@ -25,11 +24,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @board = Board.find_by_id(params[:post][:board_id])
+    # @post = Post.new(params[:post])
     # Simulate different IP addresses
-    params[:post][:ip_address] = @board.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
+    @post.ip_address = @post.board.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
     
-    @post = Post.new(params[:post])
     path_options = {}
 
     # Only a bot would see this field.

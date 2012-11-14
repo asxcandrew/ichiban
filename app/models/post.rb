@@ -7,10 +7,8 @@ class Post < ActiveRecord::Base
                   :body,
                   :board_id,
                   :parent_id,
-                  :ancestor_id,
                   :image_attributes,
                   :tripcode,
-                  :secure_tripcode,
                   :name)
 
   # Board relations
@@ -57,7 +55,8 @@ class Post < ActiveRecord::Base
   after_validation :touch_ancestor!
   after_validation :increment_parent_replies!
 
-  after_initialize :init
+  after_initialize :set_reply_count
+  after_initialize :inherit_parent, :if => :parent_id
   after_destroy :decrement_parent_replies!
 
   # Maximum length is also limited 
@@ -160,10 +159,19 @@ class Post < ActiveRecord::Base
   end
 
   private
-    def init
+    def set_reply_count
       # Will set the default value only if it's nil
       self.replies ||= 0
     end
+
+  def inherit_parent
+    parent = self.parent
+    if parent
+      self.board_id ||= parent.board_id
+      # The ancestor_id would be it's parent's ancestor_id or its own ID.
+      self.ancestor_id ||= (parent.ancestor_id || parent.id)
+    end
+  end
 
     def check_file_size
       if self.image
