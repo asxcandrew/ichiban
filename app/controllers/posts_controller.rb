@@ -43,7 +43,7 @@ class PostsController < ApplicationController
         cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
 
         # Used to delete posts.
-        cookies.signed[@post.to_sha2] = {value: @post.ip_address, expires: 1.week.from_now }
+        cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
 
         # flash[:notice] = I18n.t('posts.create.created', post_id: @post.id)
 

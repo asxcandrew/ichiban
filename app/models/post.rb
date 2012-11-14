@@ -18,14 +18,18 @@ class Post < ActiveRecord::Base
   validate :board_existance
   has_many :users, :through => :board
 
-  # Lineage
-  belongs_to :parent, class_name: 'Post'
-  validate :parent_existance,
-            :if => :parent_id
-
+  # Ancestry
   belongs_to :ancestor, class_name: 'Post'
+  validate :ancestor_existance, :if => :parent_id
+
+  # Lineage
   has_many :children, class_name: 'Post', :foreign_key => :parent_id, :dependent => :destroy
   has_many :descendants, class_name: 'Post', :foreign_key => :ancestor_id, :primary_key => :id
+
+  # Parents
+  belongs_to :parent, class_name: 'Post'
+  validates_presence_of :parent, :if => :parent_id, message: I18n.t('posts.errors.presence_of_parent')
+  validate :parent_existance_and_congruence, :if => :parent_id
 
   # Assets
   has_one :image, :dependent => :destroy
@@ -132,15 +136,15 @@ class Post < ActiveRecord::Base
   end
 
   def subject
-    subject = self.is_ancestor? ? self[:subject] : self.ancestor.subject
+    if self.is_ancestor?
+      self[:subject] || ''
+    else
+      self.ancestor ? self.ancestor.subject : ''
+    end
   end
 
   def to_sha2
     Digest::SHA2.hexdigest(SECRET_COOKIE_TOKEN + self.id.to_s)
-  end
-
-  def date
-    self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
   end
 
   def verify_tripcode(input)
@@ -149,6 +153,10 @@ class Post < ActiveRecord::Base
 
   def is_ancestor?
     self.ancestor_id.nil?
+  end
+
+  def is_not_ancestor?
+    !self.is_ancestor?
   end
 
   private
@@ -172,9 +180,42 @@ class Post < ActiveRecord::Base
       end
     end
 
-    def parent_existance
-      unless Post.find_by_id(self.parent_id)
+    def ancestor_existance
+      ancestor = Post.find_by_id(self.ancestor_id)
+      if ancestor.nil?
+        errors.add(:ancestor_existance, 
+                   message: I18n.t('posts.errors.ancestor_existance', ancestor_id: self.ancestor_id))
+      elsif ancestor.is_ancestor? == false
+        errors.add(:ancestor_not_valid, 
+                   message: I18n.t('posts.errors.ancestor_not_valid', ancestor_id: self.ancestor_id))
+      end
+    end
+
+
+    # When writing this, I questioned if most of it was even necessary.
+    # I don't think many of these situations would occur naturally but I would like to catch people
+    # setting faulty parameters.
+    def parent_existance_and_congruence
+      parent = Post.find_by_id(self.parent_id)
+      if parent.nil?
         errors.add(:parent_existance, I18n.t('posts.errors.parent_existance', parent_id: parent_id))
+      
+      elsif parent.board_id != self.board_id
+        errors.add(:parent_ancestor_mismatch, 
+                   I18n.t('posts.errors.parent_board_mismatch', 
+                          parent_board_id: parent.board_id,
+                          post_board_id: parent.board_id))
+
+      elsif parent.is_ancestor? && (parent.id != self.ancestor_id)
+        # This would occur if the reply had a ancestor that didn't match a parent who is an ancestor.
+        errors.add(:parent_ancestor_mismatch, 
+                   I18n.t('posts.errors.parent_ancestor_mismatch', post_ancestor_id: self.ancestor_id))
+
+      elsif parent.is_not_ancestor? && (parent.ancestor_id != self.ancestor_id)
+        errors.add(:ancestor_mismatch, 
+                   I18n.t('posts.errors.ancestor_mismatch', 
+                   parent_ancestor_id: parent.ancestor_id,
+                   post_ancestor_id: self.ancestor_id))
       end
     end
 
