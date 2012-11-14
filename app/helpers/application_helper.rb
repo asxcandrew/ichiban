@@ -6,17 +6,23 @@ module ApplicationHelper
     content_tag("title", text)
   end
 
-  def markdown(text)
-    # HACK: Recarpet's html filter is lackluster. We can filter using Rails but this breaks quotes.
-    text = h(text)
-    text.gsub!("&gt;", '>')
+  def markdown(text = '')
+    unless text.nil?
+      # HACK: Recarpet's html filter is lackluster. We can filter using Rails but this breaks quotes.
+      text = h(text)
+      text.gsub!("&gt;", '>')
 
-    # Double newline should break as expected.
-    text.gsub!(/\r\n\r\n/, "<br><br>")
+      # Double newline should break as expected.
+      text.gsub!(/\r\n\r\n/, "<br><br>")
 
-    # Single newline should break as expected.
-    text.gsub!(/\r\n/, "\n\n")
-    text.nil? ? '' : $MarkdownRenderer.render(text)
+      # Single newline should break as expected.
+      text.gsub!(/\r\n/, "\n\n")
+
+      markdown = $MarkdownRenderer.render(text)
+      markdown.gsub!("&amp;", '&')
+
+      return markdown
+    end
   end
 
   def pluralize_without_count(count, noun, text = nil)
