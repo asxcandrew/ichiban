@@ -3,19 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :current_user
 
-  rescue_from CanCan::AccessDenied do |exception|
-    if @current_user
-      flash[:error] = exception.message
-      redirect_to root_url
-    else # Must not be logged in...
-      # Let's hold on to that path so we can get the user back to where they were going.
-      session[:redirect_to] = request.env["REQUEST_PATH"]
-      
-      flash[:error] = I18n.t('sessions.require_log_in')
-      redirect_to(new_session_path)
-    end
-  end
-
   rescue_from RestClient::ServerBrokeConnection do |exception|
     flash[:error] = "The server broke the connection. Did the request timeout?"
     redirect_to request.referrer
@@ -31,13 +18,39 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, :with => :render_404
     rescue_from ActionController::UnknownController, :with => :render_404
     rescue_from ActionController::UnknownAction, :with => :render_404
-    rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   end
+  rescue_from CanCan::AccessDenied, :with => :render_403
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
 
   private
+    def render_403(exception)
+      @verboten = exception.message
+
+      respond_to do |format|
+        format.json do
+          render json: { flash: { :type => :error, message: @verboten }, responseText: @verboten }, status: 403
+        end 
+        format.html do
+          if @current_user
+            flash[:error] = @verboten
+            redirect_to root_url
+          else # Must not be logged in...
+            # Let's hold on to that path so we can get the user back to where they were going.
+            session[:redirect_to] = request.env["REQUEST_PATH"]
+            
+            flash[:error] = I18n.t('sessions.require_log_in')
+            redirect_to(new_session_path)
+          end
+        end
+      end
+    end
+
     def render_404(exception)
       @not_found_path = exception.message
       respond_to do |format|
+        format.json do
+          render json: { flash: { :type => :error, message: @not_found_path }, responseText: @not_found_path }, status: 404 
+        end
         format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
         format.all { render nothing: true, status: 404 }
       end

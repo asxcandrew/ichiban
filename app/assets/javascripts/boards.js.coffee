@@ -2,33 +2,30 @@ $ ->
   # Set humanized times.
   $('time').timeago()
 
-  # Flash delays
-  delays = { notice: 6000, warning: 7000, error: 9000 }
-
   $flash = $('.flash')
   if $flash
     type = $flash.data('type')
-    $flash.delay(delays[type]).hide("slide", { direction: "up" }, 200)
+    $flash.delay(flashDelays[type]).hide("slide", { direction: "up" }, 200)
 
-@flash = (type, text) ->
+@flash = (flashData) ->
   closeButton = "<a class='close' data-dismiss='alert' href='#'><i class='icon-remove'></i></a>"
   $flash = $('.flash')
 
   if $flash.length == 0
     # No flash on the page. Better make one.
-    $('.content').prepend("<div data-type=#{type} class='flash alert #{type} style='display: none'>
-                           #{text}
+    $('.content').prepend("<div data-type=#{flashData.type} class='flash alert style='display: none'>
+                           #{flashData.message}
                            #{closeButton}
                          </div>")
     $flash = $('.flash')
   else
     # Flash already exists, better replace it's contents.
-    $flash.attr('class', "flash #{type}")
-    $flash.text(text)
+    $flash.attr('data-type', flashData.type)
+    $flash.text(flashData.message)
     $flash.append(closeButton)
 
   $flash.stop(true, true).show "slide", { direction: "up" }, 200, () ->
-    $flash.delay(delay[type]).hide("slide", { direction: "up" }, 200)
+    $flash.delay(flashDelays[flashData.type]).hide("slide", { direction: "up" }, 200)
 
 @elementInViewport = (el) ->
   rect = el.getBoundingClientRect()
@@ -40,3 +37,5 @@ $ ->
 
 @titleize = (text) ->
   return text[0].toUpperCase() + text.slice(1)
+
+@flashDelays = { notice: 6000, warning: 7000, error: 9000 }

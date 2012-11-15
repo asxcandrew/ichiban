@@ -25,16 +25,19 @@ deletePost = (id) ->
   unless params.redirect
     $parent = $("##{id}").parents('.parent')
 
-  $.post "/posts/#{id}", params, (response) ->
-    if response.success
+  $.ajax
+    type: 'POST'
+    url: "/posts/#{id}"
+    data: params
+    success: (response) ->
       if response.redirect
         window.location = response.redirect
       else
         $("##{id}").hide animationDuration, () ->
           $(this).empty().remove()
           updateReplyCounter($parent.attr('id'))
-        flash("notice", response.message)
-    else
-      flash("error", response.message)
+    error: (response) ->
       $("##{id} .confirmation-toggle:first").hide()
       $("##{id} .delete-post-confirmation:first").show()
+    complete: (response) ->
+      flash($.parseJSON(response.responseText).flash)

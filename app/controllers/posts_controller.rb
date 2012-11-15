@@ -59,31 +59,18 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find_by_id(params[:id])
-    response = { success: false }
-    if @post
-      # No sense in keeping them on a page without a parent.
-      response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
+    @post = Post.find_by_id!(params[:id])
+    response = {}
+    # No sense in keeping them on a page without a parent.
+    response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
 
-      if check_if_user?(can?(:destroy, Post), @post) || cookies.signed[@post.to_sha2] == @post.ip_address
+    if cookies.signed[@post.to_sha2] == @post.ip_address || check_if_user_can!(:destroy, Post, @post)
+      if @post.destroy
+        response[:flash] = { :type => :notice, message: I18n.t('posts.destroy.deleted', post_id: @post.id) }
 
-        if @post.destroy
-          response.merge!(
-            { success: true, 
-              message: I18n.t('posts.destroy.deleted', post_id: @post.id) })
-
-          flash[:notice] = I18n.t('posts.destroy.deleted', post_id: @post.id) if params[:redirect] == 'true'
-          
-          # Better clean up after ourselves.
-          cookies.delete(@post.to_sha2)
-        end
-
-      else # Authorization failed.
-        response[:message] = I18n.t('posts.destroy.not_authorized', post_id: params[:id])
+        # Better clean up after ourselves.
+        cookies.delete(@post.to_sha2)
       end
-
-    else # Post doesn't exist.
-      response[:message] = I18n.t('posts.destroy.not_found', post_id: params[:id])
     end
 
     render json: response
