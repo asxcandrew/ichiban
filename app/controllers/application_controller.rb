@@ -19,8 +19,11 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownController, :with => :render_404
     rescue_from ActionController::UnknownAction, :with => :render_404
   end
+
   rescue_from CanCan::AccessDenied, :with => :render_403
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+  rescue_from ActiveRecord::DeleteRestrictionError, :with => :render_500
+  rescue_from ActiveRecord::RecordInvalid, :with => :render_500
 
   private
     def render_403(exception)
@@ -33,7 +36,7 @@ class ApplicationController < ActionController::Base
         format.html do
           if @current_user
             flash[:error] = @verboten
-            redirect_to root_url
+            redirect_to root_url, status: 302
           else # Must not be logged in...
             # Let's hold on to that path so we can get the user back to where they were going.
             session[:redirect_to] = request.env["REQUEST_PATH"]
@@ -49,7 +52,7 @@ class ApplicationController < ActionController::Base
       @not_found_path = exception.message
       respond_to do |format|
         format.json do
-          render json: { flash: { :type => :error, message: @not_found_path }, responseText: @not_found_path }, status: 404 
+          render json: { flash: { :type => :error, message: @not_found_path }, responseText: @not_found_path }, status: 404
         end
         format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
         format.all { render nothing: true, status: 404 }
@@ -57,10 +60,16 @@ class ApplicationController < ActionController::Base
     end
 
     def render_500(exception)
-      @error = exception
+      @error = exception.message
       respond_to do |format|
-        format.html { render template: 'errors/error_500', layout: 'layouts/application', status: 500 }
-        format.all { render nothing: true, status: 500}
+        format.json do
+          render json: { flash: { :type => :error, message: @error }, responseText: @error }, status: 500
+        end
+        format.html do
+          flash[:error] = @error
+          render(exception.record.persisted? ? { action: 'edit' } : { action: 'new' })
+        end
+        format.all { render nothing: true, status: 500 }
       end
     end
 
