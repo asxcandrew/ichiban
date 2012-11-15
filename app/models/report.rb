@@ -20,10 +20,9 @@ class Report < ActiveRecord::Base
   end
   
   private
-    # TODO: Replace max amount of reports number with variable from admin panel.
     def max_reports_per_IP
       post = Post.find_by_id(self.post_id)
-      if Report.where(ip_address: self.ip_address).size >= post.board.max_reports_per_IP
+      if post.board.reports.where(ip_address: self.ip_address).size >= post.board.max_reports_per_IP
         errors.add(:max_reports, I18n.t('reports.errors.max_reports_per_IP'))
       end
     end
