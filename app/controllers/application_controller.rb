@@ -52,7 +52,10 @@ class ApplicationController < ActionController::Base
       @not_found_path = exception.message
       respond_to do |format|
         format.json do
-          render json: { flash: { :type => :error, message: @not_found_path }, responseText: @not_found_path }, status: 404
+          response = { flash: { :type => :error, 
+                                message: @not_found_path },
+                                responseText: @not_found_path }
+          render(json: response, status: 404)
         end
         format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
         format.all { render nothing: true, status: 404 }
@@ -61,12 +64,13 @@ class ApplicationController < ActionController::Base
 
     def render_500(exception)
       @error = exception.message
+      @error_to_sentence = exception.record.errors.messages.first[1].to_sentence
       respond_to do |format|
         format.json do
-          render json: { flash: { :type => :error, message: @error }, responseText: @error }, status: 500
+          render json: { flash: { :type => :error, message: @error_to_sentence }, responseText: @error_to_sentence }, status: 500
         end
         format.html do
-          flash[:error] = @error
+          flash.now[:error] = @error_to_sentence
           render(exception.record.persisted? ? { action: 'edit' } : { action: 'new' })
         end
         format.all { render nothing: true, status: 500 }
