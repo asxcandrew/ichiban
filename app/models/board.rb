@@ -7,7 +7,17 @@ class Board < ActiveRecord::Base
                        too_long: I18n.t('boards.errors.name_too_long') },
            presence: { message: I18n.t('boards.errors.name') })
 
-  validate :max_file_size_limit
+  # TODO: Set in management panel.
+  validates(:file_size_limit,
+            numericality: { greater_than_or_equal_to: 1,
+                            less_than_or_equal_to: 6,
+                            message: I18n.t('boards.errors.max_file_size_limit', min: 1, max: 6) })
+
+  # TODO: Set in management panel.
+  validates(:max_reports_per_IP,
+            numericality: { greater_than_or_equal_to: 1,
+                            less_than_or_equal_to: 20,
+                            message: I18n.t('boards.errors.max_reports_per_IP', min: 1, max: 20) })
 
   validates(:directory, 
             format:     { with: /^[a-z0-9]+[-a-z0-9]*[a-z0-9]+$/i,
@@ -34,14 +44,6 @@ class Board < ActiveRecord::Base
       self[:directory] = directory
     else
       raise I18n.t('boards.errors.directory_modification')
-    end
-  end
-
-  def max_file_size_limit
-    # TODO: Set in management panel.
-    limit = 6
-    if self.file_size_limit > limit
-      errors.add(:max_file_size_limit, I18n.t('boards.errors.max_file_size_limit', limit: limit))
     end
   end
 
