@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :thumbnail do
-    process resize_to_limit: [250, 250]
+    process resize_to_limit: [200, 200]
     process convert: 'jpg'
 
     # This isn't documented anywhere. Thanks Cloudinary.
