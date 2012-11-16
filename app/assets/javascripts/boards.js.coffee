@@ -39,3 +39,8 @@ $ ->
   return text[0].toUpperCase() + text.slice(1)
 
 @flashDelays = { notice: 6000, warning: 7000, error: 9000 }
+
+@updateCounter = (name, element) ->
+  total = $(element).length
+  label = if 1 == total then name else (name + 's')
+  $("##{name}-counter").text("#{total} #{titleize(label)}")

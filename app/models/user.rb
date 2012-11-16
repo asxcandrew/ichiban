@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
     self[:last_login].nil? ? self.created_at : self[:last_login]
   end
 
+  def check_if_operator!
+    raise CanCan::AccessDenied unless self.operator?
+  end
+
   # TODO: Refactor to be a little less...cumbersome.
   # Operators have access to everything.
   def boards

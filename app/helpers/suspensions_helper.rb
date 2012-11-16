@@ -3,6 +3,7 @@ module SuspensionsHelper
     output = ActiveSupport::SafeBuffer.new
     classes = [options[:class]]
     classes << "unimportant" if suspension.expired?
+    classes << "suspension"
 
     options.merge!(
       { class: classes,

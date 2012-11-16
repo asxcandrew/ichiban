@@ -15,4 +15,8 @@
 //= require_tree .
 
 window.controls = '.post footer'
+
+// TODO: Migrate all animationDuration calls to quickly.
 window.animationDuration = 250
+
+window.quickly = animationDuration

@@ -20,24 +20,21 @@ $ ->
     unless params.suspension.reason == null
       params.suspension.ends_at = prompt("How long until the suspension is over? ('two days', '1 week from now', etc.)")
 
-    $.post "/suspensions/", params, (response) ->
-      returnVal = response
-      window.ss = response
-      if response.success
-        flash("notice", response.message)
-      else
-        flash("error", response.message)
+    $.ajax
+      type: 'POST'
+      url: "/suspensions/"
+      data: params
+      complete: (response) ->
+        flash($.parseJSON(response.responseText).flash)
 
 deleteSuspension = (id) ->
-  $.post "/suspensions/#{id}", { _method: 'delete' },
-  (response) ->
-    if response.success
-      $("##{id}").hide(250)
-      setSuspensionCounter(response.total)
-      flash("notice", response.message)
-    else
-      flash("error", response.message)
-      
-setSuspensionCounter = (total) ->
-  label = if total == 1 then "Suspension" else "Suspensions"
-  $('#suspension-counter').text("#{total} #{label}")
+    $.ajax
+      type: 'POST'
+      url: "/suspensions/#{id}"
+      data: { _method: 'delete' }
+      success: (response) ->
+        $("##{id}").hide quickly, () ->
+            $(this).empty().remove()
+            updateCounter('suspension', '.suspensions .suspension')
+      complete: (response) ->
+        flash($.parseJSON(response.responseText).flash)

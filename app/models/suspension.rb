@@ -30,7 +30,7 @@ class Suspension < ActiveRecord::Base
   end
 
   def future_end_date
-    if self.ends_at < Date.today
+    if self.ends_at && self.ends_at < Date.today
       errors.add(:future_end_date, I18n.t('suspensions.errors.past_date'))
     end
   end
