@@ -5,23 +5,19 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:email])
     @target = session[:redirect_to] 
+    user = User.find_by_email(params[:email]).try(:authenticate, params[:password])
 
-    if user && user.authenticate(params[:password])
+    if user
       session[:user_id] = user.id
       user.touch(:last_login)
 
-      if @target.nil?
-        @target = root_url
-      else
-        # Let's not leave old data in session.
-        session[:redirect_to] = nil
-      end
+      # Let's not leave old data in session.
+      @target.nil? ? @target = root_url : session[:redirect_to] = nil
 
       redirect_to @target, notice: I18n.t('sessions.logged_in')
     else
-      flash.now.alert = I18n.t('sessions.errors.invalid_email_or_password')
+      flash.now[:error] = I18n.t('sessions.errors.invalid_email_or_password')
       render "new"
     end
   end
