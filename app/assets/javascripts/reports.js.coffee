@@ -17,7 +17,7 @@ $ ->
     # REWRITE: Remove reports after suspension is sent through.
     suspendPoster($this.data('postid'))
 
-  $(window.controls).on "click", ".report-post", (e) ->
+  $(controls).on "click", ".report-post", (e) ->
     e.preventDefault()
     reportPost($(this).data('id'))
 
@@ -28,37 +28,35 @@ $ ->
       post_id: id, 
       comment: prompt("Why are you reporting post ##{id}?")
 
-  $.post "/reports/", params, (response) ->
-    if response.success
-      flash("notice", response.message)
-    else
-      flash("error", response.message)
+  $.ajax
+    type: 'POST'
+    url: "/reports/"
+    data: params
+    complete: (response) ->
+      flash($.parseJSON(response.responseText).flash)
 
 deleteReport = (id) ->
-  $.post "/reports/#{id}", { _method: 'delete' },
-  (response) ->
-    if response.success
-      $("##{id}").hide animationDuration, () ->
+  $.ajax
+    type: 'POST'
+    url: "/reports/#{id}"
+    data: { _method: 'delete' }
+    success: (response) ->
+      $("##{id}").hide quickly, () ->
         $(this).empty().remove()
-        updateReportCounter()
-    else
-      flash("error", response.message)
+        updateCounter('report', '.reports .report')
+    complete: (response) ->
+      flash($.parseJSON(response.responseText).flash)
 
 deletePost = (postID, reportID) ->
-  $.post "/posts/#{postID}", { _method: 'delete' },
-    (response) ->
-      if response.success
-        deletedReports = $("tr[data-postID = #{postID}]")
-        deletedReports.each (i, report) ->
-          $(report).hide animationDuration, () ->
-            $(this).empty().remove()
-            updateReportCounter()
-
-        flash("notice", response.message)
-      else
-        flash("error", response.message)
-
-updateReportCounter = () ->
-  total = $('.reports .report').length
-  label = if total == 1 then "Report" else "Reports"
-  $('#report-counter').text("#{total} #{label}")
+  $.ajax
+    type: 'POST'
+    url: "/posts/#{postID}"
+    data: { _method: 'delete' }
+    success: (response) ->
+      deletedReports = $("tr[data-postID = #{postID}]")
+      deletedReports.each (i, report) ->
+        $(report).hide quickly, () ->
+          $(this).empty().remove()
+          updateCounter('report', '.reports .report')
+    complete: (response) ->
+      flash($.parseJSON(response.responseText).flash)

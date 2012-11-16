@@ -5,18 +5,13 @@ class ReportsController < ApplicationController
     @prefix = I18n.t('reports.index.prefix')
 
     if params[:directory]
-      @board = Board.find_by_directory(params[:directory])
+      @board = Board.find_by_directory!(params[:directory])
 
-      if check_if_user?(can?(:manage, Board), @board)
-        @reports = @board.reports.order('created_at')
-      else
-        raise CanCan::AccessDenied
-      end
-
-    elsif @current_user.operator?
-      @reports = @current_user.reports.order('created_at')
+      check_if_user_can!(:manage, Board, @board)
+      @reports = @board.reports.order('created_at')
     else
-      raise CanCan::AccessDenied
+      @current_user.check_if_operator!
+      @reports = @current_user.reports.order('created_at')
     end
 
     respond_to do |format|
@@ -26,46 +21,23 @@ class ReportsController < ApplicationController
   end
 
   def create
-    @report = Report.new(params[:report])
-    @post = Post.find_by_id(params[:report][:post_id])
-    @report.ip_address = request.ip
-    response = { success: false }
+    response = { flash: { :type => :notice } }
+    params[:report][:ip_address] = request.ip
 
-    if @post
-      if @report.save
-        response.merge!(
-          { success: true,
-            message: I18n.t('reports.create.success') })
-      else
-        response[:message] = @report.errors.first[1]
-      end
-    else
-      response[:message] = I18n.t('reports.create.post_not_found', post_id: params[:report][:post_id])
-    end
+    Post.find_by_id!(params[:report][:post_id])
+    @report = Report.create!(params[:report])
+    response[:flash][:message] = I18n.t('reports.create.success')
 
     render json: response
   end
 
   def destroy
-    @report = Report.find_by_id(params[:id])
-    response = { success: false }
-
-    if @report
-      if check_if_user?(can?(:destroy, Report), @report)
-        if @report.destroy
-          response.merge!(
-            { success: true,
-              message: I18n.t('reports.destroy.success', report_id: @report.id),
-              report_total:  Report.all.size })
-        else
-          response[:message] = @report.errors.full_messages.to_sentence
-        end
-      else
-        response[:message] = I18n.t('reports.destroy.not_authorized', report_id: params[:id])
-      end
-    else
-      response[:message] = I18n.t('reports.destroy.report_not_found', report_id: params[:id])
-    end
+    response = { flash: { :type => :notice } }
+    @report = Report.find_by_id!(params[:id])
+    
+    check_if_user_can!(:destroy, Report, @report)
+    @report.destroy
+    response[:flash][:message] = I18n.t('reports.destroy.success', report_id: @report.id)
 
     render json: response
   end
