@@ -124,6 +124,13 @@ class Post < ActiveRecord::Base
     TRIPCODE_SYMBOLS[i]
   end
 
+  def ip_address=(ip_address)
+    board_id = self.parent_id ? Post.find_by_id!(self.parent_id).board_id : self.board_id
+    board = Board.find_by_id!(board_id)
+
+    # Pick a random IP address if the board doesn't care.
+    self[:ip_address] = board.save_IPs ? ip_address : Array.new(4){rand(256)}.join('.')
+  end
 
   def tripcode=(passphrase)
     self[:tripcode] = generate_tripcode_v2(passphrase)
@@ -165,12 +172,10 @@ class Post < ActiveRecord::Base
     end
 
   def inherit_parent
-    parent = self.parent
-    if parent
-      self.board_id ||= parent.board_id
-      # The ancestor_id would be it's parent's ancestor_id or its own ID.
-      self.ancestor_id ||= (parent.ancestor_id || parent.id)
-    end
+    parent = Post.find_by_id!(self.parent_id)
+    self[:board_id] = parent.board_id
+    # The ancestor_id would be it's parent's ancestor_id or its own ID.
+    self[:ancestor_id] = (parent.ancestor_id || parent.id)
   end
 
     def check_file_size

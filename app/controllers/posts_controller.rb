@@ -19,16 +19,14 @@ class PostsController < ApplicationController
   end
 
   def create
-    # @post = Post.new(params[:post])
-    # Simulate different IP addresses
-    @post.ip_address = @post.board.save_IPs ? request.ip : Array.new(4){rand(256)}.join('.')
+    params[:post][:ip_address] = request.ip
     
     # Only a bot would see this field.
     if !params[:email].blank?
-      logger.info "Spam Bot detected"
+      logger.info "Spam Bot detected: #{request.ip}"
       redirect_to request.referrer
     else
-      @post.save!
+      @post = Post.create!(params[:post])
       cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
       cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
       cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
@@ -42,13 +40,13 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find_by_id!(params[:id])
-    response = {}
+    response = { flash: { :type => :notice } }
     # No sense in keeping them on a page without a parent.
     response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
 
     cookies.signed[@post.to_sha2] == @post.ip_address || check_if_user_can!(:destroy, Post, @post)
     @post.destroy
-    response[:flash] = { :type => :notice, message: I18n.t('posts.destroy.deleted', post_id: @post.id) }
+    response[:flash][:message] = I18n.t('posts.destroy.deleted', post_id: @post.id)
 
     # Better clean up after ourselves.
     cookies.delete(@post.to_sha2)
