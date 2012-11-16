@@ -1,0 +1,25 @@
+@media all and (max-width: 800px)
+  .site-header, .site-footer
+    display: none
+  .post
+    &:target
+      &:before
+        display: none
+
+    border: 1px dotted lighten($dark-base, 85%)
+    &.child
+      margin-left: +10px
+    article
+      width: 100%
+      min-width: 100%
+
+      border-left-width: 2px
+  .thread-info
+    max-width: none
+
+  .reply
+    margin-left: +5px
+
+  .compact-form, .pagination
+    max-width: 100%
+    width: 100%
