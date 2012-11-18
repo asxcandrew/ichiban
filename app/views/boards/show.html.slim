@@ -1,6 +1,6 @@
 .directory-listing
   .ghost-text
-== render partial: 'posts/new'
+== link_to("Start a thread", new_post_path(board_id: @board.try(:id)))
 
 == render partial: 'boards/navigation'
 
