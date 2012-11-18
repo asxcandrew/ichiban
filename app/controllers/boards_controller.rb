@@ -1,10 +1,23 @@
 class BoardsController < ApplicationController
-  before_filter :find_boards, except: [:destroy]
+  before_filter :find_boards, except: [:destroy, :search]
   before_filter :set_board, except: [:index, :new, :create]
   load_and_authorize_resource
   
+  def search
+    @boards = params[:keyword] ? Board.where('name ILIKE ?', "%#{params[:keyword]}%").limit(5) : []
+
+    render json: @boards
+  end
+
   def index
+    @post  = Post.new
+    @reply = Post.new
+    @previews = 2
+    @child_limit = 2
     @prefix = "Boards"
+    @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
+
+    render 'show'
   end
 
   def new

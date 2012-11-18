@@ -1,5 +1,7 @@
 == post_tag(parent, class: 'parent') do
   .thread-info.right
+    - unless @board
+      .board = link_to_board(parent.board.name, parent.board)
     - if parent.is_ancestor?
       .subject == link_to_post(parent.subject, parent)
     - else

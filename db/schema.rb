@@ -11,17 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121110011423) do
+ActiveRecord::Schema.define(:version => 20121118030731) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
     t.string   "directory"
     t.text     "description"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.float    "file_size_limit"
     t.integer  "max_reports_per_IP"
-    t.boolean  "save_IPs"
+    t.boolean  "save_IPs",           :default => true
+    t.boolean  "worksafe",           :default => true
   end
 
   add_index "boards", ["directory"], :name => "index_boards_on_directory", :unique => true
