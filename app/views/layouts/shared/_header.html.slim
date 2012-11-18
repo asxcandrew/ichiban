@@ -1,21 +1,15 @@
 header.site-header
-  .information
-    - if @board && !@board.new_record?
-        h1.hero-text = link_to_board(@board.name, @board)
-        h3.description = @board.description
-    - else
-        h1.hero-text = link_to(Setting.site_name, root_path)
-        h3.description = Setting.tag_line
+  - if @board && !@board.new_record?
+      .hero-text = link_to_board_or_root
+      - if @board.description.present?
+        | ::
+        .description = @board.description
+  - else
+      .hero-text = link_to(Setting.site_name, root_path)
+      - if Setting.tag_line
+        | ::
+        .description = Setting.tag_line
 
-  .infotainment
-    - if @current_user
-      .name(title=@current_user.role) == @current_user.email
-
-      - if can?(:edit, Board) && @board && !@board.new_record?
-        == link_to("[Manage]", edit_board_path(@board))
-                
-      == link_to("[Log out]", session_path(@current_user), :method => :delete)
-    - else
-      - unless current_page?(controller: 'sessions', action: 'new')
-        .unimportant
-          == link_to("[Manage]", new_session_path )
+  - unless (params[:controller] == 'posts' && params[:action] == 'new') || (params[:controller] == 'posts' && params[:action] == 'show')
+    .new-thread
+      == link_to("Create a post!", new_post_path(board_id: @board.try(:id)))

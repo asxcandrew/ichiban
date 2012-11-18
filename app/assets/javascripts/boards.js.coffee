@@ -1,4 +1,13 @@
 $ ->
+  $header = $('.site-header')
+
+  $(window).scroll (e) ->
+    if $header.offset().top != 0
+      if !$header.hasClass('inset')
+        $header.addClass('inset')
+    else
+      $header.removeClass('inset')
+
   # Set humanized times.
   $('time').timeago()
 

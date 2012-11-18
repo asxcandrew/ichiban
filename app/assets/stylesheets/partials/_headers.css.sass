@@ -9,19 +9,37 @@ h3
 strong
   font-weight: bold
 
-.hero-text
-  margin: 10px 0
 
 
 .site-header
-  margin-top: 25px
-  padding: 5px
-  border-bottom: $bold-accent 2px solid
+  +transition-property(all)
+  +transition-duration($fast-transition)
+  position: fixed
+  width: 100%
+  height: $header-height
+  padding: 10px
+  z-index: 99999
+  
+  background-color: lighten($base, 13%)
 
-  .information
-    text-align: center
+  .hero-text
+    font-size: 2em
+    display: inline-block      
+  
   .description
+    display: inline-block
     font-style: italic
+
+  .new-thread
+    padding-top: 5px
+    font:
+      weight: bold
+      size: 1.5em
+    display: inline-block
+    float: right
+
+  &.inset
+    box-shadow: 0px 2px 10px rgba(0,0,0,.5)
 
   &:hover .unimportant
     opacity: $opaque

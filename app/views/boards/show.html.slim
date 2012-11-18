@@ -1,9 +1,3 @@
-.directory-listing
-  .ghost-text
-== link_to("Start a thread", new_post_path(board_id: @board.try(:id)))
-
-== render partial: 'boards/navigation'
-
 - if @posts.any?
   == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
   == render partial: 'boards/navigation'

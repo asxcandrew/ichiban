@@ -10,6 +10,7 @@ $fonts: "DejaVu Sans", Arial, Helvetica, sans-serif
 
 // Layout defaults
 $footer-height: 40px
+$header-height: 50px
 
 // Prevents broken box model annoyances.
 *
@@ -55,7 +56,7 @@ sup
   visibility: hidden
 
 .container
-  +background-image(linear-gradient(lighten($base, 10%), lighten($base, 15%)))
+  +background-image(linear-gradient(lighten($base, 13%), lighten($base, 18%)))
   min-height: 100%
 
 .wrapper
@@ -63,6 +64,7 @@ sup
   overflow: auto
   
 .content
+  margin-top: $header-height
   padding: 20px
 
 .site-logo
