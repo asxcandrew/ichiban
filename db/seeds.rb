@@ -3,7 +3,7 @@
 
 # Remember to use the correct data type for each entry.
 # => 1 != "1"
-site_settings = { site_name: 'Ichiban!' }
+site_settings = { site_name: 'Ichiban', site_tagline: 'Modern Imageboard' }
 
 site_settings.each do |key, value|
   Setting[key] = value
