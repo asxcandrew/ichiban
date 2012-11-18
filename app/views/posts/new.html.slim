@@ -3,7 +3,7 @@
                      :autocomplete => :off, 
                      html: { multipart: true, 'data-postType' => :parent }) do |f|
 
-    == f.input :subject
+    == f.input :subject, autofocus: true
     == f.input :body, :as => :text
     .meter:span
     
