@@ -9,7 +9,7 @@ $.fn.limiter = (opts) ->
     val = $this.val()
     characters = val.length
 
-    if opts.maxLength <= characters and e.keyCode not in [8, 9] and not e.ctrlKey
+    if opts.maxLength <= characters and e.keyCode not in [8, 9, 18, 37, 38, 39, 40] and not e.ctrlKey
       do e.preventDefault
 
     percentage = Math.floor((characters / opts.maxLength) * 100)
