@@ -19,9 +19,10 @@
     == label_tag :email
     == text_field_tag :email
 
-    == text_field_tag(:board, '', list: 'board-search')
-    datalist#board-searc
-    == f.hidden_field :board_id, value: nil
+    == label_tag :board_search
+    == text_field_tag(:board_search, @board.try(:name), list: 'board-search', placeholder: t('.board_search'))
+    datalist#board-search
+    == f.hidden_field :board_id, value: @board.try(:id)
 
 
     == f.simple_fields_for :image_attributes do |i|

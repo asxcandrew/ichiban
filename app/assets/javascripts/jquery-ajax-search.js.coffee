@@ -10,17 +10,17 @@ $.fn.ajaxSearch = (opts) ->
     keyword = $this.val()
     datalistID  = $this.attr('list')
     $datalist = $("##{datalistID}")
-    $boardField = $("#boardID")
+    $boardField = $("input[name='post[board_id]']")
 
     if e.keyCode == 13 # Enter
       $.getJSON "/boards/search/#{keyword}", (boards) ->
-        $boardField.value(boards[0].id)        
+        $boardField.val(boards[0].id) unless boards.length == 0
 
     else if e.keyCode not in [9, 18, 37, 38, 39, 40] and not e.ctrlKey
       $.getJSON "/boards/search/#{keyword}", (boards) ->
         $datalist.empty()
         $.each boards, (i, board) ->
           $datalist.append("<option value='#{board.name}' data-id='#{board.id}'></option>")
-        $boardField.value(boards[0].id)
+        $boardField.val(boards[0].id) unless boards.length == 0
     true
   , 50

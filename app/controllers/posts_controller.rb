@@ -1,6 +1,11 @@
 class PostsController < ApplicationController
   load_and_authorize_resource except: [:destroy]
 
+  def new
+    @board = Board.find_by_id(params[:board_id])
+    @post = Post.new
+  end
+
   def show
     @post = Post.find_by_id(params[:id])
     @reply = Post.new
@@ -34,7 +39,7 @@ class PostsController < ApplicationController
       # Used to delete posts.
       cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
 
-      redirect_to(@post.parent ? (request.referrer + "##{@post.id}") : post_path(@post))
+      redirect_to(@post.is_ancestor? ? post_path(@post) : post_path(@post.ancestor, anchor: @post.id))
     end
   end
 
