@@ -13,6 +13,6 @@ module BoardsHelper
   def link_back_to_directory
     text = content_tag(:i, nil, class: "icon-arrow-left")
     text << "&nbsp;".html_safe + t('boards.navigation.back_to_directory')
-    link_to(text, boards_path)
+    link_to(text, root_path)
   end
 end

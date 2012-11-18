@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   before_filter :find_boards, except: [:destroy, :search]
-  before_filter :set_board, except: [:index, :new, :create]
+  before_filter :set_board, except: [:index, :new, :create, :search]
   load_and_authorize_resource
   
   def search
@@ -27,7 +27,7 @@ class BoardsController < ApplicationController
 
   def create
     @board = Board.create!(params[:board])
-    redirect_to boards_path, notice: "/#{@board.directory}/ created!"
+    redirect_to edit_board_path(@board), notice: "/#{@board.directory}/ created!"
   end
 
   def show

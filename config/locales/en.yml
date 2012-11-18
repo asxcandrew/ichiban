@@ -64,7 +64,7 @@ en:
       success: "/%{directory}/ permanently deleted."
     navigation:
       back_to_board: "Back to %{board}"
-      back_to_directory: "Back to Directory Listing"
+      back_to_directory: "Back to the front page"
     errors:
       max_file_size_limit: "A board's file limit must be between %{min} and %{max} megabytes."
       max_reports_per_IP: "A board's report limit must be between %{min} and %{max}."
