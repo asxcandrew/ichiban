@@ -18,6 +18,8 @@ Ichiban::Application.routes.draw do
   get '/:page' => 'boards#index', constraints: { page: numeric }
 
   scope 'boards' do
+    get  'search/' => 'boards#search'
+    get  'search/:keyword' => 'boards#search'
     get  '/'      => 'boards#index',  :as => :boards
     get  '/:page' => 'boards#index',  :as => :boards, constraints: { page: numeric }
     post '/'      => 'boards#create', :as => :boards

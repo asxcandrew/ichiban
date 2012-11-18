@@ -20,6 +20,8 @@ $ ->
     e.preventDefault()
     toggleImageExpansion($(this))
 
+  $(".new_post #board").ajaxSearch()
+
 toggleImageExpansion = ($link) ->
   # Hide the animation element
   $link.toggleClass('expanded')
