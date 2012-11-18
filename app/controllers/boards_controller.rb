@@ -4,7 +4,14 @@ class BoardsController < ApplicationController
   load_and_authorize_resource
   
   def index
+    @post  = Post.new
+    @reply = Post.new
+    @previews = 2
+    @child_limit = 2
     @prefix = "Boards"
+    @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
+
+    render 'show'
   end
 
   def new

@@ -110,6 +110,10 @@ class Post < ActiveRecord::Base
     where("parent_id IS NULL AND board_id = ?", board.id)
   end
 
+  def self.all_threads
+    where(parent_id: nil)
+  end
+
   def set_tripcode
     # Is passphrase declared? Not blank? Otherwise use the post's IP address
     self.tripcode = self[:ip_address] if self[:tripcode].nil? || self[:tripcode].blank?
