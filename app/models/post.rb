@@ -13,6 +13,7 @@ class Post < ActiveRecord::Base
 
   # Board relations
   belongs_to :board
+  validates_presence_of :board, message: I18n.t('posts.errors.board_not_given')
   validate :board_existance
   has_many :users, :through => :board
 
@@ -129,11 +130,13 @@ class Post < ActiveRecord::Base
   end
 
   def ip_address=(ip_address)
-    board_id = self.parent_id ? Post.find_by_id!(self.parent_id).board_id : self.board_id
-    board = Board.find_by_id!(board_id)
+    board_id = self.parent_id ? Post.find_by_id(self.parent_id).board_id : self.board_id
+    board = Board.find_by_id(board_id)
 
-    # Pick a random IP address if the board doesn't care.
-    self[:ip_address] = board.save_IPs ? ip_address : Array.new(4){rand(256)}.join('.')
+    if board
+      # Pick a random IP address if the board doesn't care.
+      self[:ip_address] = board.save_IPs ? ip_address : Array.new(4){rand(256)}.join('.')
+    end
   end
 
   def tripcode=(passphrase)
@@ -184,9 +187,14 @@ class Post < ActiveRecord::Base
 
     def check_file_size
       if self.image
-        limit = self.board.file_size_limit
-        if self.image.asset.size > limit.megabytes.to_i
-          errors.add(:file_size_limit, I18n.t('posts.errors.file_size_limit', limit: limit))
+        board = Board.find_by_id(self.board_id)
+        if board
+          limit = board.file_size_limit
+          if self.image.asset.size > limit.megabytes.to_i
+            errors.add(:file_size_limit, I18n.t('posts.errors.file_size_limit', limit: limit))
+          end
+        else
+          errors.add(:board_not_found, I18n.t('posts.errors.board_not_found', board_id: self.board_id))
         end
       end
     end
