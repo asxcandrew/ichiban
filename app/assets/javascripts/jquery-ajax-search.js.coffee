@@ -5,7 +5,6 @@ $.fn.ajaxSearch = (opts) ->
   opts = $.extend {}, defaultOpts, opts
 
   @.bindWithDelay 'keyup', (e) ->
-    console.log e.keyCode
     $this = $(this)
     keyword = $this.val()
     datalistID  = $this.attr('list')
@@ -20,7 +19,8 @@ $.fn.ajaxSearch = (opts) ->
       $.getJSON "/boards/search/#{keyword}", (boards) ->
         $datalist.empty()
         $.each boards, (i, board) ->
-          $datalist.append("<option value='#{board.name}' data-id='#{board.id}'></option>")
+          status = if board.worksafe then "" else "NSFW"
+          $datalist.append("<option value='#{board.name}' data-id='#{board.id}'>#{status}</option>")
         $boardField.val(boards[0].id) unless boards.length == 0
     true
   , 50
