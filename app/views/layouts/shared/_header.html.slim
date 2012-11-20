@@ -12,4 +12,4 @@ header.site-header
 
   - unless (params[:controller] == 'posts' && params[:action] == 'new') || (params[:controller] == 'posts' && params[:action] == 'show')
     .new-thread
-      == link_to("Create a post!", new_post_path(board_id: @board.try(:id)))
+      == link_to("New post", new_post_path(board_id: @board.try(:id)))

@@ -1,4 +1,5 @@
 .new-post.compact-form
+  h1 = t('.header')
   == simple_form_for(@post,
                      :autocomplete => :off, 
                      html: { multipart: true, 'data-postType' => :parent }) do |f|
@@ -20,11 +21,12 @@
     == text_field_tag :email
 
     == label_tag :board_search
+
+    == f.simple_fields_for :image_attributes do |i|
+      == i.input :asset, :as => :file
+    
     == text_field_tag(:board_search, @board.try(:name), list: 'board-search', placeholder: t('.board_search'))
     datalist#board-search
     == f.hidden_field :board_id, value: @board.try(:id)
 
-
-    == f.simple_fields_for :image_attributes do |i|
-      == i.input :asset, :as => :file
     == f.submit disabled: true, disable_with: t('simple_form.disable_submit'), title: t('boards.show.image_required')

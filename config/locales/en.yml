@@ -10,7 +10,8 @@ en:
       last_reply: "Last reply was "
     anonymous: "Anonymous"
     new:
-      board_search: "Board Name"
+      header: "New Post"
+      board_search: "Search boards"
     show:
       prefix: "Post #%{post_id} on %{board}"
       reply_requirements: "A comment or upload must be included when replying to a thread."
