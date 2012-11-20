@@ -9,13 +9,14 @@ class SuspensionsController < ApplicationController
 
       check_if_user_can!(:manage, Board, @board)
       @suspensions = @board.suspensions.order('created_at')
+      options = { layout: 'board_management' }
     else
       @current_user.check_if_operator!
       @suspensions = @current_user.suspensions.order('created_at DESC')
     end
 
     respond_to do |format|
-      format.html
+      format.html { render options }
       format.json { render json: @suspensions }
     end
   end

@@ -18,18 +18,21 @@ class UsersController < ApplicationController
   end
 
   def index
-    if params[:directory]
-      @board = Board.find_by_directory(params[:directory])
-      if check_if_user?(can?(:manage, Board), @board)
-        @users = @board.users 
-      else
-        raise CanCan::AccessDenied
-      end
+    @prefix = "Users"
 
-    elsif @current_user.operator?
-      @users = @current_user.users
+    if params[:directory]
+      @board = Board.find_by_directory!(params[:directory])
+      check_if_user_can!(:manage, Board, @board)
+      @users = @board.users
+      options = { layout: 'board_management' }
     else
-      raise CanCan::AccessDenied
+      @current_user.check_if_operator!
+      @users = @current_user.users
+    end
+
+    respond_to do |format|
+      format.html { render options }
+      format.json { render json: @users }
     end
   end
 

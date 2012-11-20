@@ -54,6 +54,7 @@ class BoardsController < ApplicationController
 
   def edit
     check_if_user_can!(:edit, Board, @board)
+    render layout: 'board_management'
   end
 
   # TODO: Fix issue where invalid records alter the edit view.

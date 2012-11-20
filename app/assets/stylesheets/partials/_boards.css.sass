@@ -8,14 +8,6 @@
 .blatant-notice
   text-align: center
 
-// .ghost-text
-//   +user-select(none)
-//   font:
-//     size: 5em
-//     weight: bold
-//     style: italic
-//   opacity: 0.3
-
 .tripcode
   a
     color: mix($user-accent, $warning, 70%)
@@ -23,7 +15,10 @@
       text-decoration: none
       border-bottom: 1px dotted $light-touch
 
-  &.secure
-    color: mix($user-accent, $warning, 50%)
-    a
-      color: mix($user-accent, $warning, 50%)
+.management-pane
+  display: inline-block
+  width: 400px
+  height: 100%
+
+.page-frame
+  display: inline-block

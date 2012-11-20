@@ -9,13 +9,14 @@ class ReportsController < ApplicationController
 
       check_if_user_can!(:manage, Board, @board)
       @reports = @board.reports.order('created_at')
+      options = { layout: 'board_management' }
     else
       @current_user.check_if_operator!
       @reports = @current_user.reports.order('created_at')
     end
 
     respond_to do |format|
-      format.html
+      format.html { render options }
       format.json { render json: @reports }
     end
   end
