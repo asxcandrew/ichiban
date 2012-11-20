@@ -17,8 +17,8 @@ strong
   position: fixed
   width: 100%
   height: $header-height
-  padding: 10px
-  z-index: 99999
+  padding: 8px 10px
+  z-index: $medium-priority
   
   background-color: lighten($base, 13%)
 
@@ -38,8 +38,17 @@ strong
     display: inline-block
     float: right
 
+    a
+      text-decoration: none
+      padding: 4px 10px
+      background-color: $bold-accent
+      color: $light
+      &:hover
+        background-color: lighten($bold-accent, 10%)
+      &:active
+        background-color: lighten($bold-accent, 15%)
   &.inset
-    box-shadow: 0px 2px 10px rgba(0,0,0,.5)
+    box-shadow: 0px 2px 10px rgba(0,0,0, 0.5)
 
   &:hover .unimportant
     opacity: $opaque

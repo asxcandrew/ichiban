@@ -3,7 +3,8 @@
   top: 0
   left: 0
   width: 100%
-  z-index: 9999
+  min-height: $header-height
+  z-index: $high-priority
 
   text-align: center
   font-weight: bold
@@ -11,7 +12,8 @@
 
   background-color: $accent
   border-bottom: 1px solid $dark-base
-  padding: 10px
+  padding: 14px 10px
+  
   a.close
     text-decoration: none
   &.error, &[data-type='error']
