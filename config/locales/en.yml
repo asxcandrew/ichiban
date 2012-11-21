@@ -25,8 +25,9 @@ en:
       continue_thread: "Continue this thread &rarr;"
     errors:
       image_required: "An image is required when starting a thread or if comment is not added."
-      name_too_long: "Names must be shorter than 65 characters."
-      subject_too_long: "Subject must be shorter than 65 characters."
+      body_too_long: "A post's comment must be shorter than %{limit}"
+      name_too_long: "Names must be shorter than %{limit} characters."
+      subject_too_long: "Subject must be shorter than %{limit} characters."
       ip_address: "Post must have an IP address."
       parent_existance: "Attempted to reply to #%{parent_id} but the post was not found. Was it deleted?"
       presence_of_parent: "A reply must have a parent."

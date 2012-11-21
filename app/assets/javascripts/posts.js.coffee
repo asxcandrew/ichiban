@@ -10,7 +10,7 @@ $ ->
 
   # The body limitation is also validated in
   # post model.
-  $('textarea').limiter(maxLength: 800)
+  $('textarea').limiter()
 
   $(window.controls).on "click", ".reply-toggle", (e) ->
     e.preventDefault()

@@ -40,9 +40,18 @@ class Post < ActiveRecord::Base
 
   # Attributes
   validates_presence_of :ip_address, message: I18n.t('posts.errors.ip_address')
-  validates_length_of :name, maximum: 64, message: I18n.t('posts.errors.name_too_long')
-  validates_length_of :subject, maximum: 64, message: I18n.t('posts.errors.subject_too_long')
 
+  validates_length_of :name, 
+                      maximum: 40, 
+                      message: I18n.t('posts.errors.name_too_long', limit: 40)
+  validates_length_of :subject, 
+                      maximum: 40, 
+                      message: I18n.t('posts.errors.subject_too_long', limit: 40)
+
+  validates_length_of :body, 
+                      maximum: 1000, 
+                      message: I18n.t('posts.errors.body_too_long', limit: 1000)
+  
   # Suspensions
   has_many :suspensions, conditions: ["ends_at > ?", Date.today]
   validate :active_suspensions
@@ -59,10 +68,6 @@ class Post < ActiveRecord::Base
   after_initialize :set_reply_count
   after_initialize :inherit_parent, :if => :parent_id
   after_destroy :decrement_parent_replies!
-
-  # Maximum length is also limited 
-  # in the post.js.coffee file.
-  validates_length_of :body, maximum: 800
 
   # Posting limitations
   validate :throttle_limit, :if => :new_record?

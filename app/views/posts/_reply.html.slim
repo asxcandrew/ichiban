@@ -7,26 +7,25 @@
 
       == f.hidden_field :parent_id, value: parent.id
 
-      == f.input(:body, 
-                 :as => :text, 
-                 cols: nil, 
-                 rows: nil)
+      == f.input :body, :as => :text
       .meter:span
-
-      == f.input(:name, 
+      
+      == f.input(:name,
                  input_html: { value: cookies.signed[:name], 
                                class: 'name',
                                :autocomplete => :off })
-      == f.input(:tripcode, 
+      == f.input(:tripcode,
                  input_html: { :type => :password, 
                                value: cookies.signed[:passphrase], 
                                class: 'tripcode',
                                :autocomplete => :off })
-      
+
       == label_tag "#{parent.id}_post_email", "Email"
       == text_field_tag :email, '', id: "#{parent.id}_post_email"
+
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file
+        == i.hidden_field :asset_cache, value: @post.image.try(:asset_cache)
 
       == f.submit(disabled: true, 
                   disable_with: t('simple_form.disable_submit'),
