@@ -10,6 +10,6 @@ header.site-header
         | ::
         .description = Setting.tag_line
 
-  - unless (params[:controller] == 'posts' && params[:action] == 'new') || (params[:controller] == 'posts' && params[:action] == 'show')
+  - unless (params[:controller] == 'posts')
     .new-thread
       == link_to("New post", new_post_path(board_id: @board.try(:id)))
