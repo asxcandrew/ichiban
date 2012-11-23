@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    options = {}
     @prefix = I18n.t('reports.index.prefix')
 
     if params[:directory]
