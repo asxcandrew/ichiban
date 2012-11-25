@@ -43,13 +43,13 @@ module PostsHelper
             post_path(post))
   end
 
-  def link_to_image(asset, options = {})
+  def link_to_image(asset, size, options = {})
     # REFACTOR: It's quite the assumption to guess that all GIF files are animated.
     #           Though I'd rather be wrong 1% of the time then not address it.
     options[:class] = "animated" if asset.format =~ /gif/i
 
     link_to(asset.formatted.to_s, options) do
-      image_tag(asset.thumbnail.to_s, 'data-toggle' => asset.formatted.to_s)
+      image_tag(asset.send(size).to_s, 'data-toggle' => asset.formatted.to_s)
     end
   end
 
