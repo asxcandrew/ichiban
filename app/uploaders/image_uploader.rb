@@ -11,11 +11,19 @@ class ImageUploader < CarrierWave::Uploader::Base
     cloudinary_transformation :angle => :exif
   end
 
+  version :showcase do
+    process resize_to_limit: [300, 300]
+    process convert: 'jpg'
+
+    # This isn't documented anywhere. Thanks Cloudinary.
+    cloudinary_transformation quality: 90
+    cloudinary_transformation :angle => :exif
+  end
+
   version :thumbnail do
     process resize_to_limit: [200, 200]
     process convert: 'jpg'
 
-    # This isn't documented anywhere. Thanks Cloudinary.
     cloudinary_transformation quality: 90
     cloudinary_transformation :angle => :exif
   end
