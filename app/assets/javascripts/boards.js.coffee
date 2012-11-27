@@ -1,4 +1,5 @@
 $ ->
+  window.showcases = $(".showcases")
   $header = $('.site-header')
 
   $(window).scroll (e) ->
@@ -10,6 +11,14 @@ $ ->
 
   # Set humanized times.
   $('time').timeago()
+  $(window).load () ->
+    showcases.isotope
+      itemSelector: '.showcase'
+      masonry:
+        columnWidth: 10
+        gutterWidth: 10
+    ,() ->
+      console.log "done"
 
   $flash = $('.flash')
   if $flash
@@ -23,9 +32,9 @@ $ ->
   if $flash.length == 0
     # No flash on the page. Better make one.
     $('.content').prepend("<div data-type=#{flashData.type} class='flash alert style='display: none'>
-                           #{flashData.message}
-                           #{closeButton}
-                         </div>")
+                             #{flashData.message}
+                             #{closeButton}
+                           </div>")
     $flash = $('.flash')
   else
     # Flash already exists, better replace it's contents.
@@ -53,3 +62,8 @@ $ ->
   total = $(element).length
   label = if 1 == total then name else (name + 's')
   $("##{name}-counter").text("#{total} #{titleize(label)}")
+
+@scrollTo = (selector, offset, callback) ->
+  offset = 0 if offset == undefined
+  $('body').animate { scrollTop: ($(selector).offset().top + offset) }, quickly, () ->
+    callback()

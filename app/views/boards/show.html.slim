@@ -1,13 +1,16 @@
 - if @posts.any?
-  .posts
+  .showcases
     - @posts.each do |post|
-      .heart(id=post.id)
-        - if post.subject.present?
-          .banner = post.subject
-        - elsif post.body.present?
-          .banner = truncate(post.body, length: 35)
-        figure == link_to_image(post.image.asset, :showcase)
-        .view-thread == link_to_post("View thread", post)
+      .showcase(id=post.id)
+        = link_to_post post do
+          - if post.subject.present?
+            .banner = post.subject
+          == image_tag(post.image.asset.showcase.to_s)
+          .teaser
+            - if post.body.blank?
+              = link_to_post("View thread", post)
+            - else
+              = truncate(post.body, length: 40)
     / == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
 
 - else

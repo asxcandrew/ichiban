@@ -162,6 +162,9 @@
   font-style: italic
   word-wrap: break-word
 
+  a
+    color: inherit
+
   opacity: $translucent
   .board
     font-size: 2.6em
@@ -172,41 +175,3 @@
   .last-reply
     margin-top: 6px
     font: 1.9em
-
-.heart
-  display: inline-block
-  margin: 5px
-  max-width: 500px
-
-  color: $light
-  font-size: 1.2em
-  font-weight: bold
-  text-transform: uppercase
-
-
-  figure
-    display: inline-block
-    img
-      +box-shadow(14px 7px 30px rgba(34, 25, 25, 0.4))
-      max-width: 500px
-
-  .banner, .view-thread
-    position: absolute
-    width: 100%
-    background-color: hsla(0%,0%,0%, 0.425)
-    padding: 5px
-
-  &:hover .view-thread
-    visibility: visible
-
-  .view-thread
-    visibility: hidden
-
-    bottom: 3px
-    a
-      color: $light
-      display: block
-    &.visible
-      visibility: visible
-
-

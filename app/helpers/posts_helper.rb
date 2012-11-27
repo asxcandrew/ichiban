@@ -28,9 +28,13 @@ module PostsHelper
     output.safe_concat("</article>")
   end
 
-  def link_to_post(*text, post)
+  def link_to_post(*text, post, &block)
     text = text.empty? ? "##{post.id}" : text.to_sentence
-    link_to(text, post_path(post), title: "Post ##{post.id}")
+    if block.nil?
+      link_to(text, post_path(post), title: "Post ##{post.id}")
+    else
+      link_to(post_path(post), &block)
+    end
   end
 
   def link_to_parent(post)
