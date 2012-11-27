@@ -4,6 +4,7 @@
 en:
   license: "%{link} is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License."
   posts:
+    new_thread: "New Thread"
     tripcodes:
       browse: "Browse posts made by this user."
     parent:
@@ -31,7 +32,7 @@ en:
       ip_address: "Post must have an IP address."
       parent_existance: "Attempted to reply to #%{parent_id} but the post was not found. Was it deleted?"
       presence_of_parent: "A reply must have a parent."
-      parent_board_mismatch: "The reply had a board_id of #%{post_board_id} but its parent's board_id was #%{board_id}."
+      parent_board_mismatch: "The reply had a board_id of #%{post_board_id} but its parent's board_id was #%{parent_board_id}."
       parent_ancestor_mismatch: "The reply had an ancestor_id of #%{post_ancestor_id} which does not reflect its parent."
       ancestor_existance: "Attempted to set ancestor to #%{ancestor_id} but the post was not found. Was it deleted?"
       ancestor_mismatch: "The reply had an ancestor_id of #%{post_ancestor_id} but its parent's ancestor_id was #%{parent_ancestor_id}."

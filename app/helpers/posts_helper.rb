@@ -28,9 +28,13 @@ module PostsHelper
     output.safe_concat("</article>")
   end
 
-  def link_to_post(*text, post)
+  def link_to_post(*text, post, &block)
     text = text.empty? ? "##{post.id}" : text.to_sentence
-    link_to(text, post_path(post), title: "Post ##{post.id}")
+    if block.nil?
+      link_to(text, post_path(post), title: "Post ##{post.id}")
+    else
+      link_to(post_path(post), &block)
+    end
   end
 
   def link_to_parent(post)
@@ -43,13 +47,13 @@ module PostsHelper
             post_path(post))
   end
 
-  def link_to_image(asset, options = {})
+  def link_to_image(asset, size, options = {})
     # REFACTOR: It's quite the assumption to guess that all GIF files are animated.
     #           Though I'd rather be wrong 1% of the time then not address it.
     options[:class] = "animated" if asset.format =~ /gif/i
 
     link_to(asset.formatted.to_s, options) do
-      image_tag(asset.thumbnail.to_s, 'data-toggle' => asset.formatted.to_s)
+      image_tag(asset.send(size).to_s, 'data-toggle' => asset.formatted.to_s)
     end
   end
 

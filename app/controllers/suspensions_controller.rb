@@ -2,6 +2,7 @@ class SuspensionsController < ApplicationController
   load_and_authorize_resource
   
   def index
+    options = {}
     @prefix = I18n.t('suspensions.prefix')
 
     if params[:directory]
