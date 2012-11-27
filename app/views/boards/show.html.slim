@@ -1,6 +1,17 @@
 - if @posts.any?
-  == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
-  == render partial: 'boards/navigation'
+  .showcases
+    - @posts.each do |post|
+      .showcase(id=post.id)
+        = link_to_post post do
+          - if post.subject.present?
+            .banner = post.subject
+          == image_tag(post.image.asset.showcase.to_s)
+          .teaser
+            - if post.body.blank?
+              = link_to_post("View thread", post)
+            - else
+              = truncate(post.body, length: 40)
+    / == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
 
 - else
   .blatant-notice

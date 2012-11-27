@@ -40,8 +40,8 @@ toggleImageExpansion = ($link) ->
   image.addClass('loading')
 
   image.css('max-width': max_width)
-  image.attr('src': newSource).one('load', () ->
-    image.removeClass('loading'))
+  image.attr('src': newSource).one 'load', () ->
+    image.removeClass('loading')
 
 toggleReply = (id) ->
   reply = "##{id} .reply:first"
@@ -49,7 +49,7 @@ toggleReply = (id) ->
   
   # Jump to the reply
   if $(reply).is(':visible')
-    $('body').animate { scrollTop: $("##{id}").offset().top }, 200, () ->
+    scrollTo "##{id}", -35, () ->
       $("#{reply} textarea:first").focus()
 
 @updateMeter = (percentage, meter) ->

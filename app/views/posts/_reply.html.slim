@@ -25,7 +25,6 @@
 
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file
-        == i.hidden_field :asset_cache, value: @post.image.try(:asset_cache)
 
       == f.submit(disabled: true, 
                   disable_with: t('simple_form.disable_submit'),

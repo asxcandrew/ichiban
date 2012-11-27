@@ -3,6 +3,7 @@
   right: 10px
 
 .post
+  // display: inline-block
   // Highlight a post when an anchor is present.
   &:target
     &:before
@@ -125,6 +126,8 @@
         visibility: hidden
 
   .body
+    vertical-align: top
+    display: inline-block
     line-height: 20px
     h1
       font-size: 1.3em
@@ -158,6 +161,9 @@
   font-weight: bold
   font-style: italic
   word-wrap: break-word
+
+  a
+    color: inherit
 
   opacity: $translucent
   .board

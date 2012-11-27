@@ -10,13 +10,8 @@ class BoardsController < ApplicationController
   end
 
   def index
-    @post  = Post.new
-    @reply = Post.new
-    @previews = 2
-    @child_limit = 2
-    @prefix = "Boards"
-    @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
-
+    # @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
+    @posts = Post.all_threads.order("updated_at DESC")
     render 'show'
   end
 

@@ -27,6 +27,7 @@ html, body
     family: $fonts
   height: 100%
   background-color: lighten($base, 30%)
+  
 
 hr
   border: 1px solid darken($base, 5%)
@@ -60,7 +61,8 @@ sup
   visibility: hidden
 
 .container
-  +background-image(linear-gradient(lighten($base, 13%), lighten($base, 18%)))
+  // +background-image(linear-gradient(lighten($base, 13%), lighten($base, 18%)))
+  background-image: image-url("floral_pattern.png")
   min-height: 100%
 
 .wrapper
@@ -69,7 +71,7 @@ sup
   
 .content
   margin-top: $header-height
-  padding: 20px
+  padding: 20px 15px
 
 .site-logo
   width: 465px
