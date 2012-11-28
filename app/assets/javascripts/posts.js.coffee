@@ -45,7 +45,7 @@ toggleImageExpansion = ($link) ->
 
 toggleReply = (id) ->
   reply = "##{id} .reply:first"
-  $(reply).toggle(window.animationDuration)
+  $(reply).toggle quickly
   
   # Jump to the reply
   if $(reply).is(':visible')
