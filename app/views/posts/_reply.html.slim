@@ -29,4 +29,4 @@
       == f.submit(disabled: true, 
                   disable_with: t('simple_form.disable_submit'),
                   title: t('posts.show.reply_requirements.'),
-                  style: "background-color: #{post_color(cookies.signed[:tripcode])}")
+                  style: submit_button_style(cookies.signed[:tripcode]))

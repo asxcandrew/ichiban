@@ -1,12 +1,15 @@
+$background-image: image-url("polaroid.png")
+$background-color: #f1f6f8
 
 $slow-transition: 500ms
+$medium-transition: 350ms
 $fast-transition: 200ms
 
 $opaque: 1.0
 $translucent: 0.6
 
 // Fonts
-$fonts: "DejaVu Sans", Arial, Helvetica, sans-serif
+$fonts: "DejaVu Sans", "Arial", "Helvetica", sans-serif
 
 // Layout defaults
 $footer-height: 40px
@@ -16,6 +19,7 @@ $header-height: 50px
 $low-priority: 1
 $medium-priority: 999
 $high-priority: 9999
+
 // Prevents broken box model annoyances.
 *
   +box-sizing(border-box)
@@ -26,7 +30,7 @@ html, body
   font:
     family: $fonts
   height: 100%
-  background-color: lighten($base, 30%)
+  background-color: $background-color
   
 
 hr
@@ -53,6 +57,9 @@ sup
   vertical-align: super
   font-size: 0.7em
 
+strong
+  font-weight: bold
+
 .clearfix
   content: "."
   display: block
@@ -62,7 +69,7 @@ sup
 
 .container
   // +background-image(linear-gradient(lighten($base, 13%), lighten($base, 18%)))
-  background-image: image-url("floral_pattern.png")
+  background-image: $background-image
   min-height: 100%
 
 .wrapper

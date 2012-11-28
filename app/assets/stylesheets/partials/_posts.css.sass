@@ -25,6 +25,9 @@
     padding: 10px
     border-left: 10px solid $bold-accent
     word-break: break-word
+
+    +box-shadow(8px 10px 18px rgba(34, 25, 25, 0.4))
+
     header
       margin-bottom: 6px
       // TODO: Use smarter selector
@@ -149,8 +152,8 @@
 
 .reply
   margin-left: +30px
-  max-width: 500px
   article
+    width: 500px
     background-color: lighten($accent, 20%)
   display: none
 

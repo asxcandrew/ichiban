@@ -17,9 +17,10 @@ $ ->
       masonry:
         columnWidth: 10
         gutterWidth: 10
-    ,() ->
-      console.log "done"
-
+    , () ->
+        # Fix height shadow issues.
+        height = showcases.height() + 15
+        showcases.height(height)
   $flash = $('.flash')
   if $flash
     type = $flash.data('type')

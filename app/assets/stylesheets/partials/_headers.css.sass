@@ -6,11 +6,6 @@ h2
 h3
   font-size: 1.1em
 
-strong
-  font-weight: bold
-
-
-
 .site-header
   +transition-property(all)
   +transition-duration($fast-transition)
@@ -19,35 +14,44 @@ strong
   height: $header-height
   padding: 8px 10px
   z-index: $medium-priority
-  
   background-color: lighten($base, 13%)
+  background-image: $background-image
 
   .hero-text
     font-size: 2em
-    display: inline-block      
+    display: inline-block
+    text-shadow: 1px -1px 1px $light
+
+    a
+      color: darken($bold-accent, 15%)
   
   .description
     display: inline-block
     font-style: italic
+    text-shadow: 1px -1px 1px darken($background-color, 10%)
 
   .new-thread
-    text-transform: uppercase
     padding-top: 5px
     font:
       weight: bold
       size: 1.5em
     display: inline-block
     float: right
+    text-shadow: 1px 4px 6px $bold-accent, 0 0 0 $off-white, 1px 4px 6px $bold-accent
 
     a
       text-decoration: none
       padding: 4px 10px
       background-color: $bold-accent
-      color: $light
+      color: transparentize($light, 0.05)
       &:hover
         background-color: lighten($bold-accent, 10%)
+        text-shadow: 1px 4px 6px lighten($bold-accent, 10%), 0 0 0 $off-white, 1px 4px 6px lighten($bold-accent, 10%)
+
       &:active
         background-color: lighten($bold-accent, 15%)
+        text-shadow: 1px 4px 6px lighten($bold-accent, 15%), 0 0 0 $off-white, 1px 4px 6px lighten($bold-accent, 15%)
+
   &.inset
     box-shadow: 0px 2px 10px rgba(0,0,0, 0.5)
 

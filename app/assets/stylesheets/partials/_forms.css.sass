@@ -6,14 +6,16 @@ form
     width: 100%
     max-width: 100%
     font-family: $fonts
-    border: 0
+    box-shadow: inset 0px 0px 8px $off-white
     border: 1px solid lighten($dark-base, 70%)
-
-
-    // width: 350px
     height: 70px
-    padding: 2px 4px
-  
+    padding: 5px 6px
+
+    &:focus
+      outline: 0
+      border: 1px solid lighten($dark-base, 50%)
+      box-shadow: inset 0px 0px 8px darken($off-white, 5%)
+
   .selection
     margin: 0 auto
     width: 70%
@@ -38,16 +40,20 @@ form
     &.name
       display: inline-block    
       width: 60%
+
     &.tripcode
       display: inline-block    
       width: 40%
 
-
-
     &[type="text"], &[type="password"], &[type="email"]
-      background-color: $light
-      padding: 2px 4px
+      box-shadow: inset 0px 0px 8px $off-white
+      padding: 7px 8px
       border: 1px solid lighten($dark-base, 70%)
+      background-color: $light
+      &:focus
+        outline: 0
+        border: 1px solid lighten($dark-base, 50%)
+        box-shadow: inset 0px 0px 8px darken($off-white, 5%)
 
     &[type="checkbox"]
       display: inline-block
@@ -57,8 +63,11 @@ form
 
     &[type="submit"]
       background-color: $bold-accent
+      +background-image(linear-gradient(lighten($bold-accent, 2%), $bold-accent))
       color: $light
       width: 100%
+      padding: 4px 2px
+      font-weight: bold
 
       &:disabled
         opacity: $translucent

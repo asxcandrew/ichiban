@@ -19,7 +19,7 @@ module PostsHelper
     output = ActiveSupport::SafeBuffer.new
     if color
       options[:style] = 
-        "border-color: #{post_color(color)}; 
+        "border-color: #{post_color(hex: color)}; 
          background-color: #{background_color(color)};"
     end
 
@@ -57,17 +57,18 @@ module PostsHelper
     end
   end
 
-  def post_color(hex)
+  def post_color(options = {})
     # We can take the tripcode hex for what it is but the color
     # may be too strong for our layout.
     saturation_limit = 35.0
     lightness_limit = 55.0
     # HACK: There's gotta be better way to deal with this.
-    unless hex.nil?
-      color = Color::RGB.from_html(hex).to_hsl
+    unless options[:hex].nil?
+      color = Color::RGB.from_html(options[:hex]).to_hsl
       color.saturation = saturation_limit if color.saturation > saturation_limit
       color.lightness = lightness_limit if color.lightness > lightness_limit
 
+      color.lightness += options[:lighten] if options[:lighten]
       color.html
     end
   end
@@ -76,8 +77,19 @@ module PostsHelper
     unless hex.nil?
       color = Color::RGB.from_html(hex).to_hsl
       color.lightness = 95.0
-
       color.html
+    end
+  end
+
+  def submit_button_style(hex)
+    unless hex.nil?
+      base_color = post_color(hex: hex)
+      gradient_color = post_color(hex: hex, lighten: 2)
+      style = "background-color: #{base_color}; "
+      style << "background-image: linear-gradient(#{gradient_color}, #{base_color});"
+      style << "background-image: -webkit-linear-gradient(#{gradient_color}, #{base_color});"
+      style << "background-image: -moz-linear-gradient(#{gradient_color}, #{base_color});"
+      return style
     end
   end
 end
