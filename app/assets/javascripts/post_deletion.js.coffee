@@ -35,9 +35,9 @@ deletePost = (id) ->
       else
         $("##{id}").hide animationDuration, () ->
           $(this).empty().remove()
+          flash(response.flash)
           updateReplyCounter($parent.attr('id'))
     error: (response) ->
       $("##{id} .confirmation-toggle:first").hide()
       $("##{id} .delete-post-confirmation:first").show()
-    complete: (response) ->
       flash($.parseJSON(response.responseText).flash)

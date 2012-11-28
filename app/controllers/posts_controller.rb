@@ -51,8 +51,8 @@ class PostsController < ApplicationController
 
     cookies.signed[@post.to_sha2] == @post.ip_address || check_if_user_can!(:destroy, Post, @post)
     @post.destroy
+    flash[:notice] = I18n.t('posts.destroy.deleted', post_id: @post.id)
     response[:flash][:message] = I18n.t('posts.destroy.deleted', post_id: @post.id)
-
     # Better clean up after ourselves.
     cookies.delete(@post.to_sha2)
 
