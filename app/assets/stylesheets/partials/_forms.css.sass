@@ -74,14 +74,24 @@ form
 
       &:hover
         background-color: lighten($bold-accent, 10%)
+        +background-image(linear-gradient(lighten($bold-accent, 6%), $bold-accent))
+
+      &:active
+        background-color: lighten($bold-accent, 1%)
+        +background-image(linear-gradient(lighten($bold-accent, 1%), $bold-accent))
+
 
     &.danger
       background-color: $warning
       +background-image(linear-gradient(lighten($warning, 2%), $warning))
 
-
       &:hover
         background-color: lighten($warning, 10%)
+        +background-image(linear-gradient(lighten($warning, 15%), $warning))
+
+      &:active
+        background-color: lighten($warning, 1%)
+        +background-image(linear-gradient(lighten($warning, 1%), $warning))
 
 
   // Spam prevention
