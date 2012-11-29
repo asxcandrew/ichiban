@@ -45,8 +45,8 @@ class Post < ActiveRecord::Base
                       maximum: 40, 
                       message: I18n.t('posts.errors.name_too_long', limit: 40)
   validates_length_of :subject, 
-                      maximum: 40, 
-                      message: I18n.t('posts.errors.subject_too_long', limit: 40)
+                      maximum: 70, 
+                      message: I18n.t('posts.errors.subject_too_long', limit: 70)
 
   validates_length_of :body, 
                       maximum: 1000, 
