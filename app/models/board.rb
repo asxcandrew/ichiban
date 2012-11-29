@@ -3,7 +3,7 @@ class Board < ActiveRecord::Base
 
   
   validates(:name, 
-            length:  { maximum: 100, 
+            length:  { maximum: 40, 
                        too_long: I18n.t('boards.errors.name_too_long') },
            presence: { message: I18n.t('boards.errors.name') })
 
@@ -23,6 +23,8 @@ class Board < ActiveRecord::Base
             format:     { with: /^[a-z0-9]+[-a-z0-9]*[a-z0-9]+$/i,
                           message: I18n.t('boards.errors.directory_format') },
             presence:   { message: I18n.t('boards.errors.directory') },
+            length:     { maximum: 40, 
+                          too_long: I18n.t('boards.errors.directory_too_long', max: 40) },
             uniqueness: { case_sensitive: false,
                           message: I18n.t('boards.errors.directory_uniqueness') })
 
