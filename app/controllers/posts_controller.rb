@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   load_and_authorize_resource except: [:destroy]
 
   def new
+    @prefix = I18n.t('posts.new.prefix')
     @board = Board.find_by_id(params[:board_id])
     @post = Post.new
   end
