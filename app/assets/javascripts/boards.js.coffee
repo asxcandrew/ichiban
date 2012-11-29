@@ -1,5 +1,6 @@
 $ ->
   window.showcases = $(".showcases")
+  colW = 25
   $header = $('.site-header')
 
   $(window).scroll (e) ->
@@ -11,16 +12,23 @@ $ ->
 
   # Set humanized times.
   $('time').timeago()
+
+  # Isotope
   $(window).load () ->
     showcases.isotope
       itemSelector: '.showcase'
       masonry:
-        columnWidth: 10
+        columnWidth: colW
+        columns: null
         gutterWidth: 10
-    , () ->
-        # Fix height shadow issues.
-        height = showcases.height() + 15
-        showcases.height(height)
+    ,() ->
+      # Fix height shadow issues.
+      height = showcases.height() + 25
+      showcases.height(height)
+
+
+
+
   $flash = $('.flash')
   if $flash
     type = $flash.data('type')
