@@ -27,9 +27,9 @@ $.fn.limiter = (opts) ->
     # A comment or upload is required for replying.
     if $form.data('posttype') == 'reply'
       if characters > 1
-        $($submitField).prop("disabled", false)
+        $uploadField.prop("required", false)
       else
-        $($submitField).prop("disabled", true)
+        $uploadField.prop("required", true)
 
     true
 

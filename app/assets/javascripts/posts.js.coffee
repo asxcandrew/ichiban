@@ -1,18 +1,7 @@
 $ ->
-  # An upload is required for creating a new post.
-  $uploadField = $(".new_post input:file")
-  $submitField = $(".new_post input:submit")
-  checkUploadField($uploadField.attr('value'), $submitField)
-
-  $uploadField.change (e) ->
-    $submitField = $(this).parents('.new_post').find("input[type='submit']")
-    checkUploadField(e.target.value, $submitField)
-
-  # The body limitation is also validated in
-  # post model.
   $('textarea').limiter()
 
-  $(window.controls).on "click", ".reply-toggle", (e) ->
+  $(controls).on "click", ".reply-toggle", (e) ->
     e.preventDefault()
     toggleReply($(this).data('id'))
 
