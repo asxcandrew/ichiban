@@ -11,7 +11,7 @@
     font-weight: bold
     text-transform: uppercase
 
-    &:hover .teaser
+    &:hover .teaser, &:hover .banner
       background-color: hsla(0%,0%,0%, 0.725)
     a
       color: inherit
@@ -20,7 +20,7 @@
 
     img
       display: inline-block
-      +box-shadow(8px 10px 18px rgba(34, 25, 25, 0.4))
+      box-shadow: 8px 10px 18px $shadow
       max-width: 500px
 
     // Fixes issue where isotope screws with banner width.
@@ -29,6 +29,8 @@
         width: 100%
 
     .banner, .teaser
+      +transition-property(background-color)
+      +transition-duration($fast-transition)
       position: absolute
       background-color: hsla(0%,0%,0%, 0.425)
       padding: 5px

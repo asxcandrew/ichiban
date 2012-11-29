@@ -11,5 +11,5 @@ header.site-header
         .description = Setting.tag_line
 
   - unless (params[:controller] == 'posts')
-    .new-thread
+    .new-thread-button
       == link_to(t('posts.new_thread'), new_post_path(board_id: @board.try(:id)))

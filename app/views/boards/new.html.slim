@@ -1,10 +1,11 @@
 .new-board.compact-form
   h1 Create Board
-  == simple_form_for @board do |f|
-    == f.input :name, :placeholder => "Name"
-    
-    == f.input :description, :placeholder => "Description"
+  article
+    == simple_form_for @board do |f|
+      == f.input :name, input_html: { title: t('boards.errors.name_too_long') }
+      
+      == f.input :description
 
-    == f.input :directory, :placeholder => "Directory"
-    
-    == f.submit
+      == f.input :directory, input_html: { title: t('boards.errors.directory_format') }
+      
+      == f.submit

@@ -10,7 +10,7 @@
             - if post.body.blank?
               = link_to_post("View thread", post)
             - else
-              = truncate(post.body, length: 40)
+              = truncate(post.body, length: 40, separator: ' ')
     / == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
 
 - else

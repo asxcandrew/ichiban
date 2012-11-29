@@ -11,8 +11,10 @@ en:
       last_reply: "Last reply was "
     anonymous: "Anonymous"
     new:
-      header: "New Post"
+      prefix: "New Thread"
+      header: "New Thread"
       board_search: "Search boards"
+      board_search_help: "You must add a board to post on."
     show:
       prefix: "Post #%{post_id} on %{board}"
       reply_requirements: "A comment or upload must be included when replying to a thread."
@@ -64,6 +66,8 @@ en:
     update:
       success: "Board settings have been successfully updated."
     destroy:
+      button: "Delete Board"
+      confirmation: "Are you sure? Deleting /%{directory}/ will delete %{posts} posts!"
       success: "/%{directory}/ permanently deleted."
     navigation:
       back_to_board: "Back to %{board}"
@@ -73,9 +77,10 @@ en:
       max_reports_per_IP: "A board's report limit must be between %{min} and %{max}."
       board_not_found: "Could not find board #%{board_id}. Was it deleted?"
       name: "A board must have a name."
-      name_too_long: "A board's name must not exceed 100 characters."
+      name_too_long: "A board must have a name that does not exceed 40 characters."
       directory_format: "A board's directory must be alphanumeric and at least 2 characters."
       directory: "A board must have a directory."
+      directory_too_long: "A board's directory must not exceed %{max} characters."
       directory_uniqueness: "A board's directory must be unique."
       directory_modification: "A board's directory cannot be changed."
   users:

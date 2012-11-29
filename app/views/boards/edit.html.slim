@@ -1,25 +1,26 @@
 .descriptive.compact-form
-  == simple_form_for @board do |f|
-    h1 Edit board
-    == hidden_field_tag :directory, @board.directory
-    == f.input :name, placeholder: "Board name"
+  h1 Edit board
+  article
+    == simple_form_for @board do |f|
+      == hidden_field_tag :directory, @board.directory
+      == f.input :name
 
-    == f.input :description, placeholder: "description"
+      == f.input :description
 
-    == f.input :file_size_limit
-    
-    == f.input :max_reports_per_IP
+      == f.input :file_size_limit
+      
+      == f.input :max_reports_per_IP
 
-    == f.input :save_IPs
-    == f.input :worksafe
+      == f.input :save_IPs
+      == f.input :worksafe
 
-    == f.submit
+      == f.submit
 
 
   fieldset.danger-zone
     legend Danger Zone
-    == button_to("Delete Board",
+    == button_to(t('boards.destroy.button'),
                  @board, 
                  :method => :delete, 
-                 confirm: "Are you sure? Deleting /#{@board.directory}/ will delete #{@board.posts.size} posts!",
+                 confirm: t('boards.destroy.confirmation', directory: @board.directory, posts: @board.posts.size),
                  class: 'danger')
