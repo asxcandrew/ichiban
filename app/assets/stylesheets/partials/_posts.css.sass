@@ -164,11 +164,9 @@
   font-weight: bold
   font-style: italic
   word-wrap: break-word
-
   a
-    color: inherit
-
-  opacity: $translucent
+    color: transparentize($dark-base, 0.2)
+  text-shadow: 1px 4px 6px $background-color, 0 0 0 $dark-base, 1px 4px 6px $background-color
   .board
     font-size: 2.6em
   .subject
