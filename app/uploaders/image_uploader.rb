@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :showcase do
-    process resize_to_limit: [300, 300]
+    process resize_to_fill: [300]
     process convert: 'jpg'
 
     # This isn't documented anywhere. Thanks Cloudinary.

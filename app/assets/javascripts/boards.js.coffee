@@ -1,6 +1,6 @@
 $ ->
   window.showcases = $(".showcases")
-  colW = 25
+  colW = 5
   $header = $('.site-header')
 
   $(window).scroll (e) ->
