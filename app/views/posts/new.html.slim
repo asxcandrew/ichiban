@@ -31,6 +31,7 @@
                         @board.try(:name), list: 'board-search', 
                         placeholder: t('.board_search'),
                         required: true,
+                        autocomplete: false,
                         input_html: { title: t('.board_search_help') })
                         
       datalist#board-search
