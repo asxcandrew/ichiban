@@ -23,4 +23,17 @@ module BoardsHelper
     text << "&nbsp;".html_safe + t('boards.navigation.back_to_directory')
     link_to(text, root_path)
   end
+
+  def showcase_tag(post, options={ class: "showcase " }, &block)
+    output = ActiveSupport::SafeBuffer.new
+    options[:class] << post.board.directory
+    options[:class] << " nsfw" unless post.worksafe?
+
+
+    options[:id] = post.id
+
+    output.safe_concat(tag(:div, options, true))
+    output << capture(&block)
+    output.safe_concat("</div>")
+  end
 end
