@@ -20,3 +20,8 @@ window.controls = '.post footer'
 window.animationDuration = 250
 
 window.quickly = animationDuration
+
+// # Set humanized times.
+$(document).ready(function() {
+  $('time').timeago();
+})
