@@ -1,4 +1,5 @@
 $background-image: image-url("polaroid.png")
+$background-size: 56px 36px
 $background-color: #f1f6f8
 
 $slow-transition: 500ms
@@ -70,6 +71,7 @@ strong
 .container
   // +background-image(linear-gradient(lighten($base, 13%), lighten($base, 18%)))
   background-image: $background-image
+  background-size: $background-size
   min-height: 100%
 
 .wrapper
@@ -93,6 +95,13 @@ strong
   
   font-size: 0.8em
   text-align: center
+
+  .copyright, .infotainment
+    display: inline-block
+
+  .infotainment
+    text-align: right
+    float: right
 
 .left
   float: left
