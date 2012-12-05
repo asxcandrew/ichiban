@@ -205,7 +205,10 @@ class Post < ActiveRecord::Base
     end
     
     def touch_ancestor!
-      if self.ancestor
+      # TODO: Fix issue where someone could keep 
+      #       adding and deleting posts to bump a 
+      #       thread past its limit
+      if self.ancestor && self.ancestor.replies <= 300
         self.ancestor.touch
       end
     end
