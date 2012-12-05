@@ -11,8 +11,11 @@ class BoardsController < ApplicationController
 
   def index
     # @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
-    @posts = Post.all_threads.order("updated_at DESC")
-    render 'show'
+    @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
+    respond_to do |format|
+      format.html { render 'show' }
+      format.json { render json: @posts, except: [:ip_address], :include => :image }
+    end
   end
 
   def new
@@ -28,8 +31,6 @@ class BoardsController < ApplicationController
   def show
     @post  = Post.new
     @reply = Post.new
-    @previews = 2
-    @child_limit = 2
     @prefix = "#{@board.name}"
     @posts = Post.threads_for(@board).order("updated_at DESC").page(params[:page])
 
@@ -37,7 +38,7 @@ class BoardsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @posts }
+      format.json { render json: @posts, except: [:ip_address], :include => :image }
     end
   end
 
