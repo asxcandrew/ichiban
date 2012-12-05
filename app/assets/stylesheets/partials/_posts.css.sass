@@ -130,14 +130,8 @@
 
       &.loading
         opacity: $translucent
-        animation: pulsate 1s ease-out
-        animation-iteration-count: infinite
-
-        -webkit-animation: pulsate 1s ease-out
-        -webkit-animation-iteration-count: infinite
-
-        -moz-animation: pulsate 1s ease-out
-        -moz-animation-iteration-count: infinite
+        +animation(pulsate, 1s, ease-out)
+        +animation-iteration-count(infinite)
     a
       display: inline-block
       &.animated:before
