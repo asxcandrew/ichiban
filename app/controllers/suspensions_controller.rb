@@ -8,7 +8,7 @@ class SuspensionsController < ApplicationController
     if params[:directory]
       @board = Board.find_by_directory!(params[:directory])
 
-      check_if_user_can!(:manage, Board, @board)
+      check_if_user_can!(:manage, Suspension, @board)
       @suspensions = @board.suspensions.order('created_at')
       options = { layout: 'board_management' }
     else
