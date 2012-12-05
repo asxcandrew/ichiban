@@ -1,14 +1,14 @@
 - if @posts.any?
-  .showcases
+  .showcases(data-directory=@board.try(:directory))
     - @posts.each do |post| 
       == showcase_tag(post) do
         = link_to_post post do
           - if post.subject.present?
-            .banner = post.subject
+            header.banner = post.subject
           == image_tag(post.image.asset.showcase.to_s) if post.is_ancestor?
-          .teaser
+          footer.teaser
             - if post.body.blank?
-              = link_to_post("View thread", post)
+              | View thread
             - else
               = truncate(post.body, length: 40, separator: ' ')
 

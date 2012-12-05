@@ -29,8 +29,10 @@ module ApplicationHelper
     "#{time_ago_in_words(time)} #{tense}.".capitalize
   end
 
-  def body_tag(options={}, &block)
+  def body_tag(options={class: ''}, &block)
     output = ActiveSupport::SafeBuffer.new
+    options['data-controller'] = params[:controller]
+    options['data-action'] = params[:action]
 
     # Nothing to see here.    
     options[:class] << " kidz-zone" if Date.today.month == 2 && Date.today.day == 29
