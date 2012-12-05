@@ -1,2 +1,5 @@
 .site-footer
-  == t('license', link: link_to("Ichiban", "https://github.com/ericwright90/ichiban"))
+  .copyright
+    == t('license', link: link_to("Ichiban", "https://github.com/ericwright90/ichiban"))
+  .infotainment
+    = link_to("Manage", new_session_path)

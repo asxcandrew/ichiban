@@ -1,3 +1,25 @@
+@mixin rendered-markdown
+  word-wrap: break-word
+  line-height: 20px
+  h1
+    font-size: 1.3em
+  h2
+    font-size: 1.25em
+  h3
+    font-size: 1.15em
+  h4, h5, h6
+    font-size: 1em
+  em
+    font-style: italic
+  code
+    font-family: monospace
+    white-space: pre
+  blockquote
+    border-left: 2px solid $blockquote
+    padding: 4px
+    color: $blockquote
+
+
 .post-navigation
   position: fixed
   right: 10px
@@ -7,6 +29,7 @@
   // Highlight a post when an anchor is present.
   &:target
     &:before
+      +inset-text
       // Arrow
       content: "\21B3"
 
@@ -30,7 +53,6 @@
 
     header
       margin-bottom: 6px
-      // TODO: Use smarter selector
       &:hover .date
         +transition-property(opacity)
         +transition-duration($fast-transition)
@@ -108,14 +130,8 @@
 
       &.loading
         opacity: $translucent
-        animation: pulsate 1s ease-out
-        animation-iteration-count: infinite
-
-        -webkit-animation: pulsate 1s ease-out
-        -webkit-animation-iteration-count: infinite
-
-        -moz-animation: pulsate 1s ease-out
-        -moz-animation-iteration-count: infinite
+        +animation(pulsate, 1s, ease-out)
+        +animation-iteration-count(infinite)
     a
       display: inline-block
       &.animated:before
@@ -129,26 +145,9 @@
         visibility: hidden
 
   .body
-    vertical-align: top
     display: inline-block
-    line-height: 20px
-    h1
-      font-size: 1.3em
-    h2
-      font-size: 1.25em
-    h3
-      font-size: 1.15em
-    h4, h5, h6
-      font-size: 1em
-    em
-      font-style: italic
-    code
-      font-family: monospace
-      white-space: pre
-    blockquote
-      border-left: 2px solid $blockquote
-      padding: 4px
-      color: $blockquote
+    vertical-align: top
+    +rendered-markdown
 
 .reply
   margin-left: +30px
@@ -164,9 +163,9 @@
   font-weight: bold
   font-style: italic
   word-wrap: break-word
+  +inset-text
   a
     color: transparentize($dark-base, 0.2)
-  text-shadow: 1px 4px 6px $background-color, 0 0 0 $dark-base, 1px 4px 6px $background-color
   .board
     font-size: 2.6em
   .subject
@@ -176,3 +175,25 @@
   .last-reply
     margin-top: 6px
     font: 1.9em
+
+
+.preview
+  display: none
+  +transition-property(opacity)
+  +transition-duration($fast-transition)
+
+  background-color: $off-white
+  background-image: image-url("groove_paper.png")
+  background-size: 300px
+  
+  margin-top: 5px  
+  padding: 10px
+  
+  box-shadow: 2px 1px 10px inset
+  border: 1px solid #ccc
+
+  .body
+    width: 100%
+    text-shadow: 1px 4px 6px #F3F3F3, 0 0 0 $dark-base, 1px 4px 6px #F3F3F3
+    padding: 10px
+    +rendered-markdown

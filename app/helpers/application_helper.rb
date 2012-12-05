@@ -12,12 +12,6 @@ module ApplicationHelper
       text = h(text)
       text.gsub!("&gt;", '>')
 
-      # Double newline should break as expected.
-      text.gsub!(/\r\n\r\n/, "<br><br>")
-
-      # Single newline should break as expected.
-      text.gsub!(/\r\n/, "\n\n")
-
       markdown = $MarkdownRenderer.render(text)
       markdown.gsub!("&amp;", '&')
 
@@ -35,8 +29,10 @@ module ApplicationHelper
     "#{time_ago_in_words(time)} #{tense}.".capitalize
   end
 
-  def body_tag(options={}, &block)
+  def body_tag(options={class: ''}, &block)
     output = ActiveSupport::SafeBuffer.new
+    options['data-controller'] = params[:controller]
+    options['data-action'] = params[:action]
 
     # Nothing to see here.    
     options[:class] << " kidz-zone" if Date.today.month == 2 && Date.today.day == 29

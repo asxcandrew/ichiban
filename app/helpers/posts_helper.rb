@@ -53,7 +53,7 @@ module PostsHelper
     options[:class] = "animated" if asset.format =~ /gif/i
 
     link_to(asset.formatted.to_s, options) do
-      image_tag(asset.send(size).to_s, 'data-toggle' => asset.formatted.to_s)
+      image_tag(asset.send(size).to_s, 'data-toggle' => asset.formatted.to_s, title: I18n.t('posts.show.enlarge_image'))
     end
   end
 

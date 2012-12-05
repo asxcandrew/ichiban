@@ -6,8 +6,7 @@ class TripcodesController < ApplicationController
     @previews = 0
     @child_limit = 0
 
-    context = params[:secure] ? :secure_tripcode : :tripcode
-    @posts = Post.where(context => params[:tripcode]).order("updated_at DESC").page(params[:page])
+    @posts = Post.where(tripcode: params[:tripcode]).order("updated_at DESC").page(params[:page])
     @paged = params[:page]
     @prefix = "Posts for #{params[:tripcode]}"
 

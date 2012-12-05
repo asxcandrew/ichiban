@@ -120,6 +120,10 @@ class Post < ActiveRecord::Base
     where(parent_id: nil)
   end
 
+  def worksafe?
+    self.board.worksafe?
+  end
+
   def set_tripcode
     # Is passphrase declared? Not blank? Otherwise use the post's IP address
     self.tripcode = self[:ip_address] if self[:tripcode].nil? || self[:tripcode].blank?

@@ -1,17 +1,16 @@
 - if @posts.any?
-  .showcases
-    - @posts.each do |post|
-      .showcase(id=post.id)
+  .showcases(data-directory=@board.try(:directory))
+    - @posts.each do |post| 
+      == showcase_tag(post) do
         = link_to_post post do
           - if post.subject.present?
-            .banner = post.subject
-          == image_tag(post.image.asset.showcase.to_s)
-          .teaser
+            header.banner = post.subject
+          == image_tag(post.image.asset.showcase.to_s) if post.is_ancestor?
+          footer.teaser
             - if post.body.blank?
-              = link_to_post("View thread", post)
+              | View thread
             - else
               = truncate(post.body, length: 40, separator: ' ')
-    / == render partial: 'posts/parent', collection: @posts, spacer_template: 'posts/separator'
 
 - else
   .blatant-notice
