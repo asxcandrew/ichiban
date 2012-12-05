@@ -9,6 +9,9 @@
       == f.input :body, :as => :text
       .meter:span
       
+      .preview
+        .body
+
       == f.input(:name,
                  input_html: { value: cookies.signed[:name], 
                                class: 'name', 

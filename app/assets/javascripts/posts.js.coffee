@@ -1,5 +1,8 @@
 $ ->
-  $('textarea').limiter()
+  $postBody = $("textarea[name='post[body]']")
+  
+  $postBody.previewer()
+  $postBody.limiter()
 
   $(controls).on "click", ".reply-toggle", (e) ->
     e.preventDefault()

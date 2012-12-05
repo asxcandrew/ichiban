@@ -16,7 +16,9 @@ en:
       board_search: "Search boards"
       board_search_help: "You must add a board to post on."
     show:
+      enlarge_image: "Embiggen"
       prefix: "Post #%{post_id} on %{board}"
+      reply_sumbit: "Reply to #%{id}"
       reply_requirements: "A comment or upload must be included when replying to a thread."
     create:
       created: "Post #%{post_id} created!"
@@ -78,7 +80,7 @@ en:
       board_not_found: "Could not find board #%{board_id}. Was it deleted?"
       name: "A board must have a name."
       name_too_long: "A board must have a name that does not exceed 40 characters."
-      directory_format: "A board's directory must be alphanumeric and at least 2 characters."
+      directory_format: "A board's directory must be lowercase, alphanumeric and at least 2 characters."
       directory: "A board must have a directory."
       directory_too_long: "A board's directory must not exceed %{max} characters."
       directory_uniqueness: "A board's directory must be unique."
@@ -130,6 +132,8 @@ en:
     logged_out: "Logged out!"
     new:
       log_in: "Log in"
+      email: "Email"
+      password: "Password"
     errors:
       already_logged_in: "You're already logged in."
       invalid_email_or_password: "Invalid email or password."

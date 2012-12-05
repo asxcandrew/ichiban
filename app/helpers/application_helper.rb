@@ -12,12 +12,6 @@ module ApplicationHelper
       text = h(text)
       text.gsub!("&gt;", '>')
 
-      # Double newline should break as expected.
-      text.gsub!(/\r\n\r\n/, "<br><br>")
-
-      # Single newline should break as expected.
-      text.gsub!(/\r\n/, "\n\n")
-
       markdown = $MarkdownRenderer.render(text)
       markdown.gsub!("&amp;", '&')
 
