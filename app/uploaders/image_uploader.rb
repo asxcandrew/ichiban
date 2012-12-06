@@ -2,6 +2,7 @@
 
 class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
@@ -26,6 +27,13 @@ class ImageUploader < CarrierWave::Uploader::Base
 
     cloudinary_transformation quality: 90
     cloudinary_transformation :angle => :exif
+  end
+
+  def get_geometry
+    if @file
+      image = MiniMagick::Image.open(@file.file)
+      return { width: image[:width], height: image[:height] }
+    end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

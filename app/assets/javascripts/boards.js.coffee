@@ -19,6 +19,8 @@ $ ->
         columns: null
         gutterWidth: 10
     ,() ->
+      # Avoid awkward flashes of content.
+      showcases.css('visibility', 'visible')
       # Fix height shadow issues.
       height = showcases.height() + 25
       showcases.height(height)

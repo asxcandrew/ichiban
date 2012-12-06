@@ -99,6 +99,8 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.19)
+    mini_magick (3.4)
+      subexec (~> 0.2.1)
     multi_json (1.3.6)
     newrelic_rpm (3.4.2.1)
     nokogiri (1.5.5)
@@ -188,6 +190,7 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    subexec (0.2.2)
     sugar-high (0.7.2)
     sweetloader (0.1.6)
       activesupport (>= 3.0.1)
@@ -230,6 +233,7 @@ DEPENDENCIES
   font-awesome-sass-rails
   jquery-rails
   kaminari
+  mini_magick
   newrelic_rpm
   numbers_and_words
   pg
