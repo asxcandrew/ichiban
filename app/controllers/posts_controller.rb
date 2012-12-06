@@ -16,10 +16,10 @@ class PostsController < ApplicationController
     if @post && @board
       @prefix =  @post.subject && !@post.subject.blank? ? "#{@post.subject} : " : ""
       @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: @board.name)
-      
+
       respond_to do |format|
         format.html
-        format.json { render json: @post }
+        format.json { render json: @post, except: [:ip_address], :include => :image }
       end
     end
   end
