@@ -21,6 +21,21 @@ $low-priority: 1
 $medium-priority: 999
 $high-priority: 9999
 
+@mixin inset-text
+  text-shadow: 1px 4px 6px $background-color, 0 0 0 $dark-base, 1px 4px 6px $background-color
+
+@mixin blurry-text
+  text-shadow: 0px 0px 10px $dark-base
+
+@mixin user-select($type)
+  -webkit-touch-callout: $type
+  -webkit-user-select: $type
+  -khtml-user-select: $type
+  -moz-user-select: $type
+  -ms-user-select: $type
+  user-select: $type
+
+
 // Prevents broken box model annoyances.
 *
   +box-sizing(border-box)
@@ -124,10 +139,31 @@ strong
   &:hover
     opacity: $opaque
 
+.uninteresting
+  color: transparent
+  opacity: 0.3
+  +transition-property(opacity)
+  +transition-duration($fast-transition)
+  +blurry-text
+
+  figure
+    opacity: 0.1
+
+
+  &:hover
+    color: inherit
+    text-shadow: none
+    opacity: $opaque
+
+    figure
+      opacity: $opaque
+
 .translation_missing
   border: 1px dotted #000
   background-color: $warning
   color: $white
 
-@mixin inset-text
-  text-shadow: 1px 4px 6px $background-color, 0 0 0 $dark-base, 1px 4px 6px $background-color
+::selection
+  text-shadow: none
+  color: $white
+  background: $dark-base

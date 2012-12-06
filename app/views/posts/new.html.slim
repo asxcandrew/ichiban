@@ -1,6 +1,6 @@
 .new-post.compact-form
   h1 = t('.header')
-  == post_article_tag(cookies.signed[:tripcode]) do
+  == post_article_tag(color: cookies.signed[:tripcode]) do
     == simple_form_for(@post,
                        :autocomplete => :off, 
                        html: { multipart: true, 'data-postType' => :parent }) do |f|
@@ -10,6 +10,8 @@
       .meter:span
       
       .preview
+        header 
+          .inner Preview
         .body
 
       == f.input(:name,

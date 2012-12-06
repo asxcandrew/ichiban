@@ -15,15 +15,18 @@ module PostsHelper
     output.safe_concat("</div>")
   end
 
-  def post_article_tag(color, options={}, &block)
+  def post_article_tag(options = {}, &block)
+    attributes = { class: '' }
     output = ActiveSupport::SafeBuffer.new
-    if color
-      options[:style] = 
-        "border-color: #{post_color(hex: color)}; 
-         background-color: #{background_color(color)};"
+    if options[:color]
+      attributes[:style] = 
+        "border-color: #{post_color(hex: options[:color])}; 
+         background-color: #{background_color(options[:color])};"
     end
 
-    output.safe_concat(tag(:article, options, true))
+    attributes[:class] << 'uninteresting' if cookies["reported_post_#{options[:id]}"]
+
+    output.safe_concat(tag(:article, attributes, true))
     output << capture(&block)
     output.safe_concat("</article>")
   end
@@ -53,7 +56,9 @@ module PostsHelper
     options[:class] = "animated" if asset.format =~ /gif/i
 
     link_to(asset.formatted.to_s, options) do
-      image_tag(asset.send(size).to_s, 'data-toggle' => asset.formatted.to_s, title: I18n.t('posts.show.enlarge_image'))
+      image_tag(asset.send(size).to_s, 
+                'data-toggle' => asset.formatted.to_s, 
+                title: I18n.t('posts.show.enlarge_image'))
     end
   end
 
