@@ -10,7 +10,6 @@ class BoardsController < ApplicationController
   end
 
   def index
-    # @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
     @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
     respond_to do |format|
       format.html { render 'show' }
@@ -29,8 +28,6 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @post  = Post.new
-    @reply = Post.new
     @prefix = "#{@board.name}"
     @posts = Post.threads_for(@board).order("updated_at DESC").page(params[:page])
 
