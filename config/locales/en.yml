@@ -17,7 +17,7 @@ en:
     new:
       prefix: "New Thread"
       header: "New Thread"
-      board_search: "Search boards"
+      board_search: "Board Name"
       board_search_help: "You must add a board to post on."
     show:
       enlarge_image: "Embiggen"
