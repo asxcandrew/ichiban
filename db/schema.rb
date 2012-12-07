@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20121206100304) do
     t.datetime "updated_at", :null => false
     t.integer  "width"
     t.integer  "height"
-    t.integer  "md5"
+    t.string   "md5"
   end
 
   create_table "posts", :force => true do |t|
