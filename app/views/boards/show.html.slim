@@ -10,7 +10,8 @@
             - if post.body.blank?
               | View thread
             - else
-              = truncate(post.body, length: 40, separator: ' ')
+              .body
+                == truncate(markdown(post.body), length: 40, separator: ' ')
 
 - else
   .blatant-notice
