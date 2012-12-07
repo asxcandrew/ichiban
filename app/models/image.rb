@@ -12,12 +12,20 @@ class Image < ActiveRecord::Base
 
   def read_dimensions
     dimensions = self.asset.get_geometry
-    self.width = dimensions[:width]
-    self.height = dimensions[:height]
+    if dimensions.nil?
+      errors.add(:file_error, I18n.t('images.errors.file_error'))
+    else
+      self.width = dimensions[:width]
+      self.height = dimensions[:height]
+    end
   end
 
   def generate_md5
-    self.md5 = Digest::MD5.file(self.asset.path).hexdigest
+    if self.asset.path
+      self.md5 = Digest::MD5.file(self.asset.path).hexdigest
+    else
+      errors.add(:file_error, I18n.t('images.errors.file_error'))
+    end
   end
 
   def showcase_height

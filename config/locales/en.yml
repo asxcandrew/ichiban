@@ -63,6 +63,9 @@ en:
       suspend_poster: "Suspend poster"
       reply: 'reply'
       reply_to_post: "Reply to post #%{post_id}"
+  images:
+    errors:
+      file_error: "The file could not be read properly. Is the extension correct?"
   boards:
     show:
       image_required: "An image is required when starting a thread." 
