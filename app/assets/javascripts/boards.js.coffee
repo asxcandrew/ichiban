@@ -1,6 +1,6 @@
 $ ->
   window.showcases = $(".showcases")
-  colW = 5
+  colW = 25
   $header = $('.site-header')
 
   $(window).scroll (e) ->
@@ -16,8 +16,7 @@ $ ->
       itemSelector: '.showcase'
       masonry:
         columnWidth: colW
-        columns: null
-        gutterWidth: 10
+        # gutterWidth: 10
     ,() ->
       # Avoid awkward flashes of content.
       showcases.css('visibility', 'visible')
