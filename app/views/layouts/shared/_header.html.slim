@@ -1,14 +1,16 @@
 header.site-header
   - if @board && !@board.new_record?
-      .hero-text = link_to_board_or_root
+      span.hero-text = link_to_board_or_root
       - if @board.description.present?
-        | ::
-        .description = @board.description
+        span.hero-separator 
+          | ::
+        span.description = @board.description
   - else
-      .hero-text = link_to(Setting.site_name, root_path)
+      span.hero-text = link_to(Setting.site_name, root_path)
       - if Setting.tag_line
-        | ::
-        .description = Setting.tag_line
+        span.hero-separator 
+          | ::
+        span.description = Setting.tag_line
 
   - unless (params[:controller] == 'posts')
     .new-thread-button
