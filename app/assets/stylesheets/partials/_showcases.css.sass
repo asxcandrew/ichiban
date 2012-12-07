@@ -14,7 +14,6 @@
     max-height: 500px
 
     color: $light
-    font-size: 1.2em
     font-weight: bold
     text-transform: uppercase
 
@@ -32,6 +31,7 @@
       box-shadow: 8px 10px 18px $shadow
 
     .banner
+      font-size: 1.2em
       top: 0px
     .banner, .teaser
       position: absolute
@@ -42,7 +42,11 @@
       padding: 5px
 
     .teaser
+      bottom: 0px
+      font-size: 0.85em
       .body
+        // This shouldn't be necessary since Markdown is stripped.
+        // But just to be safe...
         h1,h2,h3,h4,h5,h6
           display: inherit
           font-size: inherit
@@ -53,4 +57,3 @@
           font-style: inherit
         strong
           font-weight: inherit
-      bottom: 0px
