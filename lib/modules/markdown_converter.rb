@@ -19,7 +19,7 @@ module MarkdownConverter
     replacement = options[:html_newlines] ? "<br />" : newline
     unless text.nil?
       text.gsub!(newline) do |instance|
-        instance.prepend('^^newline^^')
+        "^^newline^^#{instance}"
       end
 
       text = $MarkdownStripper.render(text)
