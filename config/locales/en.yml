@@ -4,6 +4,8 @@
 en:
   license: "%{link} is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License."
   posts:
+    showcases:
+      view_thread: "View Thread"
     preview: "Markdown Preview"
     preview_help: "View Markdown help (opens in new window)"
     new_thread: "New Thread"
