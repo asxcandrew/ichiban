@@ -12,7 +12,10 @@
 
       .preview
         header
-          .inner Preview
+          .inner == link_to(t('posts.preview'), 
+                            "http://daringfireball.net/projects/markdown/basics",
+                            :target => :_blank,
+                            title: t('posts.preview_help'))
         .body
       
       == f.input(:name,
