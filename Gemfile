@@ -10,6 +10,7 @@ gem 'unicorn'
 # File uploads
 gem 'carrierwave'
 gem 'cloudinary'
+gem 'mini_magick'
 
 # Database
 gem 'pg'

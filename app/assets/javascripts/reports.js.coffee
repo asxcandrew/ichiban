@@ -32,6 +32,9 @@ $ ->
     type: 'POST'
     url: "/reports/"
     data: params
+    success: (response) ->
+      $.cookie("reported_post_#{id}", true)
+      $("##{id} article:first").addClass('uninteresting')
     complete: (response) ->
       flash($.parseJSON(response.responseText).flash)
 

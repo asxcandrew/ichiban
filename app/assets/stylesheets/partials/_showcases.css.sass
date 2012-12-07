@@ -1,5 +1,6 @@
 .showcases
   margin: 0 auto
+  visibility: hidden
 
   .post-card
     width: 500px
@@ -8,8 +9,8 @@
 
   .showcase
     display: inline-block
-    margin: 10px 25px 10px 0px
-    max-width: 300px
+    margin: 10px 14px 6px 0px
+    width: 300px
 
     color: $light
     font-size: 1.2em
@@ -22,21 +23,19 @@
       color: inherit
       display: block
       text-decoration: none
+      min-height: 100%
+      position: relative
 
     img
-      display: inline-block
-      box-shadow: 8px 10px 18px $shadow
-      max-width: 500px
+      display: block
 
-    // Fixes issue where isotope screws with banner width.
-    &.isotope-item
-      .banner, .teaser
-        width: 100%
-
+    .banner
+      top: 0px
     .banner, .teaser
+      position: absolute
+      width: 100%
       +transition-property(background-color)
       +transition-duration($fast-transition)
-      position: absolute
       background-color: hsla(0%,0%,0%, 0.425)
       padding: 5px
 
@@ -52,5 +51,4 @@
           font-style: inherit
         strong
           font-weight: inherit
-      bottom: 3px
-
+      bottom: 0px

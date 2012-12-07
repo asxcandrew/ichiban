@@ -5,7 +5,7 @@
         = link_to_post post do
           - if post.subject.present?
             header.banner = post.subject
-          == image_tag(post.image.asset.showcase.to_s) if post.is_ancestor?
+          == image_tag(post.image.asset.showcase.to_s)
           footer.teaser
             - if post.body.blank?
               | View thread
