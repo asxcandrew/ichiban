@@ -1,22 +1,10 @@
 module ApplicationHelper
   include IchibanAuthorization
+  include MarkdownConverter
 
   def title
     text = @prefix ? "#{@prefix} :: #{Setting.site_name}" : Setting.site_name
     content_tag("title", text)
-  end
-
-  def markdown(text = '')
-    unless text.nil?
-      # HACK: Recarpet's html filter is lackluster. We can filter using Rails but this breaks quotes.
-      text = h(text)
-      text.gsub!("&gt;", '>')
-
-      markdown = $MarkdownRenderer.render(text)
-      markdown.gsub!("&amp;", '&')
-
-      return markdown
-    end
   end
 
   def pluralize_without_count(count, noun, text = nil)

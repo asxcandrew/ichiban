@@ -2,6 +2,7 @@
 class Post < ActiveRecord::Base
   include LoremIpsum
   include Tripcode
+  include MarkdownConverter
   attr_accessible(:ip_address,
                   :subject,
                   :body,
@@ -72,6 +73,12 @@ class Post < ActiveRecord::Base
   # Posting limitations
   validate :throttle_limit, :if => :new_record?
   # validate :creation_limit, :if => :new_record?
+
+  def as_json(options={})
+    hash = super(options)
+    hash['body'] = strip_markdown(text: hash['body'], html_newlines: options[:html_newlines])
+    return hash
+  end
 
   def throttle_limit
     unless Rails.env.development?

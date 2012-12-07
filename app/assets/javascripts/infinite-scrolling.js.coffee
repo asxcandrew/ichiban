@@ -16,12 +16,13 @@ $(window).scroll ->
     page++
     board = showcases.data('directory')
     path = if board then "/boards/#{board}/#{page}.json" else "/boards/#{page}.json"
+    path += "?html_newlines=true"
 
     $.ajax
       url: path
       type: "get"
       success: (response) ->
-        console.log "Got this: ", response
+        console.log "Showcases on page #{page}: ", response
         if response.length == 0
           lastPage = true
           flash(type: 'notice', message: "You've hit the end of the page.")
@@ -34,20 +35,23 @@ $(window).scroll ->
           else if post.body.length > teaserTruncate
             # Don't want to truncate on a space.
             teaserTruncate-- if post.body.charAt(teaserTruncate - 1) == ' '
-
             teaser = post.body.substring(0,teaserTruncate) + '...'
-
           else
             teaser = post.body
 
           newShowcases +=
             "<div id='#{post.id}' class='showcase'>
-              <a href='/posts/#{post.id}'>
-                <header class='banner'>#{post.subject}</header>
-                <img width='300px' src='#{post.image.asset.showcase.url}' />
-                <footer class='teaser'>#{teaser}</footer>
-              </a>
-            </div>"
+              <a href='/posts/#{post.id}'>"
+
+          unless post.subject == ""
+            newShowcases += 
+              "<header class='banner'>#{post.subject}</header>"
+
+          newShowcases +=
+              "<img width='300px' src='#{post.image.asset.showcase.url}' />
+              <footer class='teaser'><div class='body'>#{teaser}</div></footer>
+            </a>
+          </div>"
         showcases.isotope "insert", $(newShowcases), () ->
           showcases.isotope('reLayout')
           loading = false
