@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
-  # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
   include Sprockets::Helpers::RailsHelper
@@ -12,11 +11,17 @@ class ImageUploader < CarrierWave::Uploader::Base
     cloudinary_transformation :angle => :exif
   end
 
-  version :showcase do
-    process resize_to_fill: [300]
-    process convert: 'jpg'
+  # I'd just like to thank Cloudinary 
+  # for having documentation that emulates the Cretan Labyrinth
+  # Most information can be found at: http://bit.ly/HqzgNt
+  version :showcase, :from => :formatted do
+    cloudinary_transformation( 
+      transformation: [ { width: 300, crop: 'fill'},
+                        { width: 300, height: 500, crop: 'crop' }])
 
-    # This isn't documented anywhere. Thanks Cloudinary.
+
+    process convert: 'jpg'
+    # This isn't documented anywhere.
     cloudinary_transformation quality: 90
     cloudinary_transformation :angle => :exif
   end

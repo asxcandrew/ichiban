@@ -29,7 +29,8 @@ module BoardsHelper
     options[:class] << post.board.directory
     options[:class] << " nsfw" unless post.worksafe?
 
-    options[:style] = "height: #{post.image.showcase_height}px;"
+    # REFACTOR: This causes all sorts of frustration.
+    # options[:style] = "height: #{post.image.showcase_height}px;"
 
     options[:id] = post.id
 
