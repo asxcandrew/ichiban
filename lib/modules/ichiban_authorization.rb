@@ -4,8 +4,8 @@ module IchibanAuthorization
   # We first check if the user is authorized by CanCan. Then we see if they actually 'own' the object in question.
 
 
-  def check_if_user?(authorization, object)
-    if authorization && object
+  def check_if_user_can?(action, authorization_class, object)
+    if can?(action, authorization_class) && object
       class_name = object.class.to_s.pluralize.underscore.to_sym
       @current_user.send(class_name).include?(object)
     else

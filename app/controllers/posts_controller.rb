@@ -18,10 +18,14 @@ class PostsController < ApplicationController
       @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: @board.name)
       respond_to do |format|
         format.html
-        format.json { render json: @post, 
-                      except: [:ip_address], 
-                      :include => :image, 
-                      html_newlines: params[:html_newlines] }
+        format.json do
+          omitted = []
+          omitted << :ip_address unless check_if_user_can?(:create, Suspension, @post)
+          render json: @post, 
+                  except: omitted, 
+                  :include => :image, 
+                  html_newlines: params[:html_newlines]
+        end 
       end
     end
   end

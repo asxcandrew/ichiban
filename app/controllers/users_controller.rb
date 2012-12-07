@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
 
     if @user
-      if check_if_user?(can?(:destroy, User), @user)
+      if check_if_user_can?(:destroy, User, @user)
         if @user.destroy
           response[:success] = true
           response[:message] = I18n.t('users.destroy.success', email: @user.email)
