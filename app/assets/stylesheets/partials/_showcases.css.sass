@@ -1,3 +1,10 @@
+// The showcases element is hidden by default because the user will see a shift of content
+// as the Javascript calculates the positioning. We can then set the visibility once Isotope's callback fires.
+// Unfortunately, this leaves no-js users blind so let's fix that here.
+body.no-js
+  .showcases
+    visibility: visible
+  
 .showcases
   margin: 0 auto
   visibility: hidden

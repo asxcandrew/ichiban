@@ -23,5 +23,6 @@ window.quickly = animationDuration
 
 // # Set humanized times.
 $(document).ready(function() {
+  $('body').removeClass('no-js')
   $('time').timeago();
 })

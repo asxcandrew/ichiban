@@ -17,7 +17,7 @@ module ApplicationHelper
     "#{time_ago_in_words(time)} #{tense}.".capitalize
   end
 
-  def body_tag(options={class: ''}, &block)
+  def body_tag(options = { class: 'no-js' }, &block)
     output = ActiveSupport::SafeBuffer.new
     options['data-controller'] = params[:controller]
     options['data-action'] = params[:action]
