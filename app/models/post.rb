@@ -180,6 +180,14 @@ class Post < ActiveRecord::Base
     !input.blank? && self.tripcode == generate_tripcode(input)
   end
 
+  def is_child?
+    !self.parent_id.nil?
+  end
+
+  def is_parent?
+    self.children.limit(1).any?
+  end
+
   def is_ancestor?
     self.ancestor_id.nil?
   end

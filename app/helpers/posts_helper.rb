@@ -1,16 +1,16 @@
 module PostsHelper
   def post_tag(post, options={}, &block)
     output = ActiveSupport::SafeBuffer.new
-    classes = ["post", options[:class]]
-    classes << "ancestor" if post.is_ancestor?
+    attributes = { class: ['post'],
+                   id: post.id,
+                   "data-directory" => post.board.directory }
 
-    options.merge!(
-      { class: classes,
-        id: post.id,
-        "data-directory" => post.board.directory })
-    options["data-ip"] = post.ip_address if can?(:manage, Post)
+    attributes[:class] << 'ancestor' if post.is_ancestor?
+    attributes[:class] << options[:class]
+    attributes["data-ip"] = post.ip_address if can?(:manage, Post)
+    attributes[:style] = "border-left-color: #{post_color(hex: post.parent.try(:tripcode))}"
 
-    output.safe_concat(tag(:div, options, true))
+    output.safe_concat(tag(:div, attributes, true))
     output << capture(&block)
     output.safe_concat("</div>")
   end
