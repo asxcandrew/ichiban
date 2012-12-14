@@ -8,7 +8,11 @@ module PostsHelper
     attributes[:class] << 'ancestor' if post.is_ancestor?
     attributes[:class] << options[:class]
     attributes["data-ip"] = post.ip_address if can?(:manage, Post)
-    attributes[:style] = "border-left-color: #{post_color(hex: post.parent.try(:tripcode))}"
+
+    if post.is_child?
+      attributes[:style] = ["border-left-color: #{post_color(hex: post.parent.tripcode)};"]
+      attributes[:style] << "border-left-style: dotted;" if post.parent.is_ancestor?
+    end
 
     output.safe_concat(tag(:div, attributes, true))
     output << capture(&block)

@@ -23,6 +23,7 @@ en:
       enlarge_image: "Embiggen"
       prefix: "Post #%{post_id} on %{board}"
       reply_sumbit: "Reply to #%{id}"
+      reply_comment: "Comment on post #%{id}"
       reply_requirements: "A comment or upload must be included when replying to a thread."
     create:
       created: "Post #%{post_id} created!"

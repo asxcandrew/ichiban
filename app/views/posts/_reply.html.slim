@@ -7,7 +7,7 @@
 
       == f.hidden_field :parent_id, value: parent.id
 
-      == f.input :body, :as => :text
+      == f.input :body, :as => :text, placeholder: t('posts.show.reply_comment', id: parent.id)
       .meter:span
 
       .preview
