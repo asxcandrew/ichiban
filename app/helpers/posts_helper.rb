@@ -2,15 +2,16 @@ module PostsHelper
   def post_tag(post, options={}, &block)
     attributes = { class: ['post'],
                    id: post.id,
-                   "data-directory" => post.board.directory }
+                   "data-directory" => post.board.directory,
+                   style: [] }
 
     attributes[:class] << 'ancestor' if post.is_ancestor?
     attributes[:class] << options[:class]
     attributes['data-ip'] = post.ip_address if can?(:manage, Post)
     attributes[:tabindex] = @counter += 1
     if post.is_child?
-      attributes[:style] = ["border-left-color: #{post_color(hex: post.parent.tripcode)};"]
-      attributes[:style] << "border-left-style: dotted;" if post.parent.is_ancestor?
+      border_color = post_color(hex: post.parent.tripcode)
+      attributes[:style] << "border-left-color: #{border_color};"
     end
 
     content_tag(:div, attributes) do
