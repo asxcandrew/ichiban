@@ -1,38 +1,35 @@
 module PostsHelper
   def post_tag(post, options={}, &block)
-    output = ActiveSupport::SafeBuffer.new
     attributes = { class: ['post'],
                    id: post.id,
                    "data-directory" => post.board.directory }
 
     attributes[:class] << 'ancestor' if post.is_ancestor?
     attributes[:class] << options[:class]
-    attributes["data-ip"] = post.ip_address if can?(:manage, Post)
-
+    attributes['data-ip'] = post.ip_address if can?(:manage, Post)
+    attributes[:tabindex] = @counter += 1
     if post.is_child?
       attributes[:style] = ["border-left-color: #{post_color(hex: post.parent.tripcode)};"]
       attributes[:style] << "border-left-style: dotted;" if post.parent.is_ancestor?
     end
 
-    output.safe_concat(tag(:div, attributes, true))
-    output << capture(&block)
-    output.safe_concat("</div>")
+    content_tag(:div, attributes) do
+      capture(&block)
+    end
   end
 
   def post_article_tag(options = {}, &block)
     attributes = { class: '' }
-    output = ActiveSupport::SafeBuffer.new
     if options[:color]
       attributes[:style] = 
         "border-color: #{post_color(hex: options[:color])}; 
          background-color: #{background_color(options[:color])};"
     end
-
     attributes[:class] << 'uninteresting' if cookies["reported_post_#{options[:id]}"]
 
-    output.safe_concat(tag(:article, attributes, true))
-    output << capture(&block)
-    output.safe_concat("</article>")
+    content_tag(:article, attributes) do
+      capture(&block)
+    end
   end
 
   def link_to_post(*text, post, &block)

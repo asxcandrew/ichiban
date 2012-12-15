@@ -28,12 +28,13 @@
     list-style-type: decimal
 
 
-
 .post-navigation
   position: fixed
   right: 10px
 
 .post
+  &:focus
+    outline: none
   // display: inline-block
   // Highlight a post when an anchor is present.
   &:target
@@ -48,6 +49,8 @@
       font-size: 2.2em
 
   article
+    +transition-property(box-shadow, top)
+    +transition-duration(1s)
     border: 1px solid $bold-accent
     min-width: 500px
     max-width: 50%
@@ -59,6 +62,12 @@
     word-break: break-word
 
     box-shadow: 8px 10px 18px $shadow
+
+    &.active
+      // WIP
+      position: relative
+      top: -40px
+      box-shadow: 20px 35px 30px rgba(34, 25, 25, 0.4)
 
     .details
       margin-bottom: 6px
@@ -96,7 +105,7 @@
         a
           text-decoration: none
 
-  &.child:hover
+  &.child:focus, &.child:hover
     border-left: 2px dashed #CCC
     margin-left: 13px
   &.child

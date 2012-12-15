@@ -12,6 +12,7 @@ class PostsController < ApplicationController
     @reply = Post.new
     @board = @post.board unless @post.nil?
     @child_limit = 10
+    @counter = 0
 
     if @post && @board
       @prefix =  @post.subject && !@post.subject.blank? ? "#{@post.subject} : " : ""

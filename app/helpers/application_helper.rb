@@ -17,16 +17,15 @@ module ApplicationHelper
     "#{time_ago_in_words(time)} #{tense}.".capitalize
   end
 
-  def body_tag(options = { class: 'no-js' }, &block)
-    output = ActiveSupport::SafeBuffer.new
+  def body_tag(options = { class: ['no-js'] }, &block)
     options['data-controller'] = params[:controller]
     options['data-action'] = params[:action]
 
     # Nothing to see here.    
-    options[:class] << " kidz-zone" if Date.today.month == 2 && Date.today.day == 29
+    options[:class] << "kidz-zone" if Date.today.month == 2 && Date.today.day == 29
 
-    output.safe_concat(tag(:body, options, true))
-    output << capture(&block)
-    output.safe_concat("</body>")
+    content_tag(:body, options) do
+      capture(&block)
+    end
   end
 end

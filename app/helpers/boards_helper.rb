@@ -24,18 +24,12 @@ module BoardsHelper
     link_to(text, root_path)
   end
 
-  def showcase_tag(post, options={ class: "showcase " }, &block)
-    output = ActiveSupport::SafeBuffer.new
-    options[:class] << post.board.directory
-    options[:class] << " nsfw" unless post.worksafe?
+  def showcase_tag(post, options={ class: ['showcase'] }, &block)
+    attributes = { id: post.id, class: [post.board.directory] }
+    attributes[:class] << "nsfw" unless post.worksafe?
 
-    # REFACTOR: This causes all sorts of frustration.
-    # options[:style] = "height: #{post.image.showcase_height}px;"
-
-    options[:id] = post.id
-
-    output.safe_concat(tag(:div, options, true))
-    output << capture(&block)
-    output.safe_concat("</div>")
+    content_tag(:div, options) do
+      capture(&block)
+    end
   end
 end
