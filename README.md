@@ -1,8 +1,8 @@
-# Ichiban
+# Ichiban: [Demo](http://ichiban.so)
 ### *Modern Imageboard Software*
 
 ## What's this all about?
-Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba, Kusaba; all of these are terrible. It's time for something better than just a clone.
+Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba, Kusaba; It's time for something better than just a clone.
 
 Ichiban is an imageboard designed to retain the feel of its predecessors while fixing the usability issues that have plagued them. The layout attempts to reduce unnecessary distractions and exemplify user content. Ichiban acts more like a board platform than a single imageboard. Users are free to make their own boards and delegate moderator status accordingly. 
 
