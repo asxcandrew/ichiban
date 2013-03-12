@@ -10,7 +10,7 @@ en:
     preview_help: "View Markdown help (opens in new window)"
     new_thread: "New Thread"
     tripcodes:
-      browse: "Browse posts made by this user."
+      browse: "(Coming soon) Browse posts made by this user."
     parent:
       last_reply: "Last reply was "
     anonymous: "Anonymous"
@@ -69,7 +69,7 @@ en:
       file_error: "The file could not be read properly. Is the extension correct?"
   boards:
     show:
-      image_required: "An image is required when starting a thread." 
+      image_required: "An image is required when starting a thread."
       no_posts: "There aren't any posts."
       empty_page: "There aren't any posts on this page."
       back_to_index: "Go back to the index?"
