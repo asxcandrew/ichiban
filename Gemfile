@@ -25,7 +25,7 @@ gem 'color'
 gem 'simple_form'
 gem 'numbers_and_words'
 gem 'kaminari'            # Pagination.
-gem 'chronic'             # Humanized time parsing. 
+gem 'chronic'             # Humanized time parsing.
 
 # Management
 gem "rails-settings-cached"
@@ -42,15 +42,15 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
-group :test do
-  gem 'watchr'
-  gem 'spork'
-
-  gem 'capybara'
-  gem 'capybara-webkit'
-  # Capybara webkit requires QT libraries
-  # sudo apt-get install libqt4-dev libqtwebkit-dev
-end
+#group :test do
+#  gem 'watchr'
+#  gem 'spork'
+#
+#  gem 'capybara'
+#  gem 'capybara-webkit'
+#  # Capybara webkit requires QT libraries
+#  # sudo apt-get install libqt4-dev libqtwebkit-dev
+#end
 
 # Gems used only for assets and not required
 # in production environments by default.
