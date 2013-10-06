@@ -86,7 +86,6 @@ GEM
     mini_magick (3.4)
       subexec (~> 0.2.1)
     multi_json (1.5.0)
-    newrelic_rpm (3.4.2.1)
     numbers_and_words (0.4.0)
       activesupport
       i18n
@@ -206,7 +205,6 @@ DEPENDENCIES
   jquery-rails
   kaminari
   mini_magick
-  newrelic_rpm
   numbers_and_words
   pg
   pry-rails

@@ -65,7 +65,7 @@ end
 
 group :production do
   # Logging
-  gem 'newrelic_rpm'
+  # gem 'newrelic_rpm'
 end
 
 gem 'jquery-rails'
