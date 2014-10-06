@@ -3,15 +3,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :current_user
 
-  rescue_from RestClient::ServerBrokeConnection do |exception|
-    flash[:error] = "The server broke the connection. Did the request timeout?"
-    redirect_to request.referrer
-  end
+  # rescue_from RestClient::ServerBrokeConnection do |exception|
+  #   flash[:error] = "The server broke the connection. Did the request timeout?"
+  #   redirect_to request.referrer
+  # end
 
-  rescue_from Cloudinary::CarrierWave::UploadError do |exception|
-    flash[:error] = exception.message
-    redirect_to request.referrer
-  end
+  # rescue_from Cloudinary::CarrierWave::UploadError do |exception|
+  #   flash[:error] = exception.message
+  #   redirect_to request.referrer
+  # end
 
   unless Rails.application.config.consider_all_requests_local
     # rescue_from Exception, :with => :render_500

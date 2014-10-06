@@ -9,14 +9,10 @@ gem 'unicorn'
 
 # File uploads
 gem 'carrierwave'
-gem 'cloudinary'
 gem 'mini_magick'
 
 # Database
 gem 'pg'
-
-# Cloud stuff
-# gem 'heroku' Deprecated. Download the Heroku Toolbelt instead.
 
 # Templating
 gem 'slim'

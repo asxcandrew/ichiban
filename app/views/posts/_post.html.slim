@@ -3,7 +3,7 @@
   - if post.image
     .left
       figure
-        == link_to_image(post.image.asset, :thumbnail)
+        == image_tag(post.image.asset.thumbnail.to_s)
   .body == markdown(post.body)
   hr.clearfix
   == render partial: 'posts/footer', locals: { post: post }
