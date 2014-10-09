@@ -2,9 +2,18 @@ Ichiban::Application.routes.draw do
   numeric = /\d+/
 
   resources :posts
-  resources :sessions
+  # resources :sessions
 
   # Operators can view all records using the following routes.
+  devise_for :users
+
+  # devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
+  devise_scope :user do
+    match '/sessions/user', to: 'devise/sessions#create', via: :post
+    get "signup", to: "devise/registrations#new"
+    get "login", to: "devise/sessions#new"
+    get "logout", to: "devise/sessions#destroy"
+  end
   resources :users
   resources :reports
   resources :suspensions
@@ -50,8 +59,8 @@ Ichiban::Application.routes.draw do
   end
 
   # A few nicities
-  get 'login' => 'sessions#new'
-  get 'logout' => 'sessions#destroy'
+  # get 'login' => 'sessions#new'
+  # get 'logout' => 'sessions#destroy'
   
 
 

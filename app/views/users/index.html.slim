@@ -25,6 +25,6 @@
                 - user.boards.each do |board|
                   == link_to_board(board)
             td.created-at == time_tag(user.created_at, title: user.created_at)
-            td.last-login == time_tag(user.last_login, title: user.last_login)
+            td.last-login == time_tag(user.last_sign_in_at, title: user.last_sign_in_at)
             td
               a.delete-user(href='#' data-id=user.id) Delete

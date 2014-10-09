@@ -1,12 +1,14 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation, :role
-  has_secure_password
-  
-  validates(:password, presence: { :on => :create })
+  attr_accessible :role, :email, :password, :remember_me, :password_confirmation
 
-  validates(:email, 
-            format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create },
-            uniqueness: { case_sensitive: false })
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable
 
   simple_roles # It's that simple :)
 
@@ -16,9 +18,9 @@ class User < ActiveRecord::Base
   has_many :reports, :through => :posts
   has_many :users, :through => :boards
 
-  def last_login
-    self[:last_login].nil? ? self.created_at : self[:last_login]
-  end
+  # def last_login
+  #   self[:last_login].nil? ? self.created_at : self[:last_login]
+  # end
 
   def check_if_operator!
     raise CanCan::AccessDenied unless self.operator?

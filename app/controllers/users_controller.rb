@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource
+  before_filter :authenticate_user!
   
   def new
     if params[:directory]
@@ -24,6 +24,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def index
     options = {}
     @prefix = "Users"
@@ -34,8 +37,8 @@ class UsersController < ApplicationController
       @users = @board.users
       options[:layout] = 'board_management'
     else
-      @current_user.check_if_operator!
-      @users = @current_user.users
+      current_user.check_if_operator!
+      @users = current_user.users
     end
 
     respond_to do |format|

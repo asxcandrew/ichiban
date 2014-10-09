@@ -1,6 +1,6 @@
 .login.compact-form
   h1 = t('.log_in')
-  == form_tag sessions_path do
+  == form_tag session_path(:user) do
     == label_tag :email
     == email_field_tag :email, params[:email], placeholder: t('.email'), autofocus: true, required: true
 
