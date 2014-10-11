@@ -1,5 +1,5 @@
 -if user_signed_in?
-  span = "Здравствуйте, #{current_user.email}"
+  = link_to current_user.login ? current_user.login : current_user.email, user_path(current_user)
   = link_to 'Выйти', destroy_user_session_path, :method => :delete
 -else
   = link_to 'Войти', new_user_session_path
