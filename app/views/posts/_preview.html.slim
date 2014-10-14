@@ -1,0 +1,15 @@
+.col-sm-6.col-md-4.col-lg-4
+  .post
+    .post-img-content
+      = link_to_post post do
+        == image_tag(post.image.asset.showcase.to_s)
+      span class="post-info"
+        .col-lg-6
+          ="#{time_ago_in_words post.created_at} ago"
+        .col-lg-6
+          = 'ответов: '
+          = post.replies
+    .post-content
+      = link_to_post post do
+        .title = post.subject
+      .body == truncate(strip_markdown(text: post.body, html_newlines: true), length: 40, separator: ' ')
