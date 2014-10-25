@@ -19,6 +19,12 @@ module PostsHelper
     end
   end
 
+  def post_addition_tag(post)
+    #   .left
+    # figure
+    #   == image_tag(post.image.asset.thumbnail)
+  end
+
   def post_article_tag(options = {}, &block)
     attributes = { class: '' }
     if options[:color]
@@ -36,9 +42,9 @@ module PostsHelper
   def link_to_post(*text, post, &block)
     text = text.empty? ? "##{post.id}" : text.to_sentence
     if block.nil?
-      link_to(text, post_path(post), title: "Post ##{post.id}")
+      link_to(text, board_post_path(post.board_id,post), title: "Post ##{post.id}")
     else
-      link_to(post_path(post), &block)
+      link_to(board_post_path(post.board_id,post), &block)
     end
   end
 

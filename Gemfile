@@ -10,7 +10,7 @@ gem 'rails-i18n'
 gem 'unicorn'
 
 # File uploads
-gem 'carrierwave'
+gem 'carrierwave', '~> 0.10.0'
 gem 'mini_magick'
 
 # Database

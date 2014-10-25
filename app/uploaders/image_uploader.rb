@@ -6,26 +6,41 @@ class ImageUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  version :formatted do
-    process convert: 'jpg'
+  PNG = %w(png)
+  JPG = %w(jpg jpeg)
+  GIF = %w(gif)
+
+  def extension_white_list
+    PNG + JPG + GIF
   end
 
   def store_dir
     'public/my/upload/directory'
   end
-  # I'd just like to thank Cloudinary 
-  # for having documentation that emulates the Cretan Labyrinth
-  # Most information can be found at: http://bit.ly/HqzgNt
-  version :showcase do
 
-
-    process convert: 'jpg'
-    # This isn't documented anywhere.
-
+  def filename 
+    if original_filename 
+      @name ||= Digest::MD5.hexdigest(File.dirname(current_path))
+      "#{@name}.#{file.extension}"
+    end
   end
 
   version :thumbnail do
-    process resize_to_limit: [200, 200]
+    process :resize_to_fit => [300,300]
+  end
+
+  # version :thumbnail, :if => :gif? do
+  #   Rails.logger.debug 'GIF'
+  #   process :resize_to_fit => [300,300]
+  #   process :convert => 'png'
+  #   # process :set_content_type
+  #   def filename
+  #     change_ext_to_png(super)
+  #   end
+  # end
+
+  def change_ext_to_png(ext)
+    ext.chomp(File.extname(ext)) + ".png"
   end
 
   def get_geometry
@@ -39,8 +54,11 @@ class ImageUploader < CarrierWave::Uploader::Base
     end
   end
 
-  # Add a white list of extensions which are allowed to be uploaded.
-  def extension_white_list
-    %w(jpg jpeg gif png)
+  protected
+
+  def gif?(new_file)
+    extension = my_model.file.file.extension.downcase
+    GIF.include?(extension)
   end
+
 end

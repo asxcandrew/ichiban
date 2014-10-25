@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
   before_filter :find_boards, except: [:destroy, :search]
   before_filter :set_board, except: [:index, :new, :create, :search]
-  load_and_authorize_resource
+  before_filter :authenticate_user!, except: [:index, :show, :search]
   
   def search
     @boards = params[:keyword] ? Board.where('name ILIKE ?', "%#{params[:keyword]}%").limit(5) : []
@@ -46,7 +46,8 @@ class BoardsController < ApplicationController
   end
 
   def edit
-    check_if_user_can!(:edit, Board, @board)
+    authorize! :edit, @board
+    # check_if_user_can!(:edit, Board, @board)
     render layout: 'board_management'
   end
 

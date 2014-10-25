@@ -1,6 +1,6 @@
 class Image < ActiveRecord::Base
   attr_accessible :asset, :post_id
-  belongs_to :post
+  belongs_to :imageable, polymorphic: true
   mount_uploader :asset, ImageUploader
 
   validates_presence_of :width

@@ -8,7 +8,7 @@ class Post < ActiveRecord::Base
                   :body,
                   :board_id,
                   :parent_id,
-                  :image_attributes,
+                  :addition_attributes,
                   :tripcode,
                   :name)
 
@@ -32,12 +32,12 @@ class Post < ActiveRecord::Base
   validate :parent_existance_and_congruence, :if => :parent_id
 
   # Assets
-  has_one :image, :dependent => :destroy
-  accepts_nested_attributes_for :image
-  validates_presence_of :image, 
-                        :if => :image_required?, 
-                        message: I18n.t('posts.errors.image_required')
-  validate :check_file_size, :if => :new_record?
+  belongs_to :addition, :dependent => :destroy
+  accepts_nested_attributes_for :addition
+  # validates_presence_of :image, 
+                        # :if => :image_required?, 
+                        # message: I18n.t('posts.errors.image_required')
+  # validate :check_file_size, :if => :new_record?
 
   # Attributes
   validates_presence_of :ip_address, message: I18n.t('posts.errors.ip_address')

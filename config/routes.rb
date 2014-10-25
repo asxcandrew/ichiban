@@ -1,7 +1,7 @@
 Ichiban::Application.routes.draw do
   numeric = /\d+/
 
-  resources :posts
+  
   # resources :sessions
 
   # Operators can view all records using the following routes.
@@ -26,7 +26,8 @@ Ichiban::Application.routes.draw do
   root to: 'boards#index'
   get '/:page' => 'boards#index', constraints: { page: numeric }
 
-  scope 'boards' do
+  resources 'boards' do
+    resources :posts
     get  'search/' => 'boards#search'
     get  'search/:keyword' => 'boards#search'
     get  '/'      => 'boards#index',  :as => :boards

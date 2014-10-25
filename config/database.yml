@@ -15,10 +15,12 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: ichiban_development
+  database: xoompark_development
   pool: 5
-  username: ichiban
-  password:
+  host: localhost
+  port: 5432
+  username: post
+  password: gres
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have

@@ -11,7 +11,10 @@ class User < ActiveRecord::Base
          :validatable
 
   simple_roles # It's that simple :)
-
+  
+  has_one :image, :as => :imageable, :dependent => :destroy
+  accepts_nested_attributes_for :image
+  
   has_and_belongs_to_many :boards
   has_many :posts, :through => :boards
   has_many :suspensions, :through => :boards

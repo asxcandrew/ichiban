@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141009185313) do
+ActiveRecord::Schema.define(:version => 20141023191459) do
+
+  create_table "additions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "boards", :force => true do |t|
     t.string   "name"
@@ -35,11 +41,13 @@ ActiveRecord::Schema.define(:version => 20141009185313) do
   create_table "images", :force => true do |t|
     t.integer  "post_id"
     t.string   "asset"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "width"
     t.integer  "height"
     t.string   "md5"
+    t.string   "imageable_type"
+    t.integer  "imageable_id"
   end
 
   create_table "posts", :force => true do |t|
@@ -56,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20141009185313) do
     t.boolean  "locked"
     t.integer  "replies"
     t.integer  "board_id"
+    t.integer  "addition_id"
   end
 
   add_index "posts", ["parent_id"], :name => "index_posts_on_parent_id"

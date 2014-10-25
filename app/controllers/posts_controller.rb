@@ -1,16 +1,16 @@
 class PostsController < ApplicationController
-  load_and_authorize_resource except: [:destroy]
+  # load_and_authorize_resource except: [:destroy]
 
   def new
     @prefix = I18n.t('posts.new.prefix')
-    @board = Board.find_by_id(params[:board_id])
+    @board = Board.where("id = ? or directory = ?",params[:board_id],params[:board_id]).first
     @post = Post.new
   end
 
   def show
     @post = Post.find_by_id(params[:id])
     @reply = Post.new
-    @board = @post.board unless @post.nil?
+    @board = Board.where("id = ? or directory = ?",params[:board_id],params[:board_id]).first
     @child_limit = 10
     @counter = 0
 
@@ -47,7 +47,7 @@ class PostsController < ApplicationController
       # Used to delete posts.
       cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
 
-      redirect_to(@post.is_ancestor? ? post_path(@post) : post_path(@post.ancestor, anchor: @post.id))
+      redirect_to(@post.is_ancestor? ? board_post_path(@post.board.directory, @post.id) : board_post_path(@post.ancestor.board.directory, @post.ancestor.id, anchor: @post.id))
     end
   end
 

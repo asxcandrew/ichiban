@@ -1,20 +1,5 @@
 == post_tag(parent, class: 'parent') do
-  .thread-info.right
-    - unless @board
-      .board = link_to_board(parent.board.name, parent.board)
-    - if parent.is_ancestor?
-      .subject == link_to_post(parent.subject, parent)
-    - else
-      .subject == link_to_post(parent.ancestor.subject, parent)
-  
-    .replies
-      == parent.replies
-      == pluralize_without_count(parent.replies, ' reply')
-    .last-reply 
-      == t('.last_reply')
-      == time_tag(parent.updated_at, title: parent.updated_at )
-  
   == render partial: '/posts/post', locals: { post: parent }
   == render(partial: 'posts/child', 
-            collection: parent.children.find(:all, order: "created_at ASC", limit: @previews),
-            locals: { child_limit: @child_limit })
+    collection: parent.children.find(:all, order: "created_at ASC", limit: @previews),
+    locals: { child_limit: @child_limit })
