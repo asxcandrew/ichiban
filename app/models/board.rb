@@ -20,7 +20,7 @@ class Board < ActiveRecord::Base
                             message: I18n.t('boards.errors.max_reports_per_IP', min: 1, max: 20) })
 
   validates(:directory, 
-            format:     { with: /^[a-z0-9]+[-a-z0-9]*[a-z0-9]+$/i,
+            format:     { with: /[a-z0-9]+[-a-z0-9]*[a-z0-9]/i,
                           message: I18n.t('boards.errors.directory_format') },
             presence:   { message: I18n.t('boards.errors.directory') },
             length:     { maximum: 40, 

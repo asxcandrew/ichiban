@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'devise'
-
+gem 'protected_attributes'
 # Rails
-gem 'rails', '3.2.11'
-gem 'rails-i18n'
+gem 'rails', '4.1.6'
+# gem 'rails-i18n'
 
 # Server
-gem 'unicorn'
+# gem 'unicorn'
 
 # File uploads
 gem 'carrierwave', '~> 0.10.0'
@@ -26,7 +26,7 @@ gem 'kaminari'            # Pagination.
 gem 'chronic'             # Humanized time parsing.
 
 # Management
-gem "rails-settings-cached"
+gem "rails-settings-cached", "0.4.1"
 
 # Authentication
 gem 'bcrypt-ruby'
@@ -34,7 +34,7 @@ gem 'cancan'
 gem 'simple_roles'
 
 group :development, :test do
-  gem 'therubyracer', :platforms => :ruby
+  # gem 'therubyracer', :platforms => :ruby
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'database_cleaner'
@@ -54,12 +54,12 @@ end
 # in production environments by default.
 group :assets do
   gem 'bootstrap-sass'
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails', '~> 5.0.0.beta1'
+  gem 'coffee-rails'
   gem 'compass-rails'
   gem 'font-awesome-sass-rails'
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
 end
 
 group :production do
