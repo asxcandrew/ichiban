@@ -15,7 +15,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    'public/my/upload/directory'
+    'public/uploads/images'
   end
 
   def filename 
