@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :role, :email, :password, :remember_me, :password_confirmation
+  # attr_accessible :role, :email, :password, :remember_me, :password_confirmation
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

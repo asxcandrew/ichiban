@@ -32,6 +32,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    params.permit!
     params[:post][:ip_address] = request.ip
     
     # Only a bot would see this field.

@@ -102,8 +102,6 @@ GEM
       i18n
     orm_adapter (0.5.0)
     pg (0.17.1)
-    protected_attributes (1.0.8)
-      activemodel (>= 4.0.1, < 5.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -210,7 +208,6 @@ DEPENDENCIES
   mini_magick
   numbers_and_words
   pg
-  protected_attributes
   pry-rails
   rails (= 4.1.6)
   rails-settings-cached (= 0.4.1)

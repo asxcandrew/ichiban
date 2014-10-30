@@ -3,14 +3,14 @@ class Post < ActiveRecord::Base
   include LoremIpsum
   include Tripcode
   include MarkdownConverter
-  attr_accessible(:ip_address,
-                  :subject,
-                  :body,
-                  :board_id,
-                  :parent_id,
-                  :addition_attributes,
-                  :tripcode,
-                  :name)
+  # attr_accessible(:ip_address,
+  #                 :subject,
+  #                 :body,
+  #                 :board_id,
+  #                 :parent_id,
+  #                 :addition_attributes,
+  #                 :tripcode,
+  #                 :name)
 
   # Board relations
   belongs_to :board

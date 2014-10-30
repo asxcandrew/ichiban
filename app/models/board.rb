@@ -1,5 +1,5 @@
 class Board < ActiveRecord::Base
-  attr_accessible :directory, :name, :description, :file_size_limit, :save_IPs, :worksafe, :max_reports_per_IP
+  # attr_accessible :directory, :name, :description, :file_size_limit, :save_IPs, :worksafe, :max_reports_per_IP
 
   
   validates(:name, 
