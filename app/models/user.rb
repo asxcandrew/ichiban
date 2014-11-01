@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   # attr_accessible :role, :email, :password, :remember_me, :password_confirmation
 
   # Include default devise modules. Others available are:
@@ -9,8 +10,6 @@ class User < ActiveRecord::Base
          :rememberable,
          :trackable,
          :validatable
-
-  simple_roles # It's that simple :)
   
   has_one :image, :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :image

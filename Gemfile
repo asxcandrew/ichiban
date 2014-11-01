@@ -30,8 +30,8 @@ gem "rails-settings-cached", "0.4.1"
 
 # Authentication
 gem 'bcrypt-ruby'
-gem 'cancan'
-gem 'simple_roles'
+gem 'cancancan'
+gem "rolify"
 
 group :development, :test do
   # gem 'therubyracer', :platforms => :ruby
