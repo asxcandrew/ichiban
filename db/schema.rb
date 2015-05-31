@@ -13,25 +13,22 @@
 
 ActiveRecord::Schema.define(version: 20141101191159) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "additions", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "boards", force: true do |t|
     t.string   "name"
     t.string   "directory"
     t.text     "description"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.float    "file_size_limit"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.float    "file_size_limit",    limit: 24
     t.integer  "max_reports_per_IP"
-    t.boolean  "save_IPs",           default: true
-    t.boolean  "worksafe",           default: true
+    t.boolean  "save_IPs",                      default: true
+    t.boolean  "worksafe",                      default: true
   end
 
   add_index "boards", ["directory"], name: "index_boards_on_directory", unique: true, using: :btree
@@ -118,6 +115,7 @@ ActiveRecord::Schema.define(version: 20141101191159) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "role"
+    t.datetime "last_login"
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

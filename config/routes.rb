@@ -1,7 +1,11 @@
 Ichiban::Application.routes.draw do
   numeric = /\d+/
 
-  
+  namespace :account do
+    resources :users do
+      resources :boards, :param => :directory
+    end
+  end
   # resources :sessions
 
   # Operators can view all records using the following routes.

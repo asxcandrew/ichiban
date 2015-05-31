@@ -10,13 +10,15 @@ class Ability
     can :search, Board
     # Users can delete a post if they have they have created the post or if they moderate the board.
     # Take a look at posts#destroy for an explanation.
-    if user.has_role? :operator
-      can :manage, :all
-    elsif 
-      can :read, Forum
-      can :write, Forum if user.has_role?(:moderator, Forum)
-      can :write, Forum, :id => Forum.with_role(:moderator, user).pluck(:id)
-    end
+    # if user.has_role? :operator
+    #   can :manage, :all
+    # else
+    #   can :read, Board
+    #   can :write, Board if user.has_role?(:moderator, Board)
+    #   can :write, Board, :id => Board.with_role(:moderator, user).pluck(:id)
+    # end
+    can :manage, Board, :id => Board.with_role(:owner, user).pluck(:id)
+    can :manage, Board, :id => Board.with_role(:moderator, user).pluck(:id)
     # if @user.janitor?
     #   can :destroy, Post
     #   can :manage, Report
@@ -36,6 +38,6 @@ class Ability
     #   can :manage, User
     # end
 
-    can(:manage, :all) if @user.operator?
+    # can(:manage, :all) if @user.operator?
   end
 end

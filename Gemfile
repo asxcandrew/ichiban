@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'devise'
 # gem 'protected_attributes'
 # Rails
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.1'
 # gem 'rails-i18n'
 
 # Server
@@ -14,7 +14,7 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'mini_magick'
 
 # Database
-gem 'pg'
+gem 'mysql2'
 
 # Templating
 gem 'slim'
@@ -54,7 +54,7 @@ end
 # in production environments by default.
 group :assets do
   gem 'bootstrap-sass'
-  gem 'sass-rails', '~> 5.0.0.beta1'
+  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'compass-rails'
   gem 'font-awesome-sass-rails'

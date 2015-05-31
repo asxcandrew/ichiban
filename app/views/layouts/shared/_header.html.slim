@@ -14,4 +14,4 @@ header.site-header
 
   - unless (params[:controller] == 'posts')
     .new-thread-button
-      == link_to(t('posts.new_thread'), new_post_path(board_id: @board.try(:id)))
+      == link_to(t('posts.new_thread'), new_board_post_path(board_id: @board.try(:id)))

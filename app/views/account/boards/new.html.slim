@@ -1,0 +1,11 @@
+.new-board.compact-form
+  h1 Create Board
+  article
+    == simple_form_for @board, url: account_user_boards_path(current_user) do |f|
+      == f.input :name, input_html: { title: t('boards.errors.name_too_long') }
+      
+      == f.input :description
+
+      == f.input :directory, input_html: { title: t('boards.errors.directory_format') }
+      
+      == f.submit
