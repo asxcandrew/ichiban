@@ -1,6 +1,6 @@
 .reply
   == post_article_tag(color: cookies.signed[:tripcode]) do
-    ==  simple_form_for([@board, @reply],
+    ==  simple_form_for(@reply,
                         :autocomplete => :off, 
                         :namespace => parent.id,
                         :html => { :multipart => true, 'data-postType' => :reply }) do |f|
@@ -9,13 +9,6 @@
 
       == f.input :body, :as => :text, placeholder: t('posts.show.reply_comment', id: parent.id)
       .meter:span
-
-      .preview
-        header
-          .inner == link_to(t('posts.preview'), 
-                            "http://daringfireball.net/projects/markdown/basics",
-                            :target => :_blank,
-                            title: t('posts.preview_help'))
         .body
       
       == f.input(:name,

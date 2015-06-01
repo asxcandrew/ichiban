@@ -1,0 +1,6 @@
+.navigation
+  .left
+    == link_back_to_directory
+
+  - if @posts.any?
+    == paginate @posts

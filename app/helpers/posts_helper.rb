@@ -42,9 +42,9 @@ module PostsHelper
   def link_to_post(*text, post, &block)
     text = text.empty? ? "##{post.id}" : text.to_sentence
     if block.nil?
-      link_to(text, board_post_path(post.board_id,post), title: "Post ##{post.id}")
+      link_to(text, post_path(post), title: "Post ##{post.id}")
     else
-      link_to(board_post_path(post.board_id,post), &block)
+      link_to(post_path(post), &block)
     end
   end
 

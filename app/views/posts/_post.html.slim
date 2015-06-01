@@ -1,8 +1,9 @@
 == post_article_tag(color: post.tripcode, id: post.id) do
   == render partial: 'posts/header', locals: { post: post }
-  .left
-    figure
-      == image_tag(post.addition.image.asset.thumbnail)
+  - if post.image
+	  .left
+	    figure
+	      == image_tag(post.image.asset.thumbnail)
   .body == markdown(post.body)
   hr.clearfix
   == render partial: 'posts/footer', locals: { post: post }

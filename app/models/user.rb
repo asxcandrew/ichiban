@@ -28,31 +28,13 @@ class User < ActiveRecord::Base
     raise CanCan::AccessDenied unless self.operator?
   end
 
-  # TODO: Refactor to be a little less...cumbersome.
-  # Operators have access to everything.
-  def boards
-    self.operator? ? Board.where(nil) : super
-  end
-
-  def posts
-    self.operator? ? Post.where(nil) : super
-  end
-
-  def reports
-    self.operator? ? Report.where(nil) : super
-  end
-
-  def suspensions
-    self.operator? ? Suspension.where(nil) : super
-  end
-
-  def users
-    if self.operator? # Operators have all users.
-      User.where(nil)
-    elsif self.administrator? # Administrators have users from their board.
-      super
-    else # Everybody else has no users.
-      super.limit(0)
-    end
-  end
+  # def users
+  #   if self.operator? # Operators have all users.
+  #     User.where(nil)
+  #   elsif self.administrator? # Administrators have users from their board.
+  #     super
+  #   else # Everybody else has no users.
+  #     super.limit(0)
+  #   end
+  # end
 end

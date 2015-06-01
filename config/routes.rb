@@ -1,9 +1,15 @@
 Ichiban::Application.routes.draw do
   numeric = /\d+/
 
+  resources :posts
+  
   namespace :account do
     resources :users do
-      resources :boards, :param => :directory
+      resources :boards, :param => :directory do
+        resources :reports
+        resources :moderators
+        resources :suspensions
+      end
     end
   end
   # resources :sessions
@@ -30,8 +36,7 @@ Ichiban::Application.routes.draw do
   root to: 'boards#index'
   get '/:page' => 'boards#index', constraints: { page: numeric }
 
-  resources 'boards' do
-    resources :posts
+  scope 'boards' do
     get  'search/' => 'boards#search'
     get  'search/:keyword' => 'boards#search'
     get  '/'      => 'boards#index',  :as => :boards
@@ -44,17 +49,17 @@ Ichiban::Application.routes.draw do
     put    ':directory'       => 'boards#update'
     delete ':directory'       => 'boards#destroy'
 
-    scope ':directory' do
-      resources :users
-      resources :reports
-      resources :suspensions
-    end
+    # scope ':directory' do
+    #   resources :users
+    #   # resources :reports
+    #   # resources :suspensions
+    # end
   end
 
-  # scope 'tripcodes' do
-  #   get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
-  #   get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/, page: numeric }
-  # end
+  scope 'tripcodes' do
+    # get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
+    get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/, page: numeric }
+  end
   
 
   scope '/manage' do

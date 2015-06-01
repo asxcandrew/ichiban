@@ -1,7 +1,5 @@
 footer
-  == link_to_tripcode(post.tripcode) do
-    .name = post.name
-    .tripcode = post.tripcode_symbol
+
 
   .right
     == render partial: 'posts/controls', locals: { post: post }

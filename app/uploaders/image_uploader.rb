@@ -3,8 +3,8 @@
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
-  include Sprockets::Helpers::RailsHelper
-  include Sprockets::Helpers::IsolatedHelper
+  # include Sprockets::Helpers::RailsHelper
+  # include Sprockets::Helpers::IsolatedHelper
 
   PNG = %w(png)
   JPG = %w(jpg jpeg)
@@ -45,7 +45,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def get_geometry
     if @file
-      image = MiniMagick::Image.open(@file.file)
+      image = MiniMagick::Image.new(@file.file)
       if image
         return { width: image[:width], height: image[:height] }
       else

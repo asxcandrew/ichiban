@@ -1,0 +1,8 @@
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :email, required: true, autofocus: true, :placeholder => 'Электронная почта'
+    = f.input :password, required: true, hint: ("Не короче #{@minimum_password_length} символов" if @validatable), :placeholder => 'Пароль'
+    = f.input :password_confirmation, required: true, :placeholder => 'Повтроите пароль'
+  .form-actions
+    = f.button :submit, 'Зарегистрироваться'

@@ -11,10 +11,11 @@ html(lang='en')
 
     == favicon_link_tag
   == body_tag do
-    .col-lg-9
-      == render partial: 'layouts/shared/flash_messages'
-      == yield
-    .col-lg-3
-      == render partial: 'layouts/shared/menu'
+    .container
+      .wrapper
+        == render partial: 'layouts/shared/header'
+        .content
+          == render partial: 'layouts/shared/flash_messages'
+          == yield
       
     == render partial: 'layouts/shared/footer'

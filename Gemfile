@@ -11,7 +11,7 @@ gem 'rails', '4.2.1'
 
 # File uploads
 gem 'carrierwave', '~> 0.10.0'
-gem 'mini_magick'
+gem 'mini_magick', '4.2.1'
 
 # Database
 gem 'mysql2'
@@ -66,5 +66,5 @@ group :production do
   # Logging
   # gem 'newrelic_rpm'
 end
-
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'jquery-rails'

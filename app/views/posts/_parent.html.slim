@@ -1,5 +1,5 @@
 == post_tag(parent, class: 'parent') do
   == render partial: '/posts/post', locals: { post: parent }
   == render(partial: 'posts/child', 
-    collection: parent.children.find(:all, order: "created_at ASC", limit: @previews),
+    collection: parent.children,
     locals: { child_limit: @child_limit })

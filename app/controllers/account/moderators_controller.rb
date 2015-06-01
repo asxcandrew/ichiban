@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Account::ModeratorsController < ApplicationController
   before_filter :authenticate_user!
   
   def new
@@ -36,11 +36,11 @@ class UsersController < ApplicationController
 
     if params[:directory]
       @board = Board.find_by_directory!(params[:directory])
-      check_if_user_can!(:manage, Board, @board)
+      # check_if_user_can!(:manage, Board, @board)
       @users = @board.users
       options[:layout] = 'board_management'
     else
-      current_user.check_if_operator!
+      # current_user.check_if_operator!
       @users = current_user.users
     end
 

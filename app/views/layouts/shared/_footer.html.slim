@@ -2,4 +2,11 @@
   .copyright
     == t('license', link: link_to("Ichiban", "https://github.com/ericwright90/ichiban"))
   .infotainment
-    = link_to("Manage", session_path(:user))
+    -if user_signed_in?
+		  = link_to 'Aккаунт', account_user_path(current_user)
+		  = ' | '
+		  = link_to 'Выйти', destroy_user_session_path, :method => :delete
+		-else
+		  = link_to 'Войти', new_user_session_path
+		  = ' | '
+		  = link_to 'Зарегистрироваться', new_user_registration_path

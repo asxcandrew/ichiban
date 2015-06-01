@@ -1,6 +1,6 @@
 aside.management-pane
   ul
-    li == link_to("Board Settings", edit_board_path(@board))
-    li == link_to("Reports", board_path(@board) + reports_path)
-    li == link_to("Suspensions", board_path(@board) + suspensions_path)
-    li == link_to("Users", board_path(@board) + users_path)
+    li == link_to("Board Settings", edit_account_user_board_path(current_user, @board))
+    li == link_to("Reports", account_user_board_reports_path(current_user, @board))
+    li == link_to("Suspensions", account_user_board_suspensions_path(current_user, @board))
+    li == link_to("Users", account_user_board_moderators_path(current_user, @board))

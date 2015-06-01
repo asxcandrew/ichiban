@@ -4,8 +4,7 @@ class BoardsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show, :search]
   
   def search
-    @boards = params[:keyword] ? Board.where('name ILIKE ?', "%#{params[:keyword]}%").limit(5) : []
-
+    @boards = params[:keyword] ? Board.where('name LIKE ?', "%#{params[:keyword]}%").limit(5) : []
     render json: @boards
   end
 

@@ -10,10 +10,9 @@ class PostsController < ApplicationController
   def show
     @post = Post.find_by_id(params[:id])
     @reply = Post.new
-    @board = Board.where("id = ? or directory = ?",params[:board_id],params[:board_id]).first
+    @board = @post.board
     @child_limit = 10
     @counter = 0
-
     if @post && @board
       @prefix =  @post.subject && !@post.subject.blank? ? "#{@post.subject} : " : ""
       @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: @board.name)
@@ -21,7 +20,7 @@ class PostsController < ApplicationController
         format.html
         format.json do
           omitted = []
-          omitted << :ip_address unless check_if_user_can?(:create, Suspension, @post)
+          # omitted << :ip_address unless check_if_user_can?(:create, Suspension, @post)
           render json: @post, 
                   except: omitted, 
                   :include => :image, 
@@ -40,7 +39,7 @@ class PostsController < ApplicationController
       logger.info "Spam Bot detected: #{request.ip}"
       redirect_to request.referrer
     else
-      @post = Post.create!(params[:post])
+      @post = Post.create(params[:post])
       cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
       cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
       cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
@@ -48,7 +47,7 @@ class PostsController < ApplicationController
       # Used to delete posts.
       cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
 
-      redirect_to(@post.is_ancestor? ? board_post_path(@post.board.directory, @post.id) : board_post_path(@post.ancestor.board.directory, @post.ancestor.id, anchor: @post.id))
+      redirect_to(@post.is_ancestor? ? post_path(@post) : post_path(@post.ancestor.id, anchor: @post.id))
     end
   end
 
