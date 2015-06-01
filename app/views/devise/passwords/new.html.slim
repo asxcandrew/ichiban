@@ -1,0 +1,13 @@
+.session.compact-form
+  h1 Forgot your password?
+  article
+		= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  	  = f.error_notification
+
+	    .form-inputs
+	      = f.input :email, required: true, autofocus: true, :placeholder => 'Электронная почта'
+
+	    .form-actions
+	      = f.button :submit, "Send me reset password instructions"
+  .account-extras
+    = render "devise/shared/links"
