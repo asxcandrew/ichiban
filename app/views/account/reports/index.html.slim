@@ -27,6 +27,4 @@
               a.suspend-poster(href='#' data-id=report.id data-postID=report.post_id) Suspend Poster
               a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
             td
-              a.delete-report(href='#' title="Delete Report" data-id=report.id) X
-
-
+              = link_to 'Удалить', account_board_report_path(@board, report), :method => :delete

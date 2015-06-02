@@ -5,4 +5,4 @@
 - if @boards
   - @boards.each do |board|
     span == link_to_board("#{board.name} - /#{board.directory}/", board)
-    span == link_to "Edit", edit_account_user_board_path(current_user, board)
+    span == link_to "Edit", edit_account_board_path(board)

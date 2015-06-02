@@ -6,12 +6,11 @@ class Account::SuspensionsController < ApplicationController
     options = {}
     @prefix = I18n.t('suspensions.prefix')
 
-    if params[:directory]
-      @board = Board.find_by_directory!(params[:directory])
+    if params[:board_directory]
+      @board = Board.find_by_directory!(params[:board_directory])
 
       # check_if_user_can!(:manage, Suspension, @board)
       @suspensions = @board.suspensions.order('created_at')
-      options = { layout: 'board_management' }
     else
       # @current_user.check_if_operator!
       @suspensions = current_user.suspensions.order('created_at DESC')
@@ -25,7 +24,7 @@ class Account::SuspensionsController < ApplicationController
   
   def create
     response = { flash: { :type => :notice } }
-    @suspension = Suspension.new(params[:suspension])
+    @suspension = Suspension.new(ad_params)
     # check_if_user_can!(:create, Suspension, @suspension.board)
     @suspension.save!
     response[:flash][:message] = I18n.t('suspensions.create.success', 
@@ -42,12 +41,16 @@ class Account::SuspensionsController < ApplicationController
     # check_if_user_can!(:destroy, Suspension, @suspension)
     @suspension.destroy
     response[:flash][:message] = I18n.t('suspensions.destroy.success', ip_address: @suspension.ip_address)
-
-    render json: response
+    @board = Board.find_by_directory!(params[:board_directory])
+    redirect_to account_board_suspensions_path(@board)
   end
 
   private
     def set_template
       self.class.layout('layouts/board_management')
+    end
+
+    def ad_params
+      params.require(:suspension).permit(:post_id, :reason, :ip_address, :board_id, :ends_at)
     end
 end

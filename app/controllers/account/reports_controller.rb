@@ -32,11 +32,11 @@ class Account::ReportsController < ApplicationController
     response = { flash: { :type => :notice } }
     @report = Report.find_by_id!(params[:id])
     
-    check_if_user_can!(:destroy, Report, @report)
+    # check_if_user_can!(:destroy, Report, @report)
     @report.destroy
     response[:flash][:message] = I18n.t('reports.destroy.success', report_id: @report.id)
-
-    render json: response
+    @board = Board.find_by_directory!(params[:board_directory])
+    redirect_to account_board_reports_path(@board)
   end
 
   private

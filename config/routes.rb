@@ -4,12 +4,10 @@ Ichiban::Application.routes.draw do
   resources :posts
   
   namespace :account do
-    resources :users do
-      resources :boards, :param => :directory do
-        resources :reports
-        resources :moderators
-        resources :suspensions
-      end
+    resources :boards, :param => :directory do
+      resources :reports
+      resources :moderators
+      resources :suspensions
     end
   end
   # resources :sessions
@@ -26,7 +24,6 @@ Ichiban::Application.routes.draw do
   end
   resources :users
   resources :reports, only: :create
-  resources :suspensions
   ##
 
   # We declare our routes manually instead of using the

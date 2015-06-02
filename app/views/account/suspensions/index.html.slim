@@ -23,4 +23,5 @@
           - unless params[:directory]
             td = link_to_board(suspension.board)
           td
-            a.delete-suspension(href='#' title="Delete Suspension" data-id=suspension.id) X
+            = link_to 'Удалить', account_board_suspension_path(@board, suspension), :method => :delete
+            

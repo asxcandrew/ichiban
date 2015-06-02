@@ -22,7 +22,7 @@ $ ->
 
     $.ajax
       type: 'POST'
-      url: "/suspensions/"
+      url: "/account/boards/1/suspensions/"
       data: params
       complete: (response) ->
         flash($.parseJSON(response.responseText).flash)

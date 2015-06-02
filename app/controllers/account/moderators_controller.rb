@@ -34,16 +34,9 @@ class Account::ModeratorsController < ApplicationController
   def index
     options = {}
     @prefix = "Users"
-
-    if params[:directory]
-      @board = Board.find_by_directory!(params[:directory])
+      @board = Board.find_by_directory!(params[:board_directory])
       # check_if_user_can!(:manage, Board, @board)
       @users = @board.users
-      options[:layout] = 'board_management'
-    else
-      # current_user.check_if_operator!
-      @users = current_user.users
-    end
 
     respond_to do |format|
       format.html { render options }
