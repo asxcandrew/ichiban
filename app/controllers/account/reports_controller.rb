@@ -1,20 +1,15 @@
 class Account::ReportsController < ApplicationController
+  before_filter :set_template
   # load_and_authorize_resource
 
   def index
     options = {}
     @prefix = I18n.t('reports.index.prefix')
 
-    if params[:directory]
-      @board = Board.find_by_directory!(params[:directory])
+    @board = Board.find_by_directory!(params[:board_directory])
 
-      # check_if_user_can!(:manage, Report, @board)
-      @reports = @board.reports.order('created_at')
-      options = { layout: 'board_management' }
-    else
-      # @current_user.check_if_operator!
-      @reports = current_user.reports.order('created_at')
-    end
+    # check_if_user_can!(:manage, Report, @board)
+    @reports = @board.reports.order('created_at')
 
     respond_to do |format|
       format.html { render options }
@@ -43,4 +38,9 @@ class Account::ReportsController < ApplicationController
 
     render json: response
   end
+
+  private
+    def set_template
+      self.class.layout('layouts/board_management')
+    end
 end

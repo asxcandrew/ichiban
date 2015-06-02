@@ -1,4 +1,5 @@
 class Account::ModeratorsController < ApplicationController
+  before_filter :set_template
   before_filter :authenticate_user!
   
   def new
@@ -71,4 +72,10 @@ class Account::ModeratorsController < ApplicationController
 
     render json: response
   end
+
+  private
+    def set_template
+      self.class.layout('layouts/board_management')
+    end
+
 end

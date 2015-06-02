@@ -25,7 +25,7 @@ Ichiban::Application.routes.draw do
     get "logout", to: "devise/sessions#destroy"
   end
   resources :users
-  resources :reports
+  resources :reports, only: :create
   resources :suspensions
   ##
 

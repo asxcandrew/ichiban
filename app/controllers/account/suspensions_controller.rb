@@ -1,4 +1,5 @@
 class Account::SuspensionsController < ApplicationController
+  before_filter :set_template
   # load_and_authorize_resource
   
   def index
@@ -44,4 +45,9 @@ class Account::SuspensionsController < ApplicationController
 
     render json: response
   end
+
+  private
+    def set_template
+      self.class.layout('layouts/board_management')
+    end
 end
