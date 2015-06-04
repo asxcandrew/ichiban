@@ -3,8 +3,8 @@
   - if child.children.any?
     - if child_limit > 0 && child.children.size < child_limit
       == render(partial: 'posts/child', 
-                collection: child.children.find(:all, order: "created_at ASC", limit: child_limit),
-                locals: { child_limit: (child_limit - 1) })
+              collection: child.children.order('created_at ASC').limit(child_limit),
+              locals: { child_limit: (child_limit - 1) })
     - elsif @previews.nil?
       br
       == link_to_post(t('.continue_thread').html_safe, child)
