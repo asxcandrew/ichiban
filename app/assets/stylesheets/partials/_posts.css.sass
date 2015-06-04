@@ -59,8 +59,8 @@
   article
     +transition-duration(1s)
     border: 1px solid $bold-accent
-    min-width: 500px
-    max-width: 50%
+    min-width: 600px
+    max-width: 90%
     display: inline-block
 
     margin: 5px 0
@@ -158,9 +158,10 @@
           opacity: $opaque
 
   figure
-    margin-right: 8px
+    margin-bottom: 4pt
+    margin-right: 5pt
     img
-      border: 1px solid darken($accent, 25%)
+      //border: 1px solid darken($accent, 25%)
 
       &.loading
         opacity: $translucent
@@ -179,7 +180,7 @@
         visibility: hidden
 
   .body
-    display: inline-block
+    // display: inline-block
     vertical-align: top
     +rendered-markdown
 
