@@ -25,7 +25,7 @@ class Account::SuspensionsController < ApplicationController
   def create
     response = { flash: { :type => :notice } }
     @suspension = Suspension.new(ad_params)
-    # check_if_user_can!(:create, Suspension, @suspension.board)
+    authorize! :create, @suspension
     @suspension.save!
     response[:flash][:message] = I18n.t('suspensions.create.success', 
                                          ip_address: @suspension.ip_address, 
@@ -38,7 +38,7 @@ class Account::SuspensionsController < ApplicationController
     @suspension = Suspension.find_by_id!(params[:id])
     response = { flash: { :type => :notice } }
 
-    # check_if_user_can!(:destroy, Suspension, @suspension)
+    authorize! :destroy, @suspension
     @suspension.destroy
     response[:flash][:message] = I18n.t('suspensions.destroy.success', ip_address: @suspension.ip_address)
     @board = Board.find_by_directory!(params[:board_directory])

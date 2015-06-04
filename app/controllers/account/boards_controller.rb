@@ -1,21 +1,15 @@
 class Account::BoardsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :find_boards, except: [:destroy, :search]
   before_filter :set_board, except: [:index, :new, :create, :search]
   before_filter :authenticate_user!, except: [:index, :show, :search]
-  
-  def search
-    @boards = params[:keyword] ? Board.where('name ILIKE ?', "%#{params[:keyword]}%").limit(5) : []
-
-    render json: @boards
-  end
 
   def index
-    @boards = Board.with_role(:owner, current_user)
-    # @posts = Post.all_threads.order("updated_at DESC").page(params[:page])
-    # respond_to do |format|
-    #   format.html { render 'show' }
-    #   format.json { render json: @posts, except: [:ip_address], :include => :image }
-    # end
+    if (current_user.has_role? :operator )|| (current_user.has_role? :administrator)
+      @boards = Board.all
+    else
+      @boards = Board.with_role(:owner, current_user) + Board.with_role(:moderator, current_user)
+    end
   end
 
   def new
@@ -25,37 +19,25 @@ class Account::BoardsController < ApplicationController
 
   def create
     @board = Board.create!(ad_params)
-    redirect_to edit_account_user_board_path(current_user, @board), notice: "/#{@board.directory}/ created!"
-  end
-
-  def show
-    @prefix = "#{@board.name}"
-    @posts = Post.threads_for(@board).order("updated_at DESC").page(params[:page])
-
-    @paged = params[:page] 
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @posts, except: [:ip_address], :include => :image }
-    end
+    redirect_to edit_account_board_path(@board), notice: "/#{@board.directory}/ created!"
   end
 
   def destroy
-    check_if_user_can!(:destroy, Board, @board)
+    authorize! :destroy, @board
     @board.destroy
     redirect_to root_path, notice: I18n.t('boards.destroy.success', directory: @board.directory)
   end
 
   def edit
-    authorize! :edit, @board
-    # check_if_user_can!(:edit, Board, @board)
-    render layout: 'board_management'
+    if can?(:manage, @board)
+      render layout: 'board_management'
+    else
+      redirect_to account_board_reports_path(@board)
+    end
   end
 
-  # TODO: Fix issue where invalid records alter the edit view.
   def update
-    check_if_user_can!(:update, Board, @board)
-    
+    authorize! :update, @board
     @edited_board = @board.clone
     @edited_board.update_attributes!(params[:board])
 

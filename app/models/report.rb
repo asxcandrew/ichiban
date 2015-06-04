@@ -2,6 +2,7 @@ class Report < ActiveRecord::Base
   # attr_accessible :comment, :model, :post_id, :ip_address
 
   belongs_to :post
+  has_one :board, :through => :post
 
   validates_presence_of :comment, message: I18n.t('reports.errors.comment')
   validates_presence_of :post, message: I18n.t('reports.errors.post_not_found')
