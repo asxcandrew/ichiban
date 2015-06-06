@@ -21,17 +21,16 @@ class Ability
       # can :manage, Board
       # can :manage, User
     end
-      
-    can :manage, Board, :id => Board.with_role(:owner, user).pluck(:id)
-    can :manage, Report, :board => { :id => Board.with_role(:owner, user).pluck(:id) }
-    can :destroy, Post, :board => { :id => Board.with_role(:owner, user).pluck(:id) }
-    can :manage, Suspension, :board => { :id => Board.with_role(:owner, user).pluck(:id) }
+    unless @user.new_record?
+      # can :manage, Board, :id => Board.with_role(:moderator, user).pluck(:id)
+      can :manage, Board, :id => Board.with_role(:owner, user).pluck(:id)
+      can :manage, Report, :board => { :id => Board.with_role(:owner, user).pluck(:id) }
+      can :destroy, Post, :board => { :id => Board.with_role(:owner, user).pluck(:id) }
+      can :manage, Suspension, :board => { :id => Board.with_role(:owner, user).pluck(:id) }
 
-    
-    # if @user.has_role? :moderator
-    can :manage, Report, :board => { :id => Board.with_role(:moderator, user).pluck(:id) }
-    can :destroy, Post, :board => { :id => Board.with_role(:moderator, user).pluck(:id) }
-    can :manage, Suspension, :board => { :id => Board.with_role(:moderator, user).pluck(:id) }
-    # end
+      can :manage, Report, :board => { :id => Board.with_role(:moderator, user).pluck(:id) }
+      can :destroy, Post, :board => { :id => Board.with_role(:moderator, user).pluck(:id) }
+      can :manage, Suspension, :board => { :id => Board.with_role(:moderator, user).pluck(:id) }
+    end
   end
 end

@@ -1,12 +1,12 @@
 .controls
-  a.delete-post-confirmation(href='#' title=t('.delete_post')) = t('.delete')
-  span.confirmation-toggle
-    span = t('.deletion_confirmation')
-    a.delete-post(href='#' data-id=post.id) = t('.confirm')
-    a.unconfirm(href='#') = t('.unconfirm')
+  /a.delete-post-confirmation(href='#' title=t('.delete_post')) = t('.delete')
+  /span.confirmation-toggle
+  /  span = t('.deletion_confirmation')
+  /  a.delete-post(href='#' data-id=post.id) = t('.confirm')
+  /  a.unconfirm(href='#') = t('.unconfirm')
   
   / - if check_if_user_can?(:create, Suspension, post)
-  a.suspend-poster(href='#' title=t('.suspend_poster') data-id=post.id) = t('.suspend')
+  /a.suspend-poster(href='#' title=t('.suspend_poster') data-id=post.id) = t('.suspend')
   / - else
   a.report-post(href='#' title=t('.report_poster', post_id: post.id) data-id=post.id) = t('.report')
   
