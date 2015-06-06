@@ -3,15 +3,6 @@ class Post < ActiveRecord::Base
   include LoremIpsum
   include Tripcode
   include MarkdownConverter
-  # attr_accessible(:ip_address,
-  #                 :subject,
-  #                 :body,
-  #                 :board_id,
-  #                 :parent_id,
-  #                 :addition_attributes,
-  #                 :tripcode,
-  #                 :name)
-
   # Board relations
   belongs_to :board
   validates_presence_of :board, message: I18n.t('posts.errors.board_not_given')
@@ -51,7 +42,7 @@ class Post < ActiveRecord::Base
 
   validates_length_of :body, 
                       maximum: 1000, 
-                      message: I18n.t('posts.errors.body_too_long', limit: 1000)
+                      message: I18n.t('posts.errors.body_too_long', limit: 5000)
   
   # Suspensions
   # has_many :suspensions, conditions: ["ends_at > ?", Date.today]

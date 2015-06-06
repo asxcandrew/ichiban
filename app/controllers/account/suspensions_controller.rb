@@ -1,4 +1,5 @@
 class Account::SuspensionsController < ApplicationController
+  before_filter :authenticate_user!, except: [:create]
   before_filter :set_template
   # load_and_authorize_resource
   
@@ -25,7 +26,6 @@ class Account::SuspensionsController < ApplicationController
   def create
     response = { flash: { :type => :notice } }
     @suspension = Suspension.new(ad_params)
-    authorize! :create, @suspension
     @suspension.save!
     response[:flash][:message] = I18n.t('suspensions.create.success', 
                                          ip_address: @suspension.ip_address, 

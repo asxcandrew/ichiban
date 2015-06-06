@@ -53,11 +53,12 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find_by_id!(params[:id])
+    authorize! :manage, @post.reports.last
     response = { flash: { :type => :notice } }
     # No sense in keeping them on a page without a parent.
     response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
 
-    cookies.signed[@post.to_sha2] == @post.ip_address || check_if_user_can!(:destroy, Post, @post)
+    cookies.signed[@post.to_sha2] == @post.ip_address
     @post.destroy
     flash[:notice] = I18n.t('posts.destroy.deleted', post_id: @post.id)
     response[:flash][:message] = I18n.t('posts.destroy.deleted', post_id: @post.id)

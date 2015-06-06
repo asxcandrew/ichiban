@@ -1,4 +1,5 @@
 class Account::ReportsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :set_template
   # load_and_authorize_resource
 

@@ -5,7 +5,6 @@ class ReportsController < ApplicationController
     params[:report][:ip_address] = request.ip
     
     @report = Report.create(ad_params)
-    Rails.logger.debug @report
     response[:flash][:message] = I18n.t('reports.create.success')
 
     render json: response

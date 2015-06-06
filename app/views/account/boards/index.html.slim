@@ -1,8 +1,26 @@
 .directory-listing
-  .ghost-text
-    == link_to("boards/", boards_path)
 
-- if @boards
-  - @boards.each do |board|
-    span == link_to_board("#{board.name} - /#{board.directory}/", board)
-    span == link_to "Edit", edit_account_board_path(board)
+  - if @boards 
+    h1 Борды
+
+  .users
+    table
+      thead
+        tr
+          th #
+          th Name
+          th Description
+          th Directory
+          th Edit
+          th == link_to("Создать борду", new_account_board_path)
+      tbody
+        - if @boards
+          - @boards.each do |board|
+            tr.user(id=board.id)
+              td.id == board.id
+              td.email == board.name
+              td.role == board.description.to_s
+              td
+                span == link_to_board("#{board.name} - /#{board.directory}/", board)
+              td
+                span == link_to "Edit", edit_account_board_path(board)

@@ -1,5 +1,4 @@
 class Account::BoardsController < ApplicationController
-  before_filter :authenticate_user!
   before_filter :find_boards, except: [:destroy, :search]
   before_filter :set_board, except: [:index, :new, :create, :search]
   before_filter :authenticate_user!, except: [:index, :show, :search]
@@ -19,6 +18,7 @@ class Account::BoardsController < ApplicationController
 
   def create
     @board = Board.create!(ad_params)
+    current_user.add_role :owner, @board
     redirect_to edit_account_board_path(@board), notice: "/#{@board.directory}/ created!"
   end
 

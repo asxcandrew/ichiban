@@ -1,26 +1,22 @@
 class Account::ModeratorsController < ApplicationController
   before_filter :set_template
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, only: [:create , :destroy]
   
   def new
-    if params[:directory]
-      @board = Board.find_by_directory!(params[:directory])
-      check_if_user_can!(:edit, Board, @board)
-
-      options = { layout: 'board_management' }
-    end
-
-    @user = User.new
+    @board = Board.find_by_directory!(params[:board_directory])
+    authorize! :manage, @board
   end
 
   def create
-    @user = User.new(params[:user])
-    
-    if @user.save
-      redirect_to(root_url, 
-                  notice: I18n.t('users.create.success', email: @user.email, role: @user.role))
+    @board = Board.find_by_directory!(params[:board_directory])
+    authorize! :manage, @board
+    @user = User.where(email: params[:moderator][:email]).first
+    if @user.present?
+      @user.add_role :moderator, @board
+      flash[:notice] = I18n.t('users.create.success', email: @user.email, role: 'moderator')
+      render "index"
     else
-      flash[:error] = @user.errors.full_messages.to_sentence
+      flash[:error] = 'Фейкомыло не найдено!'
       render "new"
     end
   end
@@ -35,8 +31,8 @@ class Account::ModeratorsController < ApplicationController
     options = {}
     @prefix = "Users"
       @board = Board.find_by_directory!(params[:board_directory])
-      # check_if_user_can!(:manage, Board, @board)
-      @users = @board.users
+      # authorize! :manage, @board
+      @users = User.with_role :moderator, @board
 
     respond_to do |format|
       format.html { render options }
@@ -45,25 +41,11 @@ class Account::ModeratorsController < ApplicationController
   end
 
   def destroy
-    response = { success: false }
+    @board = Board.find_by_directory!(params[:board_directory])
+    authorize! :manage, @board
     @user = User.find_by_id(params[:id])
-
-    if @user
-      if check_if_user_can?(:destroy, User, @user)
-        if @user.destroy
-          response[:success] = true
-          response[:message] = I18n.t('users.destroy.success', email: @user.email)
-        else 
-          response[:message] = @user.errors.full_messages.to_sentence
-        end
-      else
-        response[:message] = I18n.t('users.errors.not_authorized', email: @user.email)
-      end
-    else
-      response[:message] = I18n.t('users.errors.user_not_found', user_id: params[:id])
-    end
-
-    render json: response
+    @user.remove_role :moderator, @board if @user
+    redirect_to account_board_moderators_path(params[:board_directory])
   end
 
   private

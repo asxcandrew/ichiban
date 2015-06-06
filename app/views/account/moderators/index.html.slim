@@ -1,5 +1,5 @@
 - if @users 
-  h1#user-counter == pluralize(@users.size, "User")
+  h1#user-counter Модераторы
 
 .users
   table
@@ -7,24 +7,19 @@
       tr
         th #
         th Email
-        th Role
+        //th Role
         th Boards
-        th Creation Date
         th Last Login
+        th == link_to('Назначить модератора', new_account_board_moderator_path(@board))
     tbody
       - if @users
         - @users.each do |user|
           tr.user(id=user.id)
             td.id == user.id
             td.email == user.email
-            td.role == user.role.to_s.titleize
+            //td.role == user.role.to_s.titleize
             td.boards
-              - if user.operator?
-                | n/a
-              - else
-                - user.boards.each do |board|
-                  == link_to_board(board)
-            td.created-at == time_tag(user.created_at, title: user.created_at)
+              == link_to_board(@board)
             td.last-login == time_tag(user.last_sign_in_at, title: user.last_sign_in_at)
             td
-              a.delete-user(href='#' data-id=user.id) Delete
+              == link_to 'Уволить', account_board_moderator_path(@board, user), :method => :delete
