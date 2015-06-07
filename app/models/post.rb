@@ -44,9 +44,9 @@ class Post < ActiveRecord::Base
                       maximum: 1000, 
                       message: I18n.t('posts.errors.body_too_long', limit: 5000)
   
-  # Suspensions
-  # has_many :suspensions, conditions: ["ends_at > ?", Date.today]
-  # validate :active_suspensions
+  #Suspensions
+  has_many :suspensions, -> (object){ where("ends_at > ?", Date.today)}
+  validate :active_suspensions
   
   # Reports
   has_many :reports, :dependent => :destroy
