@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608175927) do
+ActiveRecord::Schema.define(version: 20150608220439) do
 
   create_table "additions", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -99,6 +99,15 @@ ActiveRecord::Schema.define(version: 20150608175927) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+
+  create_table "simple_captcha_data", force: :cascade do |t|
+    t.string   "key",        limit: 40
+    t.string   "value",      limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "simple_captcha_data", ["key"], name: "idx_key", using: :btree
 
   create_table "suspensions", force: :cascade do |t|
     t.date     "ends_at"

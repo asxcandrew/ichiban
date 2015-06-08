@@ -28,6 +28,8 @@
       == f.simple_fields_for :image_attributes do |i|
          == i.input :asset, :as => :file
          == i.hidden_field :asset_cache, value: @post.image.try(:asset_cache)
+
+      == show_simple_captcha
       
       == text_field_tag(:board_search, 
                         @board.try(:name), list: 'board-search', 

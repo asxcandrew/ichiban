@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  include SimpleCaptcha::ControllerHelpers
   # load_and_authorize_resource except: [:destroy]
 
   def new
@@ -31,24 +32,30 @@ class PostsController < ApplicationController
   end
 
   def create
-    params.permit!
-    params[:post][:ip_address] = request.ip
-    
-    # Only a bot would see this field.
-    if !params[:email].blank?
-      logger.info "Spam Bot detected: #{request.ip}"
-      redirect_to request.referrer
+    if simple_captcha_valid?
+      params.permit!
+      params[:post][:ip_address] = request.ip
+      
+      # Only a bot would see this field.
+      if !params[:email].blank?
+        logger.info "Spam Bot detected: #{request.ip}"
+        redirect_to request.referrer
+      else
+        @post = Post.create(params[:post])
+        cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
+        cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
+        cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
+
+        # Used to delete posts.
+        cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
+
+        redirect_to(@post.is_ancestor? ? post_path(@post) : post_path(@post.ancestor.id, anchor: @post.id))
+      end
     else
-      @post = Post.create(params[:post])
-      cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
-      cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
-      cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
-
-      # Used to delete posts.
-      cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
-
-      redirect_to(@post.is_ancestor? ? post_path(@post) : post_path(@post.ancestor.id, anchor: @post.id))
+      flash[:error] = t('simple_captcha.message.default')
+      redirect_to :back
     end
+ 
   end
 
   def destroy

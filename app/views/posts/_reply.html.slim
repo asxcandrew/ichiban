@@ -27,6 +27,8 @@
       == f.simple_fields_for :image_attributes do |i|
         == i.input :asset, :as => :file, input_html: { title: t('posts.show.reply_requirements.') }
 
+      == show_simple_captcha
+
       == f.submit(t('posts.show.reply_sumbit', id: parent.id), disable_with: t('simple_form.disable_submit'),
                   title: t('posts.show.reply_requirements.'),
                   style: submit_button_style(cookies.signed[:tripcode]))

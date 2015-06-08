@@ -191,6 +191,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
+    simple_captcha2 (0.3.4)
+      rails (>= 4.1)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -246,6 +248,7 @@ DEPENDENCIES
   rolify
   rspec-rails
   sass-rails
+  simple_captcha2
   simple_form
   slim
   sprockets-rails
