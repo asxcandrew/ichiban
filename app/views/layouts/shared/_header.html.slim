@@ -1,16 +1,13 @@
 header.site-header
+  .boards
+    - Board.top.each do |board|
+      = link_to "/#{board.directory}", board_path(board)
   - if @board && !@board.new_record?
       span.hero-text = link_to_board_or_root
       - if @board.description.present?
         span.hero-separator 
           | ::
         span.description = @board.description
-  - else
-      span.hero-text = link_to(Setting.site_name, root_path)
-      - if Setting.tag_line
-        span.hero-separator 
-          | ::
-        span.description = Setting.tag_line
 
   - unless (params[:controller] == 'posts')
     .new-thread-button

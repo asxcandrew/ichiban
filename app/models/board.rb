@@ -35,6 +35,14 @@ class Board < ActiveRecord::Base
   has_many :reports, :through => :posts, :dependent => :destroy
 
   after_initialize :init
+  
+  scope :top, -> {
+    group("posts.board_id").
+    joins(:posts).
+    order("count(posts.board_id) desc").
+    limit(20)
+  }
+
 
 
   # Used to build RESTful routes
