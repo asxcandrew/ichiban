@@ -2,6 +2,9 @@ header.site-header
   .boards
     - Board.top.each do |board|
       = link_to "/#{board.directory}", board_path(board)
+  - unless (params[:controller] == 'posts')
+    .new-thread
+      == link_to('[Создать тред]', new_post_path(board_id: @board.try(:id)))
   - if @board && !@board.new_record?
       span.hero-text = link_to_board_or_root
       - if @board.description.present?
@@ -9,6 +12,3 @@ header.site-header
           | ::
         span.description = @board.description
 
-  - unless (params[:controller] == 'posts')
-    .new-thread-button
-      == link_to(t('posts.new_thread'), new_post_path(board_id: @board.try(:id)))
