@@ -107,7 +107,7 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.7.4)
+    kgio (2.9.3)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -244,6 +244,7 @@ DEPENDENCIES
   font-awesome-sass-rails
   jquery-rails
   kaminari
+  kgio (= 2.9.3)
   mini_magick (= 4.2.1)
   mysql2
   numbers_and_words

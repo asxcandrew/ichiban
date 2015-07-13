@@ -7,6 +7,7 @@ gem 'rails', '4.2.1'
 # gem 'rails-i18n'
 
 # Server
+gem 'kgio', '2.9.3'
 gem 'unicorn'
 gem 'simple_captcha2', require: 'simple_captcha'
 # File uploads
