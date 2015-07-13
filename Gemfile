@@ -7,7 +7,7 @@ gem 'rails', '4.2.1'
 # gem 'rails-i18n'
 
 # Server
-# gem 'unicorn'
+gem 'unicorn'
 gem 'simple_captcha2', require: 'simple_captcha'
 # File uploads
 gem 'carrierwave', '~> 0.10.0'

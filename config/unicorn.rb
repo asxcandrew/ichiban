@@ -1,33 +1,18 @@
-worker_processes 3
-timeout 30
+app_dir = File.expand_path("../..", __FILE__)
+working_directory app_dir
+
+
+# Set unicorn options
+worker_processes 2
 preload_app true
+timeout 30
 
-before_fork do |server, worker|
-  # Replace with MongoDB or whatever
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.connection.disconnect!
-    Rails.logger.info('Disconnected from ActiveRecord')
-  end
+# Set up socket location
+listen "#{app_dir}/tmp/sockets/unicorn.sock", :backlog => 64
 
-  # If you are using Redis but not Resque, change this
-  if defined?(Resque)
-    Resque.redis.quit
-    Rails.logger.info('Disconnected from Redis')
-  end
+# Logging
+stderr_path "#{app_dir}/log/unicorn.stderr.log"
+stdout_path "#{app_dir}/log/unicorn.stdout.log"
 
-  sleep 1
-end
-
-after_fork do |server, worker|
-  # Replace with MongoDB or whatever
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.establish_connection
-    Rails.logger.info('Connected to ActiveRecord')
-  end
-
-  # If you are using Redis but not Resque, change this
-  if defined?(Resque)
-    Resque.redis = ENV['REDIS_URI']
-    Rails.logger.info('Connected to Redis')
-  end
-end
+# Set master PID location
+pid "#{app_dir}/tmp/pids/unicorn.pid"
