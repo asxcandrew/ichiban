@@ -12,7 +12,6 @@ db/*.sqlite3
 
 # Ignore all logfiles and tempfiles.
 log/*.log
-tmp/**/*
 public/uploads/**/*
 public/assets/**/*
 
