@@ -3,10 +3,10 @@
     == t('license', link: link_to("Ichiban", "https://github.com/ericwright90/ichiban"))
   .infotainment
     -if user_signed_in?
-		  = link_to 'Aккаунт', account_boards_path
-		  = ' | '
-		  = link_to 'Выйти', destroy_user_session_path, :method => :delete
-		-else
-		  = link_to 'Войти', new_user_session_path
-		  = ' | '
-		  = link_to 'Зарегистрироваться', new_user_registration_path
+      = link_to 'Aккаунт', account_boards_path
+      = ' | '
+      = link_to 'Выйти', destroy_user_session_path, :method => :delete
+    -else
+      = link_to 'Войти', new_user_session_path
+      = ' | '
+      = link_to 'Зарегистрироваться', new_user_registration_path
