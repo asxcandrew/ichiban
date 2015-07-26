@@ -15,13 +15,13 @@ set -e
 USAGE="Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
 
 # app settings
-USER="deploy"
+# USER="deploy"
 APP_NAME="ichiban"
-APP_ROOT="/var/www/$APP_NAME"
+APP_ROOT="/var/www/$APP_NAME/current"
 ENV="production"
 
 # environment settings
-PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
+# PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
 CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn.rb -E $ENV -D"
 PID="$APP_ROOT/tmp/pids/unicorn.pid"
 OLD_PID="$PID.oldbin"
@@ -41,7 +41,7 @@ case $1 in
   start)
     sig 0 && echo >&2 "Already running" && exit 0
     echo "Starting $APP_NAME"
-    su - $USER -c "$CMD"
+    eval $CMD
     ;;
   stop)
     echo "Stopping $APP_NAME"

@@ -45,4 +45,12 @@ namespace :deploy do
     end
   end
 
+  after :restart, :restart_unicorn do
+    on roles(:web) do
+      execute "chmod 775 #{fetch(:release_path)}/config/unicorn_init.sh"
+      execute "#{fetch(:release_path)}/config/unicorn_init.sh 'stop'"
+      execute "#{fetch(:release_path)}/config/unicorn_init.sh 'start'"
+    end
+  end
+
 end
