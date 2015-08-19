@@ -1,7 +1,7 @@
 Ichiban::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   # Don't care if the mailer can't send
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.eager_load = true
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -66,13 +66,15 @@ Ichiban::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   config.action_mailer.default_options = {:from => "fakeanon.next@gmail.com"}
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => 'example.com' }
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "email-smtp.us-east-1.amazonaws.com",
     :port                 => 587,
-    :user_name            => Rails.application.secrets.email_username,
-    :password             => Rails.application.secrets.email_pswd,
+    :user_name            => Rails.application.secrets.ses_username,
+    :password             => Rails.application.secrets.ses_pswd,
     :authentication       => :login,
     :enable_starttls_auto => true
   }
+
 end

@@ -29,6 +29,9 @@ gem 'chronic'             # Humanized time parsing.
 # Management
 gem "rails-settings-cached", "0.4.1"
 
+gem 'fog'
+gem "fog-aws"
+
 # Authentication
 gem 'bcrypt-ruby'
 gem 'cancancan'
