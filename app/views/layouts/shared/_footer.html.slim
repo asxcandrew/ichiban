@@ -1,6 +1,7 @@
 .site-footer
   .copyright
-    == t('license', link: link_to("Ichiban", "https://github.com/ericwright90/ichiban"))
+    span == "2015 Nextchan - modern imageboard"
+    == link_to(Version::CURRENT, "https://github.com/nextanon/ichiban/releases/tag/#{Version::CURRENT}")
   .infotainment
     -if user_signed_in?
       = link_to 'Aккаунт', account_boards_path
