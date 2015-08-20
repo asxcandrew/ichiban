@@ -1,6 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
+set :rvm_ruby_version, 'ruby-2.0.0-p247'
+
 set :application, 'ichiban'
 set :repo_url, 'git@github.com:nextanon/ichiban.git'
 set :default_stage, "production"
@@ -45,12 +47,15 @@ namespace :deploy do
     end
   end
 
-  after :restart, :restart_unicorn do
+  desc 'Restart unicorn'
+  task :restart_unicorn do
     on roles(:web) do
       execute "chmod 775 #{fetch(:release_path)}/config/unicorn_init.sh"
       execute "#{fetch(:release_path)}/config/unicorn_init.sh 'stop'"
       execute "#{fetch(:release_path)}/config/unicorn_init.sh 'start'"
     end
   end
+
+  after :publishing, :restart_unicorn
 
 end
