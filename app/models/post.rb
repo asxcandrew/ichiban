@@ -45,7 +45,7 @@ class Post < ActiveRecord::Base
                       message: I18n.t('posts.errors.body_too_long', limit: 5000)
   
   #Suspensions
-  has_many :suspensions, -> (object){ where("ends_at > ?", Date.today)}
+  has_many :suspensions, -> { where("ends_at > ?", Date.today)}
   validate :active_suspensions
   
   # Reports
