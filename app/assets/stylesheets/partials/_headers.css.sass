@@ -11,23 +11,50 @@ h3
 .site-header
   +transition-property(all)
   +transition-duration($fast-transition)
-  // position: fixed
+  position: fixed
   width: 100%
+  font-size: 14px
   height: $header-height
-  padding: 3px 10px
   z-index: $medium-priority
-  background-color: $background-color
-  // background-image: $background-image
+  background-color: #333
+  box-shadow: 0px 0px 5px #444444
   background-size: $background-size
-
-  .boards
-    //margin-left: 10px
-    float: left
-    a
-      margin-right: 10px
-  .new-thread
+  a
+    color: inherit
+    text-decoration: none
+    padding-left: 15px
+    padding-right: 15px
+    &:hover
+      color: white
+  .root
+    line-height: 2.5
+  .item
+    color: #ccc
+    height: 35px
+    min-height: 35px
+    max-height: 35px
+    font-family: "Trebuchet MS", Trebuchet, sans-serif
+    cursor: pointer
+    display: inline-block
+    position: relative
+    line-height: 2.6
+  #main-menu
+    margin-left: 40px
+  #right-menu
+    font-size: 13px
+    line-height: 2.5
     float: right
-
+    padding-right: 15px
+    #sign-out-link
+      float: right
+      padding-top: 7px
+    #sign-out-icon
+      max-height: 20px
+      min-height: 20px
+      width: 20px
+      background-image: image-url("sign-out_icon.png")
+      &:hover
+        background-image: image-url("sign-out_icon_white.png")
 
   .hero-text
     font-size: 2em

@@ -1,14 +1,11 @@
 header.site-header
-  .boards
-    - Board.top.each do |board|
-      = link_to "/#{board.directory}", board_path(board)
-  - unless (params[:controller] == 'posts')
-    .new-thread
-      == link_to('[Создать тред]', new_post_path(board_id: @board.try(:id)))
-  - if @board && !@board.new_record?
-      span.hero-text = link_to_board_or_root
-      - if @board.description.present?
-        span.hero-separator 
-          | ::
-        span.description = @board.description
-
+  == link_to 'NEXCHAN', root_path, class: 'item root'
+  span#main-menu
+  span#right-menu
+    -if user_signed_in?
+      = link_to 'Aккаунт', account_boards_path, class: 'item'
+      = link_to destroy_user_session_path, :method => :delete, class: 'item', id: 'sign-out-link'
+        #sign-out-icon
+    -else
+      = link_to 'Войти', new_user_session_path, class: 'item'
+      = link_to 'Зарегистрироваться', new_user_registration_path, class: 'item'
