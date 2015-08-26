@@ -1,4 +1,9 @@
 class Board < ActiveRecord::Base
+
+  has_settings :class_name => 'BoardSettingObject' do |s|
+    s.key :view, :defaults => { :color => 'gray'}
+  end
+
   resourcify
   # attr_accessible :directory, :name, :description, :file_size_limit, :save_IPs, :worksafe, :max_reports_per_IP
 
@@ -43,7 +48,9 @@ class Board < ActiveRecord::Base
     limit(20)
   }
 
-
+  def color
+    settings(:view).color
+  end
 
   # Used to build RESTful routes
   def to_param
@@ -64,4 +71,12 @@ class Board < ActiveRecord::Base
       self.max_reports_per_IP ||= 10
     end
   #end_private
+end
+
+class BoardSettingObject < RailsSettings::SettingObject
+  validate do
+    unless PostsHelper::COLORS.keys.include?(self.value['color'].to_sym)
+      errors.add(:base, "Color name is missing")
+    end
+  end
 end

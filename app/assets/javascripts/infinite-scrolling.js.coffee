@@ -25,7 +25,7 @@ $(window).scroll ->
         console.log "Showcases on page #{page}: ", response
         if response.length == 0
           lastPage = true
-          flash(type: 'notice', message: "You've hit the end of the page.")
+          # flash(type: 'notice', message: "You've hit the end of the page.")
           return true
         
         newShowcases = ""

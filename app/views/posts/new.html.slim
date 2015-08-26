@@ -1,6 +1,6 @@
 .new-post.compact-form
   h1 = t('.header')
-  == post_article_tag(color: cookies.signed[:tripcode]) do
+  == post_article_tag(color: @post.board.color) do
     == simple_form_for(@post,
                        :autocomplete => :off, 
                        html: { multipart: true, 'data-postType' => :parent }) do |f|

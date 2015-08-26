@@ -3,7 +3,7 @@ module ApplicationHelper
   include MarkdownConverter
 
   def title
-    text = @prefix ? "#{@prefix} :: #{Setting.site_name}" : Setting.site_name
+    text = @prefix ? "#{@prefix} :: NEXCHAN" : 'NEXCHAN'
     content_tag("title", text)
   end
 

@@ -1,4 +1,15 @@
 module PostsHelper
+
+  COLORS = {
+    sky_blue: '#d7e3f4',
+    blue: '#e2e7f0',
+    thistle: '#eedfde',
+    beige: '#f0eed8',
+    plum: '#eae1f0',
+    khaki: '#d8decf',
+    gray: '#e4e4e4'
+  }
+
   def post_tag(post, options={}, &block)
     attributes = { class: ['post'],
                    id: post.id,
@@ -10,7 +21,7 @@ module PostsHelper
     attributes['data-ip'] = post.ip_address if can?(:manage, Post)
     attributes[:tabindex] = @counter += 1
     if post.is_child?
-      border_color = post_color(hex: post.parent.tripcode)
+      border_color = post_color(hex: COLORS[post.board.color.to_sym])
       attributes[:style] << "border-left-color: #{border_color};"
     end
 
@@ -27,10 +38,11 @@ module PostsHelper
 
   def post_article_tag(options = {}, &block)
     attributes = { class: '' }
-    if options[:color]
+    color = COLORS[options[:color].to_sym]
+    if color
       attributes[:style] = 
-        "border-color: #{post_color(hex: options[:color])}; 
-         background-color: #{background_color(options[:color])};"
+        "border-color: #{post_color(hex: color)}; 
+         background-color: #{color};"
     end
     attributes[:class] << 'uninteresting' if cookies["reported_post_#{options[:id]}"]
 

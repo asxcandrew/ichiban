@@ -27,7 +27,7 @@ gem 'kaminari'            # Pagination.
 gem 'chronic'             # Humanized time parsing.
 
 # Management
-gem "rails-settings-cached", "0.4.1"
+gem 'ledermann-rails-settings'
 
 gem 'fog'
 gem "fog-aws"
@@ -58,9 +58,8 @@ end
 # in production environments by default.
 gem 'compass-rails'
 gem 'sass-rails'
-gem 'bootstrap-sass'
+gem 'purecss-rails'
 gem 'coffee-rails'
-gem 'font-awesome-sass-rails'
 
 gem 'uglifier'
 

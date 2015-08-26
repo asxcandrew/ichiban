@@ -1,5 +1,5 @@
 .reply
-  == post_article_tag(color: cookies.signed[:tripcode]) do
+  == post_article_tag(color: parent.board.color) do
     ==  simple_form_for(@reply,
                         :autocomplete => :off, 
                         :namespace => parent.id,
