@@ -3,11 +3,3 @@
     span == "2015 Nextchan - modern imageboard"
     == link_to(Version::CURRENT, "https://github.com/nextanon/ichiban/releases/tag/#{Version::CURRENT}")
   .infotainment
-    -if user_signed_in?
-      = link_to 'Aккаунт', account_boards_path
-      = ' | '
-      = link_to 'Выйти', destroy_user_session_path, :method => :delete
-    -else
-      = link_to 'Войти', new_user_session_path
-      = ' | '
-      = link_to 'Зарегистрироваться', new_user_registration_path

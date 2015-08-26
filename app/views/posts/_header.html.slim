@@ -1,6 +1,8 @@
 header.details
+  .id == link_to_post(post)
   .date
-    == time_tag(post.created_at, title: post.created_at)
+    time(title=post.created_at)
+      =post.created_at.strftime("%F %T")
   - if can?(:manage, Post)
     .ip-address = post.ip_address
 
@@ -11,4 +13,7 @@ header.details
       .parent == link_to_parent(post.parent)
       - if post.parent != post.ancestor
         .ancestor == link_to_ancestor(post.ancestor)
-    .id == link_to_post(post)
+    a.report-post(href='#' data-id=post.id)
+      = image_tag('/assets/report-icon.png')
+    a.reply-toggle(href='#' data-id=post.id)
+        = image_tag('/assets/reply-icon.png')

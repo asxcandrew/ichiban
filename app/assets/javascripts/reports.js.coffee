@@ -17,7 +17,7 @@ $ ->
     # REWRITE: Remove reports after suspension is sent through.
     suspendPoster($this.data('postid'))
 
-  $(controls).on "click", ".report-post", (e) ->
+  $(details).on "click", ".report-post", (e) ->
     e.preventDefault()
     reportPost($(this).data('id'))
 

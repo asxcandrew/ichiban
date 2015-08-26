@@ -4,7 +4,7 @@ $ ->
   $postBody.previewer()
   $postBody.limiter()
 
-  $(controls).on "click", ".reply-toggle", (e) ->
+  $(details).on "click", ".reply-toggle", (e) ->
     e.preventDefault()
     toggleReply($(this).data('id'))
 
@@ -36,6 +36,7 @@ toggleImageExpansion = ($link) ->
     image.removeClass('loading')
 
 toggleReply = (id) ->
+  console.log("toggleReply")
   reply = "##{id} .reply:first"
   $(reply).toggle quickly
   

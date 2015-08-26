@@ -6,6 +6,6 @@
         ==link_to post.image.asset.url, class: 'post-img' do
 	         == image_tag(post.image.asset.thumbnail)
   .body == markdown(post.body)
-  hr.clearfix
+
   == render partial: 'posts/footer', locals: { post: post }
 == render partial: 'posts/reply', locals: { parent: post }
