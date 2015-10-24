@@ -5,7 +5,7 @@ class Account::ReportsController < ApplicationController
 
   def index
     options = {}
-    @prefix = I18n.t('reports.index.prefix')
+    @prefix = t('reports.index.prefix')
     if current_user.has_any_role? :operator, :administrator
       @reports = Report.all.order('created_at')
     else

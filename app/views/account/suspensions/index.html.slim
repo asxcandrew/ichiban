@@ -7,6 +7,7 @@ table.pure-table
     th Reason
     - unless params[:directory]
       th Board
+    th
 
   - @suspensions.each do |suspension|
     = suspension_tr_tag(suspension) do
@@ -19,5 +20,5 @@ table.pure-table
       - unless params[:directory]
         td = link_to_board(suspension.board)
       td
-        = link_to 'Удалить', account_board_suspension_path(@board, suspension), :method => :delete
+        = link_to 'Удалить', account_suspension_path(suspension), :method => :delete
             

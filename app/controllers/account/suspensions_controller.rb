@@ -36,9 +36,8 @@ class Account::SuspensionsController < ApplicationController
 
     authorize! :destroy, @suspension
     @suspension.destroy
-    response[:flash][:message] = I18n.t('suspensions.destroy.success', ip_address: @suspension.ip_address)
-    @board = Board.find_by_directory!(params[:board_directory])
-    redirect_to account_board_suspensions_path(@board)
+    response[:flash][:message] = t('suspensions.destroy.success', ip_address: @suspension.ip_address)
+    redirect_to account_suspensions_path
   end
 
   private

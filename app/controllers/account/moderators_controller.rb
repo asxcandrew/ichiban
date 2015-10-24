@@ -29,7 +29,7 @@ class Account::ModeratorsController < ApplicationController
 
   def index
     options = {}
-    @prefix = "Users"
+    @prefix = "Модераторы"
     if current_user.has_role? :operator
       @administrators = User.with_role :administrator
     else
