@@ -49,7 +49,7 @@ en:
       board_not_found: "Could not find board #%{board_id}'."
       board_not_given: "Board was not specified."
       suspended: "Your posting privilages have been suspended until %{ends_at} for: %{reason}"
-      file_size_limit: "Images cannot be larger than %{limit} megabytes."
+      file_size_limit: "Images cannot be larger than %{limit} bytes."
       throttle_limit: "You're posting too fast!"
       creation_limit: "You're posting too much!"
     controls:
@@ -76,8 +76,8 @@ en:
     update:
       success: "Board settings have been successfully updated."
     destroy:
-      button: "Delete Board"
-      confirmation: "Are you sure? Deleting /%{directory}/ will delete %{posts} posts!"
+      button: "Удалить доску"
+      confirmation: "Вы уверены? Удаление /%{directory}/ удалит %{posts} постов!"
       success: "/%{directory}/ permanently deleted."
     navigation:
       back_to_board: "Back to %{board}"

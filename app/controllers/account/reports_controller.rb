@@ -6,11 +6,12 @@ class Account::ReportsController < ApplicationController
   def index
     options = {}
     @prefix = I18n.t('reports.index.prefix')
-
-    @board = Board.find_by_directory!(params[:board_directory])
-
-    # check_if_user_can!(:manage, Report, @board)
-    @reports = @board.reports.order('created_at')
+    if current_user.has_any_role? :operator, :administrator
+      @reports = Report.all.order('created_at')
+    else
+      boards = Board.with_roles([:owner, :moderator], current_user).pluck(:id)
+      @reports = Report.joins(:post, :board).where(boards:{id: boards}).order('created_at')
+    end
     respond_to do |format|
       format.html { render options }
       format.json { render json: @reports }
@@ -24,8 +25,7 @@ class Account::ReportsController < ApplicationController
     authorize! :destroy, @report
     @report.destroy
     response[:flash][:message] = I18n.t('reports.destroy.success', report_id: @report.id)
-    @board = Board.find_by_directory!(params[:board_directory])
-    redirect_to account_board_reports_path(@board)
+    redirect_to account_reports_path
   end
 
   private

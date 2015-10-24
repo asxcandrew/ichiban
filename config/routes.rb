@@ -4,10 +4,11 @@ Ichiban::Application.routes.draw do
   resources :posts
   
   namespace :account do
+    resources :reports
+    resources :moderators
+    resources :suspensions
     resources :boards, :param => :directory do
-      resources :reports
-      resources :moderators
-      resources :suspensions
+      
     end
   end
   # resources :sessions

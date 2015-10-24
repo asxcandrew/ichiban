@@ -1,6 +1,11 @@
-aside.management-pane
-  ul
-    li == link_to("Board Settings", edit_account_board_path(@board))
-    li == link_to("Reports", account_board_reports_path(@board))
-    li == link_to("Suspensions", account_board_suspensions_path(@board))
-    li == link_to("Moderators", account_board_moderators_path(@board))
+.pure-menu.account-menu
+  span.pure-menu-heading Настройки
+  ul.pure-menu-list
+    li.pure-menu-item class="#{current_page?( account_boards_path )? 'pure-menu-selected':''}"
+      == link_to("Доски", account_boards_path, class: 'pure-menu-link')
+    li.pure-menu-item class="#{current_page?( account_reports_path )? 'pure-menu-selected':''}"
+      == link_to("Жалобы", account_reports_path, class: 'pure-menu-link')
+    li.pure-menu-item class="#{current_page?( account_suspensions_path)? 'pure-menu-selected':''}"
+      == link_to("Баны", account_suspensions_path, class: 'pure-menu-link')
+    li.pure-menu-item class="#{current_page?( account_moderators_path)? 'pure-menu-selected':''}"
+      == link_to("Модераторы", account_moderators_path, class: 'pure-menu-link')

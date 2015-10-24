@@ -1,27 +1,23 @@
-- if @suspensions 
-  h1#suspension-counter == pluralize(@suspensions.size, "Suspension")
+h1#suspension-counter Баны
+table.pure-table
+  thead
+    th Created At
+    th Ends At
+    th IP
+    th Reason
+    - unless params[:directory]
+      th Board
 
-.suspensions
-  table
-    thead
-      th Created At
-      th Ends At
-      th IP
-      th Reason
+  - @suspensions.each do |suspension|
+    = suspension_tr_tag(suspension) do
+      td
+        == time_tag(suspension.created_at, suspension.created_at, title: suspension.created_at)
+      td
+        == time_tag(suspension.ends_at, suspension.ends_at, title: suspension.ends_at)
+      td = suspension.ip_address
+      td = suspension.reason
       - unless params[:directory]
-        th Board
-
-    - if @suspensions
-      - @suspensions.each do |suspension|
-        = suspension_tr_tag(suspension) do
-          td
-            == time_tag(suspension.created_at, suspension.created_at, title: suspension.created_at)
-          td
-            == time_tag(suspension.ends_at, suspension.ends_at, title: suspension.ends_at)
-          td = suspension.ip_address
-          td = suspension.reason
-          - unless params[:directory]
-            td = link_to_board(suspension.board)
-          td
-            = link_to 'Удалить', account_board_suspension_path(@board, suspension), :method => :delete
+        td = link_to_board(suspension.board)
+      td
+        = link_to 'Удалить', account_board_suspension_path(@board, suspension), :method => :delete
             

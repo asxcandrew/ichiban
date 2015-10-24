@@ -12,13 +12,15 @@ html(lang='en')
 
     == favicon_link_tag
   == body_tag do
+    == render partial: 'layouts/shared/header'
     .container
       .wrapper
-        == render partial: 'layouts/shared/header'
-        .content
-          == render partial: 'layouts/shared/flash_messages'
-          == render partial: 'layouts/shared/management_pane'
-          section.page-frame
-            == yield
+        == render partial: 'layouts/shared/flash_messages'
+        .pure-g
+          .pure-u-1-4
+              == render partial: 'layouts/shared/management_pane'
+          .pure-u-3-4
+            section.page-frame
+              == yield
       
     == render partial: 'layouts/shared/footer'

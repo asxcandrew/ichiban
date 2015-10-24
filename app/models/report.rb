@@ -17,13 +17,13 @@ class Report < ActiveRecord::Base
 
 
   def date
-    self.created_at.strftime("%Y-%m-%d %l:%M %p %Z")
+    self.created_at.strftime("%F %T")
   end
   
   private
     def max_reports_per_IP
       post = Post.find_by_id(self.post_id)
-      if post.board.reports.where(ip_address: self.ip_address).size >= post.board.max_reports_per_IP
+      if post.board.reports.where(ip_address: self.ip_address).size >= post.board.settings(:limits).reports_per_ip
         errors.add(:max_reports, I18n.t('reports.errors.max_reports_per_IP'))
       end
     end

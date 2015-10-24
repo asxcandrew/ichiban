@@ -1,6 +1,6 @@
 class Account::ModeratorsController < ApplicationController
   before_filter :set_template
-  before_filter :authenticate_user!, only: [:create , :destroy]
+  before_filter :authenticate_user!#, only: [:create , :destroy]
   
   def new
     @board = Board.find_by_directory!(params[:board_directory])
@@ -30,9 +30,14 @@ class Account::ModeratorsController < ApplicationController
   def index
     options = {}
     @prefix = "Users"
-      @board = Board.find_by_directory!(params[:board_directory])
-      # authorize! :manage, @board
-      @users = User.with_role :moderator, @board
+    if current_user.has_role? :operator
+      @administrators = User.with_role :administrator
+    else
+      @boards = Board.with_role(:owner, current_user)
+    end
+      # @board = Board.find_by_directory!(params[:board_directory])
+      # # authorize! :manage, @board
+      # @users = User.with_role :moderator, @board
 
     respond_to do |format|
       format.html { render options }

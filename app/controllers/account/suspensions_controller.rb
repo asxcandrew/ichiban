@@ -6,15 +6,11 @@ class Account::SuspensionsController < ApplicationController
   def index
     options = {}
     @prefix = I18n.t('suspensions.prefix')
-
-    if params[:board_directory]
-      @board = Board.find_by_directory!(params[:board_directory])
-
-      # check_if_user_can!(:manage, Suspension, @board)
-      @suspensions = @board.suspensions.order('created_at')
+    if current_user.has_any_role? :operator, :administrator
+      @suspensions = Suspension.all.order('created_at')
     else
-      # @current_user.check_if_operator!
-      @suspensions = current_user.suspensions.order('created_at DESC')
+      boards = Board.with_roles([:owner, :moderator], current_user).pluck(:id)
+      @suspensions = Suspension.where(board_id: boards).order('created_at')
     end
 
     respond_to do |format|

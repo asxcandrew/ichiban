@@ -1,6 +1,7 @@
 - if @posts.any?
-  - @posts.each do |post|
-    == render partial: 'posts/preview', locals: { post: post }
+  .pure-g
+    - @posts.each do |post|
+      == render partial: 'posts/preview', locals: { post: post }
 
 
 - else

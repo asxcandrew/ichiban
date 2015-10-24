@@ -1,25 +1,37 @@
-- if @users 
-  h1#user-counter Модераторы
-
-.users
-  table
+-if @administrators
+  h1#user-counter Администраторы
+  table.pure-table
     thead
       tr
         th #
         th Email
-        //th Role
-        th Boards
         th Last Login
-        th == link_to('Назначить модератора', new_account_board_moderator_path(@board))
+        th == link_to('Назначить администратора', new_account_moderator_path)
     tbody
-      - if @users
-        - @users.each do |user|
-          tr.user(id=user.id)
-            td.id == user.id
-            td.email == user.email
-            //td.role == user.role.to_s.titleize
-            td.boards
-              == link_to_board(@board)
-            td.last-login == time_tag(user.last_sign_in_at, title: user.last_sign_in_at)
+      - @administrators.each do |administrator|
+        tr.user(id=administrator.id)
+          td.id == administrator.id
+          td.email == administrator.email
+          td.last-login == administrator.last_sign_in_at ? administrator.last_sign_in_at.strftime("%F %T"): nil
+          td
+            == link_to 'Уволить', account_moderator_path(administrator), :method => :delete
+-elsif @boards
+  h1#user-counter Модераторы
+  table.pure-table
+    thead
+      tr
+        th #
+        th Email
+        th Board
+        th Last Login
+        th == link_to('Назначить модератора', new_account_moderator_path)
+    tbody
+      - @boards.each do |board|
+        - User.with_role(:moderator, board).each do |moderator|
+          tr.user(id=moderator.id)
+            td.id == moderator.id
+            td.email == moderator.email
+            td.boards == link_to_board(board)
+            td.last-login == moderator.last_sign_in_at ? moderator.last_sign_in_at.strftime("%F %T"): nil
             td
-              == link_to 'Уволить', account_board_moderator_path(@board, user), :method => :delete
+              == link_to 'Уволить', account_moderator_path(moderator), :method => :delete

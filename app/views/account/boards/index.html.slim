@@ -1,26 +1,21 @@
-.directory-listing
+h1 Борды
 
-  - if @boards 
-    h1 Борды
-
-  .users
-    table
-      thead
-        tr
-          th #
-          th Name
-          th Description
-          th Directory
-          th Edit
-          th == link_to("Создать борду", new_account_board_path)
-      tbody
-        - if @boards
-          - @boards.each do |board|
-            tr.user(id=board.id)
-              td.id == board.id
-              td.email == board.name
-              td.role == board.description.to_s
-              td
-                span == link_to_board("#{board.name} - /#{board.directory}/", board)
-              td
-                span == link_to "Edit", edit_account_board_path(board)
+table.pure-table
+  thead
+    tr
+      th #
+      th Name
+      th Description
+      th Directory
+      th == link_to("Создать борду", new_account_board_path)
+  tbody
+    - if @boards
+      - @boards.each do |board|
+        tr.user(id=board.id)
+          td.id == board.id
+          td.email == board.name
+          td.role == board.description.to_s
+          td
+            span == link_to_board("#{board.name} - /#{board.directory}/", board)
+          td
+            span == link_to "Edit", edit_account_board_path(board)

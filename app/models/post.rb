@@ -23,7 +23,7 @@ class Post < ActiveRecord::Base
   validate :parent_existance_and_congruence, :if => :parent_id
 
   # Assets
-  has_one :image, :dependent => :destroy
+  has_one :image
   accepts_nested_attributes_for :image
   validates_presence_of :image, 
                         :if => :image_required?, 
@@ -204,8 +204,8 @@ class Post < ActiveRecord::Base
       if self.image
         board = Board.find_by_id(self.board_id)
         if board
-          limit = board.file_size_limit
-          if self.image.asset.size > limit.megabytes.to_i
+          limit = board.settings(:limits).file_size_limit
+          if self.image.asset.size > limit
             errors.add(:file_size_limit, I18n.t('posts.errors.file_size_limit', limit: limit))
           end
         else

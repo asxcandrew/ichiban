@@ -2,28 +2,15 @@ class Board < ActiveRecord::Base
 
   has_settings :class_name => 'BoardSettingObject' do |s|
     s.key :view, :defaults => { :color => 'gray'}
+    s.key :limits, :defaults => { :reports_per_ip => 3, :file_size_limit => 3.megabytes}
   end
 
   resourcify
-  # attr_accessible :directory, :name, :description, :file_size_limit, :save_IPs, :worksafe, :max_reports_per_IP
-
   
   validates(:name, 
             length:  { maximum: 40, 
                        too_long: I18n.t('boards.errors.name_too_long') },
            presence: { message: I18n.t('boards.errors.name') })
-
-  # TODO: Set in management panel.
-  validates(:file_size_limit,
-            numericality: { greater_than_or_equal_to: 1,
-                            less_than_or_equal_to: 6,
-                            message: I18n.t('boards.errors.max_file_size_limit', min: 1, max: 6) })
-
-  # TODO: Set in management panel.
-  validates(:max_reports_per_IP,
-            numericality: { greater_than_or_equal_to: 1,
-                            less_than_or_equal_to: 20,
-                            message: I18n.t('boards.errors.max_reports_per_IP', min: 1, max: 20) })
 
   validates(:directory, 
             format:     { with: /[-a-z0-9]*[a-z0-9]/i,
@@ -38,8 +25,6 @@ class Board < ActiveRecord::Base
   has_many :suspensions, :dependent => :destroy
   has_and_belongs_to_many :users
   has_many :reports, :through => :posts, :dependent => :destroy
-
-  after_initialize :init
   
   scope :top, -> {
     group("posts.board_id").
@@ -65,18 +50,16 @@ class Board < ActiveRecord::Base
     end
   end
 
-  private
-    def init
-      self.file_size_limit ||= 3.0
-      self.max_reports_per_IP ||= 10
-    end
-  #end_private
 end
 
 class BoardSettingObject < RailsSettings::SettingObject
   validate do
-    unless PostsHelper::COLORS.keys.include?(self.value['color'].to_sym)
-      errors.add(:base, "Color name is missing")
+    errors.add(:base, "Color name is missing") unless PostsHelper::COLORS.keys.include?(self.value['color'].to_sym)
+    unless self.value['reports_per_ip'].is_a?(Numeric) || self.value['reports_per_ip'].between?(1,15)
+      errors.add(:base, "To many reports_per_ip") 
+    end
+    unless self.value['file_size_limit'].is_a?(Numeric) || self.value['file_size_limit'].between?(1.megabytes,5.megabytes)
+      errors.add(:base, "file_size_limit is 5 mb")
     end
   end
 end

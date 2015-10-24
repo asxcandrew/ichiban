@@ -31,21 +31,8 @@ boards.each do |board|
   Board.create!(board)
 end
 
-User.create!({ email: "operator@example.com",
-               password: "password",
-               :role => :operator })
-
 User.create!({ email: "admin@example.com",
-               password: "password",
-               :role => :administrator })
-
-User.create!({ email: "moderator@example.com",
-               password: "password",
-               :role => :moderator })
-
-User.create!({ email: "janitor@example.com",
-               password: "password",
-               :role => :janitor })
+               password: "password"})
 
 User.find_by_email("admin@example.com").boards << Board.find_by_directory("test") 
 User.find_by_email("moderator@example.com").boards << Board.find_by_directory("test")

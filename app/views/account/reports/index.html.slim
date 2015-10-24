@@ -1,30 +1,27 @@
-- if @reports 
-  h1#report-counter == pluralize(@reports.size, "Report")
-
-.reports
-  table
-    thead
-      tr
-        td #
-        th Post
-        th Poster IP
-        th Reporter IP
-        th Comment
-        th Date
-    tbody
-      - if @reports
-        - @reports.each do |report|
-          tr.report(id=report.id data-postID=report.post_id)
-            td = report.id
-            td = link_to_post("#{report.post.board.directory}##{report.post.id}", report.post)
-            td = report.post.ip_address
-            td = report.ip_address
-            td = report.comment
-            td
-              == time_tag(report.created_at, human_time(report.created_at), title: report.created_at)
-            td.controls
-              a.delete-post(href='#' data-id=report.post_id) Delete Post
-              a.suspend-poster(href='#' data-id=report.id data-postID=report.post_id) Suspend Poster
-              a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
-            td
-              = link_to 'Удалить', account_board_report_path(@board, report), :method => :delete
+h1#report-counter Жалобы
+table.pure-table.reports
+  thead
+    tr
+      td Date
+      th Post
+      th Poster IP
+      th Reporter IP
+      th Comment
+      th
+      th
+  tbody
+    - @reports.each do |report|
+      tr.report(id=report.id data-postID=report.post_id)
+        td = report.date
+        td = link_to_post("#{report.post.board.directory}##{report.post.id}", report.post)
+        td = report.post.ip_address
+        td = report.ip_address
+        td = report.comment
+        td.controls
+          a.delete-post(href='#' data-id=report.post_id) Удалить пост
+          br
+          a.suspend-poster(href='#' data-id=report.id data-postID=report.post_id) Забанить постера
+          br
+          a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
+        td
+          = link_to 'Удалить', account_report_path(report), :method => :delete
