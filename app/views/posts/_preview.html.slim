@@ -4,8 +4,8 @@
       = link_to_post post do
         == image_tag(post.image.asset.thumbnail)
       span.post-info
-        .col-lg-6 ="#{time_ago_in_words post.created_at} ago"
-        .col-lg-6 = "ответов: #{post.replies}"
+        span =post.created_at.strftime("%F %T")
+        span = "ответов: #{post.replies}"
     .post-content
       = link_to_post post do
         .title = post.subject
