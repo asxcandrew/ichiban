@@ -4,6 +4,7 @@ gem 'devise'
 # gem 'protected_attributes'
 # Rails
 gem 'rails', '4.2.1'
+gem 'rails-backbone'
 # gem 'rails-i18n'
 
 # Server
