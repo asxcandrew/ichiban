@@ -1,11 +1,14 @@
-== post_article_tag(color: post.board.color, id: post.id) do
+== post_article_tag(color: post.board.color, id: post.related_id) do
   == render partial: 'posts/header', locals: { post: post }
   - if post.image
 	  .left
 	    figure
         ==link_to post.image.asset.url, class: 'post-img' do
 	         == image_tag(post.image.asset.thumbnail)
-  .body == markdown(post.body)
+  .body
+  	- if post.is_ancestor?
+  		.title ==post.subject
+  	== markdown(post.body)
 
   == render partial: 'posts/footer', locals: { post: post }
 == render partial: 'posts/reply', locals: { parent: post }

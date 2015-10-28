@@ -13,7 +13,7 @@ header.details
       .parent == link_to_parent(post.parent)
       - if post.parent != post.ancestor
         .ancestor == link_to_ancestor(post.ancestor)
-    a.report-post(href='#' data-id=post.id)
+    a.report-post(href='#' data-id=post.related_id)
       = image_tag('/assets/report-icon.png')
-    a.reply-toggle(href='#' data-id=post.id)
+    a.reply-toggle(href='#' data-id=post.related_id)
         = image_tag('/assets/reply-icon.png')

@@ -54,6 +54,7 @@ class Post < ActiveRecord::Base
   # Routines
   before_save :add_lorem_ipsum, :if => :new_record?
   before_save :set_tripcode, :if => :new_record?
+  before_save Proc.new { |post| post.related_id = Post.where(board_id: post.board_id).count }, :if => :new_record?
   after_validation :touch_ancestor!
   after_validation :increment_parent_replies!
 

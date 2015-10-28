@@ -4,12 +4,17 @@ class PostsController < ApplicationController
 
   def new
     @prefix = I18n.t('posts.new.prefix')
-    @board = Board.where("id = ? or directory = ?",params[:board_id],params[:board_id]).first
-    @post = Post.new
+    @board = Board.find_by_directory(params[:board_directory])
+    if @board
+      @post = Post.new
+      @post.board = @board
+    else
+      redirect_to request.referrer
+    end
   end
 
   def show
-    @post = Post.find_by_id(params[:id])
+    @post = Post.joins(:board).where(related_id: params[:related_id], boards:{directory: params[:board_directory]}).first
     @reply = Post.new
     @board = @post.board
     @child_limit = 10
@@ -49,7 +54,7 @@ class PostsController < ApplicationController
         # Used to delete posts.
         cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
 
-        redirect_to(@post.is_ancestor? ? post_path(@post) : post_path(@post.ancestor.id, anchor: @post.id))
+        redirect_to(@post.is_ancestor? ? view_context.post_path(@post) : view_context.post_path(@post.ancestor, anchor: @post.related_id))
       end
     else
       flash[:error] = t('simple_captcha.message.default')

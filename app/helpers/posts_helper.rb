@@ -12,7 +12,7 @@ module PostsHelper
 
   def post_tag(post, options={}, &block)
     attributes = { class: ['post'],
-                   id: post.id,
+                   id: post.related_id,
                    "data-directory" => post.board.directory,
                    style: [] }
 
@@ -51,23 +51,27 @@ module PostsHelper
     end
   end
 
+  def post_path(post, options = {})
+    board_post_path(post.board, post.related_id, options)
+  end
+
   def link_to_post(*text, post, &block)
-    text = text.empty? ? "##{post.id}" : text.to_sentence
+    text = text.empty? ? "##{post.related_id}" : text.to_sentence
     if block.nil?
-      link_to(text, post_path(post), title: "Post ##{post.id}")
+      link_to(text, board_post_path(post.board, post.related_id), title: "Post ##{post.related_id}")
     else
-      link_to(post_path(post), &block)
+      link_to(board_post_path(post.board, post.related_id), &block)
     end
   end
 
   def link_to_parent(post)
     link_to(content_tag(:i, nil, class: "icon-chevron-up", title: "Parent ##{post.id}"), 
-            post_path(post))
+            board_post_path(post.board, post))
   end
 
   def link_to_ancestor(post)
     link_to(content_tag(:i, nil, class: "icon-sitemap", title: "Ancestor ##{post.id}"), 
-            post_path(post))
+            board_post_path(post.board, post))
   end
 
   def link_to_image(asset, size, options = {})

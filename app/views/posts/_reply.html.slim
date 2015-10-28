@@ -1,13 +1,13 @@
 .reply
   == post_article_tag(color: parent.board.color) do
-    ==  simple_form_for(@reply,
+    ==  simple_form_for([@board, @reply],
                         :autocomplete => :off, 
                         :namespace => parent.id,
                         :html => { :multipart => true, 'data-postType' => :reply }) do |f|
 
       == f.hidden_field :parent_id, value: parent.id
 
-      == f.input :body, :as => :text, placeholder: t('posts.show.reply_comment', id: parent.id)
+      == f.input :body, :as => :text, placeholder: false
       .meter:span
         .body
       
@@ -29,6 +29,6 @@
 
       == show_simple_captcha
 
-      == f.submit(t('posts.show.reply_sumbit', id: parent.id), disable_with: t('simple_form.disable_submit'),
+      == f.submit(t('posts.show.reply_sumbit', id: parent.related_id), disable_with: t('simple_form.disable_submit'),
                   title: t('posts.show.reply_requirements.'),
                   style: submit_button_style(cookies.signed[:tripcode]))

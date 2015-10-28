@@ -7,6 +7,21 @@ Ichiban is an imageboard designed to retain the feel of its predecessors while f
 
 # Local Setup
 Ichiban is a Ruby on Rails application so the setup is minimal.
+
+sudo apt-get install mysql-server - При установке нужно придумать пароль
+sudo apt-get install mysql-client
+sudo apt-get install mysql-workbench - Удобный менеджер БД
+
+Просто необходымое ПО
+sudo apt-get install imagemagick php5-imagick
+sudo apt-get install git
+
+Удобный менеджер репозиторие Git
+sudo add-apt-repository ppa:eugenesan/ppa
+sudo apt-get update
+sudo apt-get install smartgit
+
+sudo apt-get install imagemagick php5-imagick
 ## Requirements
 * Some *nix variant or OSX. I recommend Ubuntu Server or a Debian derivative.
 * Ruby 2.0+, preferably using [RVM](https://rvm.io/).

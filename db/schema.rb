@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826062559) do
+ActiveRecord::Schema.define(version: 20151026105139) do
 
   create_table "additions", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150826062559) do
     t.integer  "replies",         limit: 4
     t.integer  "board_id",        limit: 4
     t.integer  "addition_id",     limit: 4
+    t.integer  "related_id",      limit: 4,     null: false
   end
 
   add_index "posts", ["parent_id"], name: "index_posts_on_parent_id", using: :btree

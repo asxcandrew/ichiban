@@ -1,8 +1,15 @@
 Ichiban::Application.routes.draw do
   numeric = /\d+/
 
-  resources :posts
-  
+  resources :boards, :param => :directory, :only => [:index, :show] do
+    resources :posts, :param => :related_id
+    collection do
+      get  'search/' => 'boards#search'
+      get  'search/:keyword' => 'boards#search'
+      get  '/:page' => 'boards#index', constraints: { page: numeric }
+    end
+  end
+
   namespace :account do
     resources :reports
     resources :moderators
@@ -34,42 +41,10 @@ Ichiban::Application.routes.draw do
   root to: 'boards#index'
   get '/:page' => 'boards#index', constraints: { page: numeric }
 
-  scope 'boards' do
-    get  'search/' => 'boards#search'
-    get  'search/:keyword' => 'boards#search'
-    get  '/'      => 'boards#index',  :as => :boards
-    get  '/:page' => 'boards#index', constraints: { page: numeric }
-    post '/'      => 'boards#create'
-    get    'new'              => 'boards#new',     :as => :new_board
-    get    ':directory/edit'  => 'boards#edit',    :as => :edit_board
-    get    ':directory'       => 'boards#show',    :as => :board
-    get    ':directory/:page' => 'boards#show', constraints: { page: numeric }
-    put    ':directory'       => 'boards#update'
-    delete ':directory'       => 'boards#destroy'
-
-    # scope ':directory' do
-    #   resources :users
-    #   # resources :reports
-    #   # resources :suspensions
-    # end
-  end
-
   scope 'tripcodes' do
     # get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
     get ':tripcode/:page'  => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/, page: numeric }
   end
-  
-
-  scope '/manage' do
-    get '/' => 'management#show'
-    put '/' => 'management#update'
-  end
-
-  # A few nicities
-  # get 'login' => 'sessions#new'
-  # get 'logout' => 'sessions#destroy'
-  
-
 
   unless Rails.application.config.consider_all_requests_local
     get '*not_found', to: 'errors#error_404'
