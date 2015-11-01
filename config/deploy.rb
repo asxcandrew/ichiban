@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :rvm_ruby_version, 'ruby-2.0.0-p247'
+set :rvm_ruby_version, 'ruby-2.2.3'
 
 set :application, 'ichiban'
 set :repo_url, 'git@github.com:nextanon/ichiban.git'

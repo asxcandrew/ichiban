@@ -9,7 +9,7 @@ gem 'rails-backbone'
 
 # Server
 gem 'kgio', '2.9.3'
-gem 'unicorn'
+gem 'unicorn', '4.9.0'
 gem 'simple_captcha2', require: 'simple_captcha'
 # File uploads
 gem 'carrierwave', '~> 0.10.0'
