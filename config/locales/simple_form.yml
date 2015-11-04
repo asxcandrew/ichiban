@@ -29,3 +29,34 @@ en:
         subject: "Subject"
         body: "Comment"
         tripcode: "Tripcode"
+ru:
+  helpers:
+    submit:
+      board:
+        create: "Create Board"
+        update: "Update Board"
+      post:
+        create: "Create Thread"
+  simple_form:
+    yes: "yes"
+    no: "no"
+    required:
+      text: "required"
+      mark: ''
+    disable_submit: "Submitting!"
+    labels:
+      defaults:
+        name: "Name"
+        save_IPs: "Save IPs"
+        file_size_limit: "File Size Limit (MB)"
+        max_reports_per_IP: "Max Reports Per IP"
+    placeholders:
+      board:
+        name: "Board name"
+        description: "Description"
+        directory: "Directory"
+      post:
+        name: "Name"
+        subject: "Subject"
+        body: "Comment"
+        tripcode: "Tripcode"

@@ -7,25 +7,26 @@ $ ->
     e.preventDefault()
     $this = $(this) # Not going to ask for this twice...
 
-    reportID = $this.parent().parent().attr('id')
     postID = $this.data('id')
-    deletePost(postID, reportID)
+    boardDir = $this.data('board-dir')
+
+    deletePost(postID, boardDir)
 
   $(".reports").on "click", ".suspend-poster", (e) ->
     e.preventDefault()
     $this = $(this)
     # REWRITE: Remove reports after suspension is sent through.
-    suspendPoster($this.data('postid'))
+    suspendPoster($this.data('postid'), $this.data('board-dir'))
 
   $(details).on "click", ".report-post", (e) ->
     e.preventDefault()
-    reportPost($(this).data('id'))
+    reportPost($(this).data('id'), $(this).data('global-id'))
 
-@reportPost = (id) ->
+@reportPost = (id, global_id) ->
   params = 
     _method: 'create',
     report: 
-      post_id: id, 
+      post_id: global_id, 
       comment: prompt("Why are you reporting post ##{id}?")
 
   $.ajax
@@ -33,7 +34,7 @@ $ ->
     url: "/reports/"
     data: params
     success: (response) ->
-      $.cookie("reported_post_#{id}", true)
+      $.cookie("reported_post_#{global_id}", true)
       $("##{id} article:first").addClass('uninteresting')
     complete: (response) ->
       flash($.parseJSON(response.responseText).flash)
@@ -50,10 +51,10 @@ deleteReport = (id) ->
     complete: (response) ->
       flash($.parseJSON(response.responseText).flash)
 
-deletePost = (postID, reportID) ->
+deletePost = (postID, boardDir) ->
   $.ajax
     type: 'POST'
-    url: "/posts/#{postID}"
+    url: "/boards/#{boardDir}/posts/#{postID}"
     data: { _method: 'delete' }
     success: (response) ->
       deletedReports = $("tr[data-postID = #{postID}]")

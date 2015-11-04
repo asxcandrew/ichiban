@@ -5,6 +5,7 @@ class Account::BoardsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show, :search]
 
   def index
+    @prefix = t('boards.index.prefix')
     if current_user.has_role? :operator
       @boards = Board.all
     else
@@ -14,7 +15,7 @@ class Account::BoardsController < ApplicationController
   end
 
   def new
-    @prefix = "Create a new board"
+    @prefix = t('boards.new.prefix')
     @board = Board.new
   end
 
@@ -31,6 +32,7 @@ class Account::BoardsController < ApplicationController
   end
 
   def edit
+    @prefix = t('boards.update.prefix')
     if can?(:manage, @board)
       # render layout: 'board_management'
     else
@@ -41,9 +43,9 @@ class Account::BoardsController < ApplicationController
   def update
     authorize! :update, @board
     @edited_board = @board.clone
-    @edited_board.update_attributes!(params[:board])
+    @edited_board.update_attributes!(ad_params)
 
-    redirect_to edit_board_path(@edited_board), notice: I18n.t('boards.update.success')
+    redirect_to edit_account_board_path(@edited_board), notice: I18n.t('boards.update.success')
   end
   private
 

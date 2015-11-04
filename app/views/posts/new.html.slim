@@ -1,5 +1,6 @@
+== render partial: 'layouts/shared/board_header'
 .new-post.compact-form
-  h1 = t('.header')
+  h1 Создать тред
   == post_article_tag(color: @post.board.color) do
     == simple_form_for([@board, @post],
                        :autocomplete => :off, 

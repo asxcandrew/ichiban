@@ -7,6 +7,10 @@ gem 'rails', '4.2.1'
 gem 'rails-backbone'
 # gem 'rails-i18n'
 
+gem 'capistrano', '~> 3.1'
+gem 'capistrano-rvm'
+gem 'capistrano-rails', '~> 1.1'
+
 # Server
 gem 'kgio', '2.9.3'
 gem 'unicorn', '4.9.0'

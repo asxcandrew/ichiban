@@ -3,8 +3,8 @@ class Account::ModeratorsController < ApplicationController
   before_filter :authenticate_user!#, only: [:create , :destroy]
   
   def new
-    @board = Board.find_by_directory!(params[:board_directory])
-    authorize! :manage, @board
+    @boards = Board.with_role(:owner, current_user)
+    # authorize! :manage, @board
   end
 
   def create
@@ -29,7 +29,7 @@ class Account::ModeratorsController < ApplicationController
 
   def index
     options = {}
-    @prefix = "Модераторы"
+    @prefix = t('moderators.index.prefix')
     if current_user.has_role? :operator
       @administrators = User.with_role :administrator
     else

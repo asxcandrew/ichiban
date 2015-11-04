@@ -5,7 +5,7 @@ class Account::SuspensionsController < ApplicationController
   
   def index
     options = {}
-    @prefix = I18n.t('suspensions.prefix')
+    @prefix = t('suspensions.index.prefix')
     if current_user.has_any_role? :operator, :administrator
       @suspensions = Suspension.all.order('created_at')
     else

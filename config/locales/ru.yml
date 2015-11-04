@@ -1,7 +1,4 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
-en:
+ru:
   license: "%{link} is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License."
   posts:
     showcases:
@@ -22,7 +19,7 @@ en:
     show:
       enlarge_image: "Embiggen"
       prefix: "Post #%{post_id} on %{board}"
-      reply_sumbit: "Reply to #%{id}"
+      reply_sumbit: "Ответить #%{id}"
       reply_comment: "Comment on post #%{id}"
       reply_requirements: "A comment or upload must be included when replying to a thread."
     create:
@@ -69,31 +66,31 @@ en:
       file_error: "The file could not be read properly. Is the extension correct?"
   boards:
     fields:
-      name: Name
-      description: Description
-      directory: Directory
+      name: Название
+      description: Описание
+      directory: Домен
     index:
-      prefix: My boards
-      header: My boards
+      prefix: Мои доски
+      header: Мои доски
     new:
-      link: Create board
-      prefix: Create a new board
-      header: Create board
-      button: Create
+      link: Создать доску
+      prefix: Создание доски
+      header: Создание доски
+      button: Создать
     show:
       image_required: "An image is required when starting a thread."
       no_posts: "There aren't any posts."
       empty_page: "There aren't any posts on this page."
       back_to_index: "Go back to the index?"
     update:
-      link: Edit
-      header: Update board
-      prefix: Update board
-      button: Update
+      link: Редактировать
+      header: Редактирование доски
+      prefix: Редактирование доски
+      button: Редактировать
       success: "Board settings have been successfully updated."
     destroy:
-      button: "Delete Board"
-      confirmation: "Are you sure? Deleting /%{directory}/ will delete %{posts} posts!"
+      button: "Удалить доску"
+      confirmation: "Вы уверены? Удаление /%{directory}/ удалит %{posts} постов!"
       success: "/%{directory}/ permanently deleted."
     navigation:
       back_to_board: "Back to %{board}"
@@ -119,18 +116,18 @@ en:
       user_not_found: "User #%{id} not found. Were they deleted already?"
   reports:
     controls:
-      delete_post: Delete post
-      suspend_poster: Suspend poster
-      controls: Delete
+      delete_post: Удалить пост
+      suspend_poster: Забанить постера
+      delete: Удалить
     fields:
-      date: Date
-      post: Post
-      poster_ip: Poster IP
-      reporter_ip: Reporter IP
-      comment: Comment
+      date: Дата
+      post: Пост
+      poster_ip: IP постера
+      reporter_ip: IP репортера
+      comment: Комментарий
     index:
-      prefix: "View Reports"
-      header: "Reports"
+      prefix: "Жалобы"
+      header: "Жалобы"
     create:
       success: "Report submitted!"
       post_not_found: "Post #%{post_id} not found."
@@ -147,16 +144,16 @@ en:
       max_reports_per_IP: "You have too many open reports."
   moderators:
     fields:
-      email: Email
-      board: Board
-      last_login: Last login
+      email: Почта
+      board: Доска
+      last_login: Крайний логин
     index:
       prefix: Модераторы
       header: Модераторы
   suspensions:
     index:
-      prefix: View suspensions
-      header: Suspensions
+      prefix: "Баны"
+      header: "Баны"
     create:
       success: "Suspended %{ip_address} until %{ends_at}"
       not_authorized: "You are not authorized to create suspensions for this board."
@@ -166,11 +163,11 @@ en:
     controls:
       delete: Удалить
     fields:
-      created_at: Created At
-      ends_at: Ends At
+      created_at: Создан
+      ends_at: Окончание
       ip: IP
-      reason: Reason
-      board: Board
+      reason: Причина
+      board: Доска
     errors:
       suspension_not_found: "Suspension #%{suspension_id} not found. Was it deleted?"
       no_ip_address: "An IP address must be given."

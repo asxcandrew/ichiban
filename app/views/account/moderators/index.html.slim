@@ -1,11 +1,11 @@
 -if @administrators
-  h1#user-counter Администраторы
+  h1 =t('moderators.index.header')
   table.pure-table
     thead
       tr
         th #
-        th Email
-        th Last Login
+        th =t('moderators.fields.email')
+        th =t('moderators.fields.last_login')
         th == link_to('Назначить администратора', new_account_moderator_path)
     tbody
       - @administrators.each do |administrator|
@@ -16,14 +16,14 @@
           td
             == link_to 'Уволить', account_moderator_path(administrator), :method => :delete
 -elsif @boards
-  h1#user-counter Модераторы
+  h1 =t('moderators.index.header')
   table.pure-table
     thead
       tr
         th #
-        th Email
-        th Board
-        th Last Login
+        th =t('moderators.fields.email')
+        th =t('moderators.fields.board')
+        th =t('moderators.fields.last_login')
         th == link_to('Назначить модератора', new_account_moderator_path)
     tbody
       - @boards.each do |board|

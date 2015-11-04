@@ -64,16 +64,16 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find_by_id!(params[:id])
+    @post = Post.joins(:board).where(related_id: params[:related_id], boards:{directory: params[:board_directory]}).first
     authorize! :manage, @post.reports.last
-    response = { flash: { :type => :notice } }
+    # response = { flash: { :type => :notice } }
     # No sense in keeping them on a page without a parent.
     response[:redirect] = board_path(@post.board) if params[:redirect] == true.to_s
 
     cookies.signed[@post.to_sha2] == @post.ip_address
     @post.destroy
-    flash[:notice] = I18n.t('posts.destroy.deleted', post_id: @post.id)
-    response[:flash][:message] = I18n.t('posts.destroy.deleted', post_id: @post.id)
+    # flash[:notice] = I18n.t('posts.destroy.deleted', post_id: @post.id)
+    # response[:flash][:message] = I18n.t('posts.destroy.deleted', post_id: @post.id)
     # Better clean up after ourselves.
     cookies.delete(@post.to_sha2)
 

@@ -1,7 +1,7 @@
 .register.compact-form
   h1 Назначение модератора
   article
-    == simple_form_for :moderator, url: account_board_moderators_path(@board) do |f|
-
+    == simple_form_for :moderator, url: account_moderators_path do |f|
+    	== f.input :board, collection: @boards
       == f.input :email, placeholder: "Email"
       == f.button :submit, 'Назначить'

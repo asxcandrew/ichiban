@@ -7,8 +7,8 @@ $ ->
     e.preventDefault()
     suspendPoster($(this).data('id'))
 
-@suspendPoster = (id) ->
-  $.getJSON "/posts/#{id}.json", (post) ->
+@suspendPoster = (id, boardDir) ->
+  $.getJSON "/boards/#{boardDir}/posts/#{id}.json", (post) ->
     params = 
       _method: 'create'
       suspension:

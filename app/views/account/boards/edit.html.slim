@@ -1,7 +1,7 @@
 .descriptive.compact-form
-  h1 Edit board
+  h1 =t('boards.update.header')
   article
-    == simple_form_for @board do |f|
+    == simple_form_for [:account, @board] do |f|
       == hidden_field_tag :directory, @board.directory
       == f.input :name
 
@@ -14,7 +14,7 @@
       == f.input :save_IPs
       == f.input :worksafe
 
-      == f.submit
+      == f.submit t('boards.update.button')
 
 
   fieldset.danger-zone

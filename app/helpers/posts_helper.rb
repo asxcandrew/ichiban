@@ -12,9 +12,10 @@ module PostsHelper
 
   def post_tag(post, options={}, &block)
     attributes = { class: ['post'],
-                   id: post.related_id,
-                   "data-directory" => post.board.directory,
-                   style: [] }
+                  id: post.related_id,
+                  'data-global-id' => post.id,
+                  'data-directory' => post.board.directory,
+                  style: [] }
 
     attributes[:class] << 'ancestor' if post.is_ancestor?
     attributes[:class] << options[:class]

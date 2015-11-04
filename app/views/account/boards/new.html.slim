@@ -1,11 +1,11 @@
 .new-board.compact-form
-  h1 Create Board
+  h1 =t('boards.new.header')
   article
-    == simple_form_for @board, url: account_boards_path do |f|
-      == f.input :name, input_html: { title: t('boards.errors.name_too_long') }
+    == simple_form_for [:account, @board] do |f|
+      == f.input :name, label: 'Name', input_html: { title: t('boards.errors.name_too_long') }
       
       == f.input :description
 
       == f.input :directory, input_html: { title: t('boards.errors.directory_format') }
       
-      == f.submit
+      == f.submit t('boards.new.button')

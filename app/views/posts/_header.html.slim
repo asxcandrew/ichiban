@@ -3,8 +3,8 @@ header.details
   .date
     time(title=post.created_at)
       =post.created_at.strftime("%F %T")
-  - if can?(:manage, Post)
-    .ip-address = post.ip_address
+  //- if can?(:manage, Post)
+    //.ip-address = post.ip_address
 
   .right
     // Only show a parent link if the post in question is the parent of the thread
@@ -13,7 +13,7 @@ header.details
       .parent == link_to_parent(post.parent)
       - if post.parent != post.ancestor
         .ancestor == link_to_ancestor(post.ancestor)
-    a.report-post(href='#' data-id=post.related_id)
+    a.report-post(href='#' data-global-id=post.id data-id=post.related_id)
       = image_tag('/assets/report-icon.png')
     a.reply-toggle(href='#' data-id=post.related_id)
         = image_tag('/assets/reply-icon.png')

@@ -1,27 +1,27 @@
-h1#report-counter Жалобы
+h1#report-counter =t('reports.index.header')
 table.pure-table.reports
   thead
     tr
-      td Date
-      th Post
-      th Poster IP
-      th Reporter IP
-      th Comment
+      td =t('reports.fields.date')
+      th =t('reports.fields.post')
+      th =t('reports.fields.poster_ip')
+      th =t('reports.fields.reporter_ip')
+      th =t('reports.fields.comment')
       th
       th
   tbody
     - @reports.each do |report|
-      tr.report(id=report.id data-postID=report.post_id)
+      tr.report(id=report.id data-postID=report.post.related_id)
         td = report.date
-        td = link_to_post("#{report.post.board.directory}##{report.post.id}", report.post)
+        td = link_to_post("#{report.post.board.name}##{report.post.related_id}", report.post)
         td = report.post.ip_address
         td = report.ip_address
         td = report.comment
         td.controls
-          a.delete-post(href='#' data-id=report.post_id) Удалить пост
+          a.delete-post(href='#' data-board-dir=report.post.board.directory data-id=report.post.related_id) =t('reports.controls.delete_post')
           br
-          a.suspend-poster(href='#' data-id=report.id data-postID=report.post_id) Забанить постера
-          br
-          a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
+          a.suspend-poster(href='#' data-id=report.id data-board-dir=report.post.board.directory data-postID=report.post.related_id) =t('reports.controls.suspend_poster')
+          //br
+          //a.delete-reports-by-ip(href='#' title="Delete by IP" data-id=report.id) Delete by IP
         td
-          = link_to 'Удалить', account_report_path(report), :method => :delete
+          = link_to t('reports.controls.delete'), account_report_path(report), :method => :delete

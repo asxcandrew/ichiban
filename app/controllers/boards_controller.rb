@@ -1,7 +1,6 @@
 class BoardsController < ApplicationController
   # before_filter :find_boards, except: [:destroy, :search]
-  before_filter :set_board, except: [:index, :new, :create, :search]
-  before_filter :authenticate_user!, except: [:index, :show, :search]
+  before_filter :set_board, except: [:index, :search]
   
   def search
     @boards = params[:keyword] ? Board.where('name LIKE ?', "%#{params[:keyword]}%").limit(5) : []

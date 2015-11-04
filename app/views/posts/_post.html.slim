@@ -1,4 +1,4 @@
-== post_article_tag(color: post.board.color, id: post.related_id) do
+== post_article_tag(color: post.board.color, id: post.id) do
   == render partial: 'posts/header', locals: { post: post }
   - if post.image
 	  .left

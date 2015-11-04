@@ -1,24 +1,22 @@
-h1#suspension-counter Баны
+h1#suspension-counter =t('suspensions.index.header')
 table.pure-table
   thead
-    th Created At
-    th Ends At
-    th IP
-    th Reason
-    - unless params[:directory]
-      th Board
+    th =t('suspensions.fields.created_at')
+    th =t('suspensions.fields.ends_at')
+    th =t('suspensions.fields.ip')
+    th =t('suspensions.fields.reason')
+    th =t('suspensions.fields.board')
     th
 
   - @suspensions.each do |suspension|
     = suspension_tr_tag(suspension) do
       td
-        == time_tag(suspension.created_at, suspension.created_at, title: suspension.created_at)
+        == time_tag(suspension.created_at, suspension.created_at.strftime('%T %F'))
       td
         == time_tag(suspension.ends_at, suspension.ends_at, title: suspension.ends_at)
       td = suspension.ip_address
       td = suspension.reason
-      - unless params[:directory]
-        td = link_to_board(suspension.board)
+      td = link_to_board(suspension.board)
       td
-        = link_to 'Удалить', account_suspension_path(suspension), :method => :delete
+        = link_to t('suspensions.controls.delete'), account_suspension_path(suspension), :method => :delete
             
