@@ -22,7 +22,7 @@ ENV="production"
 
 # environment settings
 # PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
-CMD="cd $APP_ROOT && ~/.rvm/bin/rvm ruby-2.0.0-p247 do bundle exec unicorn -c config/unicorn.rb -E $ENV -D"
+CMD="cd $APP_ROOT && ~/.rvm/bin/rvm ruby-2.2.3 do bundle exec unicorn -c config/unicorn.rb -E $ENV -D"
 PID="$APP_ROOT/tmp/pids/unicorn.pid"
 OLD_PID="$PID.oldbin"
 
