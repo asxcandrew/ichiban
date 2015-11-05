@@ -14,6 +14,6 @@ header.details
       - if post.parent != post.ancestor
         .ancestor == link_to_ancestor(post.ancestor)
     a.report-post(href='#' data-global-id=post.id data-id=post.related_id)
-      = image_tag('/assets/report-icon.png')
+      = image_tag('report-icon.png')
     a.reply-toggle(href='#' data-id=post.related_id)
-        = image_tag('/assets/reply-icon.png')
+        = image_tag('reply-icon.png')
