@@ -1,4 +1,18 @@
 module BoardsHelper
+
+  def boards_top(current = false)
+    block = ''
+    top = Board.top.to_a
+    if current
+      top.delete current 
+      block << link_to("/#{current.directory}", board_path(current), class: 'current top')
+    end
+    top.each do |board|
+      block << link_to("/#{board.directory}", board_path(board), class: 'top')
+    end
+    block
+  end
+
   def link_to_board(*text, board)
     text = text.empty? ? board.directory : text.to_sentence
     link_to(text, board_path(board))

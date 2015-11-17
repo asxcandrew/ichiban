@@ -30,7 +30,7 @@ class Board < ActiveRecord::Base
     group("posts.board_id").
     joins(:posts).
     order("count(posts.board_id) desc").
-    limit(20)
+    limit(5)
   }
 
   def color
@@ -55,11 +55,11 @@ end
 class BoardSettingObject < RailsSettings::SettingObject
   validate do
     errors.add(:base, "Color name is missing") unless PostsHelper::COLORS.keys.include?(self.value['color'].to_sym)
-    unless self.value['reports_per_ip'].is_a?(Numeric) || self.value['reports_per_ip'].between?(1,15)
-      errors.add(:base, "To many reports_per_ip") 
-    end
-    unless self.value['file_size_limit'].is_a?(Numeric) || self.value['file_size_limit'].between?(1.megabytes,5.megabytes)
-      errors.add(:base, "file_size_limit is 5 mb")
-    end
+    # unless self.value['reports_per_ip'].is_a?(Numeric) || self.value['reports_per_ip'].between?(1,15)
+    #   errors.add(:base, "To many reports_per_ip") 
+    # end
+    # unless self.value['file_size_limit'].is_a?(Numeric) || self.value['file_size_limit'].between?(1.megabytes,5.megabytes)
+    #   errors.add(:base, "file_size_limit is 5 mb")
+    # end
   end
 end

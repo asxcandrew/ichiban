@@ -1,10 +1,11 @@
 header.site-header
   == link_to 'NEXCHAN', root_path, class: 'item root'
   span#main-menu
+    == boards_top(@board)
+    = link_to 'Все доски', boards_path, class: 'item'
   span#right-menu
-    - if params[:directory].present? || params[:board_directory].present?
-      - params[:directory] ||= params[:board_directory]
-      = link_to 'Создать тред', new_board_post_path(params[:directory]), class: 'item', id: 'new-thread'
+    - if @board.present?
+      = link_to 'Создать тред', new_board_post_path(@board), class: 'item', id: 'new-thread'
     -if user_signed_in?
       = link_to 'Aккаунт', account_boards_path, class: 'item'
       = link_to destroy_user_session_path, :method => :delete, class: 'item', id: 'sign-out-link'
