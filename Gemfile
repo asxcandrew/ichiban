@@ -34,8 +34,7 @@ gem 'chronic'             # Humanized time parsing.
 # Management
 gem 'ledermann-rails-settings'
 
-gem 'fog'
-gem "fog-aws"
+gem 'carrierwave-aws'
 
 # Authentication
 gem 'bcrypt-ruby'
