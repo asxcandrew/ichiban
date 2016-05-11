@@ -1,6 +1,7 @@
 Ichiban::Application.routes.draw do
   numeric = /\d+/
 
+  resources :home, only: [:index]
   resources :boards, :param => :directory, :only => [:index, :show] do
     resources :posts, :param => :related_id
     collection do
@@ -15,7 +16,7 @@ Ichiban::Application.routes.draw do
     resources :moderators
     resources :suspensions
     resources :boards, :param => :directory do
-      
+
     end
   end
   # resources :sessions
@@ -38,8 +39,8 @@ Ichiban::Application.routes.draw do
   # resource method because our directory acts the identifier for public use.
 
   # Boards
-  root to: 'boards#index'
-  get '/:page' => 'boards#index', constraints: { page: numeric }
+  root to: 'home#index'
+  get '/:page' => 'home#index', constraints: { page: numeric }
 
   scope 'tripcodes' do
     # get ':tripcode/'       => 'tripcodes#show', :as => :tripcode, constraints: { tripcode: /[^\/]+/ }
