@@ -1,7 +1,4 @@
-.directory-listing
-  .ghost-text
-    == link_to("boards/", boards_path)
-
-- if @boards
-  - @boards.each do |board|
-    div == link_to_board("#{board.name} - /#{board.directory}/", board)
+- if @boards.any?
+  .pure-g
+    - @boards.each do |board|
+      .pure-u-1-1 == link_to_board("#{board.name} - /#{board.directory}/", board)
