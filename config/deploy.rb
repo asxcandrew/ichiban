@@ -1,10 +1,10 @@
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.5.0'
 
 set :rvm_ruby_version, 'ruby-2.2.3'
 
 set :application, 'ichiban'
-set :repo_url, 'git@github.com:nextanon/ichiban.git'
+set :repo_url, 'git@github.com:asxcandrew/ichiban.git'
 set :default_stage, "production"
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

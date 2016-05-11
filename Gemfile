@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'devise'
 # gem 'protected_attributes'
 # Rails
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.6'
 gem 'rails-backbone'
 # gem 'rails-i18n'
 
@@ -34,8 +34,7 @@ gem 'chronic'             # Humanized time parsing.
 # Management
 gem 'ledermann-rails-settings'
 
-gem 'fog'
-gem "fog-aws"
+gem 'carrierwave-aws'
 
 # Authentication
 gem 'bcrypt-ruby'

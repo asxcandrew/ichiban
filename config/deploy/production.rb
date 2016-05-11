@@ -42,7 +42,7 @@ server 'nexchan.com', user: 'ubuntu', roles: %w{app db web}
 # Global options
 # --------------
  set :ssh_options, {
-   keys: ['/home/hard/git/nextch-us-east-1.pem'],
+  #  keys: ['/home/hard/git/nextch-us-east-1.pem'],
    forward_agent: true,
    auth_methods: %w(publickey)
  }
