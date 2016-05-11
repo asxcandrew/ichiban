@@ -3,7 +3,7 @@
   .pure-g.board-grid
     - @posts.each do |post|
       == render partial: 'posts/preview', locals: { post: post }
-
+  == paginate @posts
 
 - else
   .blatant-notice

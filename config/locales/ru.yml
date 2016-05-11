@@ -190,3 +190,9 @@ ru:
   authorization:
     not_authorized_vague: "You are not authorized to %{action} %{authorization_class}."
     not_authorized_specific: "You are not authorized to %{action} %{auth_object} #%{auth_object_id}."
+  views:
+    pagination:
+      next: Next
+      last: Last
+      first: First
+      previous: Previous
