@@ -4,7 +4,7 @@
   box-shadow: 1px 3px 1px rgba(34, 25, 25, 0.3)
   margin: 10px
   .post-content
-    padding: 6px 12px 12px 12px
+    padding: 12px
     .title
       font-size: 12pt
       font-weight: bold
@@ -17,20 +17,18 @@
     flex-direction: column
     justify-content: center
     min-height: 60px
+    max-height: 400px
+    overflow: hidden
     img
       width: 100%
 
   .post-info
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, black 0 0 3px, black 0 0 3px
     font-size: 9pt
-    vertical-align: bottom
-    z-index: 2
-    position: absolute
-    left: 0px
-    background-color: rgba(51, 51, 51, 0.58)
-    display: inline-block
-    color: #FFF
-    padding: 10px 5px
+    color: gray
+    padding: 0px 12px 12px
     width: 100%
-    span
-      margin: 0px 5px
+    li
+      display: inline-block
+      margin-right: 10px
+      &:last-child
+        margin-right: none

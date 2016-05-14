@@ -1,12 +1,16 @@
 .pure-u-xs-1-1.pure-u-sm-1-1.pure-u-md-1-2.pure-u-lg-1-3.pure-u-xl-1-4.grid-item
   .post-preview
-    .post-img-content
-      = link_to_post post do
-        == image_tag(post.image.asset.thumbnail)
-      span.post-info
-        span =post.created_at.strftime("%F %T")
-        span = "ответов: #{post.replies}"
     .post-content
       = link_to_post post do
         .title = post.subject
+    ul.post-info
+      li = post.created_at.strftime("%F %T")
+      - if !@board
+        li = "/" + post.board.directory
+      li = "ответов: #{post.replies}"
+
+    .post-img-content
+      = link_to_post post do
+        == image_tag(post.image.asset.thumbnail)
+    .post-content
       .body == truncate(strip_markdown(text: post.body, html_newlines: true), length: 400, separator: ' ')
