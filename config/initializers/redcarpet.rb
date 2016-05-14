@@ -6,7 +6,7 @@ options = { hard_wrap: true,
             autolink: true,
             no_intraemphasis: true,
             fenced_code: true,
-            safe_links_only: true,
+            no_links: true,
             strikethrough: true,
             superscript: true,
             gh_blockcode: true }
