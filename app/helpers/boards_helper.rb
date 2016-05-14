@@ -1,16 +1,12 @@
 module BoardsHelper
 
   def boards_top(current = false)
-    block = ''
     top = Board.top.to_a
     if current
-      top.delete current 
-      block << link_to("/#{current.directory}", board_path(current), class: 'current top')
+      top.delete current
+      top.unshift current
     end
-    top.each do |board|
-      block << link_to("/#{board.directory}", board_path(board), class: 'top')
-    end
-    block
+    top
   end
 
   def link_to_board(*text, board)
@@ -20,7 +16,7 @@ module BoardsHelper
 
   def link_to_board_or_root
     if params[:controller] == 'boards' && params[:action] == 'show'
-      link_to(@board.name, root_path)  
+      link_to(@board.name, root_path)
     else
       link_to_board(@board.name, @board)
     end

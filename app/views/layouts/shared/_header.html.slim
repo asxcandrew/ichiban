@@ -1,15 +1,30 @@
-header.site-header
-  == link_to 'NEXCHAN', root_path, class: 'item root'
-  span#main-menu
-    == boards_top(@board)
-    = link_to 'Все доски', boards_path, class: 'item'
-  span#right-menu
-    - if @board.present?
-      = link_to 'Создать тред', new_board_post_path(@board), class: 'item', id: 'new-thread'
-    -if user_signed_in?
-      = link_to 'Aккаунт', account_boards_path, class: 'item'
-      = link_to destroy_user_session_path, :method => :delete, class: 'item', id: 'sign-out-link'
-        #sign-out-icon
-    -else
-      = link_to 'Войти', new_user_session_path, class: 'item'
-      = link_to 'Зарегистрироваться', new_user_registration_path, class: 'item'
+.custom-menu-wrapper.pure-g
+  .pure-u-1.pure-u-md-1-6
+    .pure-menu.custom-menu.custom-menu-top
+      == link_to 'NEXCHAN', root_path, class: 'pure-menu-heading custom-menu-brand'
+      a.custom-menu-toggle#toggle href="#"
+        s.bar
+        s.bar
+  .pure-u-1.pure-u-md-5-6
+    .pure-menu.pure-menu-horizontal.pure-menu-scrollable.custom-menu.custom-menu-bottom.custom-menu-tucked#tuckedMenu
+      .custom-menu-screen
+      ul.pure-menu-list.left
+        - boards_top(@board).each do |board|
+          li.pure-menu-item
+            == link_to("/#{board.directory}", board_path(board), class: "pure-menu-link #{board == board ? 'highlighted':''}")
+        li.pure-menu-item
+          == link_to 'Все доски', boards_path, class: 'pure-menu-link'
+      ul.pure-menu-list.right
+        - if @board.present?
+          li.pure-menu-item
+            = link_to 'Создать тред', new_board_post_path(@board), class: 'pure-menu-link highlighted'
+        - if user_signed_in?
+          li.pure-menu-item
+            = link_to 'Aккаунт', account_boards_path, class: 'pure-menu-link'
+          li.pure-menu-item
+            = link_to destroy_user_session_path, :method => :delete, class: 'pure-menu-link', id: 'sign-out-link'
+        - else
+          li.pure-menu-item
+            = link_to 'Войти', new_user_session_path, class: 'pure-menu-link'
+          li.pure-menu-item
+            = link_to 'Зарегистрироваться', new_user_registration_path, class: 'pure-menu-link'
