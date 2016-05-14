@@ -17,7 +17,7 @@ class BoardsController < ApplicationController
 
   def show
     @prefix = "#{@board.name}"
-    @posts = Post.threads_for(@board).order("updated_at DESC").page(params[:page])
+    @posts = Post.threads_for(@board).order('locked DESC').order('updated_at DESC').page(params[:page])
 
     @paged = params[:page]
 
