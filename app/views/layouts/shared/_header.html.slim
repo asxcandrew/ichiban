@@ -22,7 +22,8 @@
           li.pure-menu-item
             = link_to 'Aккаунт', account_boards_path, class: 'pure-menu-link'
           li.pure-menu-item
-            = link_to destroy_user_session_path, :method => :delete, class: 'pure-menu-link', id: 'sign-out-link'
+            = link_to destroy_user_session_path, method: :delete, class: 'pure-menu-link sign-out-link' do
+              i.sign-out-icon
         - else
           li.pure-menu-item
             = link_to 'Войти', new_user_session_path, class: 'pure-menu-link'

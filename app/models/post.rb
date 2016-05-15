@@ -25,36 +25,35 @@ class Post < ActiveRecord::Base
   # Assets
   has_one :image
   accepts_nested_attributes_for :image
-  validates_presence_of :image, 
-                        :if => :image_required?, 
+  validates_presence_of :image,
+                        :if => :image_required?,
                         message: I18n.t('posts.errors.image_required')
   validate :check_file_size, :if => :new_record?
 
   # Attributes
   validates_presence_of :ip_address, message: I18n.t('posts.errors.ip_address')
 
-  validates_length_of :name, 
-                      maximum: 40, 
+  validates_length_of :name,
+                      maximum: 40,
                       message: I18n.t('posts.errors.name_too_long', limit: 40)
-  validates_length_of :subject, 
-                      maximum: 70, 
+  validates_length_of :subject,
+                      maximum: 70,
                       message: I18n.t('posts.errors.subject_too_long', limit: 70)
 
-  validates_length_of :body, 
-                      maximum: 1000, 
-                      message: I18n.t('posts.errors.body_too_long', limit: 5000)
-  
+  validates_length_of :body,
+                      maximum: 1000,
+                      message: I18n.t('posts.errors.body_too_long', limit: 1000)
+
   #Suspensions
   has_many :suspensions, -> { where("ends_at > ?", Date.today)}
   validate :active_suspensions
-  
+
   # Reports
   has_many :reports, :dependent => :destroy
 
   # Routines
-  before_save :add_lorem_ipsum, :if => :new_record?
-  before_save :set_tripcode, :if => :new_record?
-  before_save Proc.new { |post| post.related_id = Post.where(board_id: post.board_id).count }, :if => :new_record?
+  before_create :set_tripcode
+  before_create Proc.new { |post| post.related_id = Post.where(board_id: post.board_id).maximum(:related_id) + 1 }
   after_validation :touch_ancestor!
   after_validation :increment_parent_replies!
 
@@ -74,7 +73,7 @@ class Post < ActiveRecord::Base
 
   def throttle_limit
     unless Rails.env.development?
-      posts = Post.limit(1).where("ip_address = ? AND created_at >= ?", 
+      posts = Post.limit(1).where("ip_address = ? AND created_at >= ?",
                                   self.ip_address,
                                   Time.now - 1.minute)
       errors.add(:throttle_limit, I18n.t('posts.errors.throttle_limit')) if posts.any?
@@ -83,8 +82,8 @@ class Post < ActiveRecord::Base
 
   # TODO: This feature needs more work.
   # def creation_limit
-  #   posts = Post.limit(5).where("ip_address = ? AND created_at >= ?", 
-  #                                self.ip_address, 
+  #   posts = Post.limit(5).where("ip_address = ? AND created_at >= ?",
+  #                                self.ip_address,
   #                                Time.now - 5.minutes)
   #   if posts.size == 5
   #     errors.add(:creation_limit, I18n.t('posts.errors.creation_limit'))
@@ -214,10 +213,10 @@ class Post < ActiveRecord::Base
         end
       end
     end
-    
+
     def touch_ancestor!
-      # TODO: Fix issue where someone could keep 
-      #       adding and deleting posts to bump a 
+      # TODO: Fix issue where someone could keep
+      #       adding and deleting posts to bump a
       #       thread past its limit
       if self.ancestor && self.ancestor.replies <= 300
         self.ancestor.touch
@@ -227,10 +226,10 @@ class Post < ActiveRecord::Base
     def ancestor_existance
       ancestor = Post.find_by_id(self.ancestor_id)
       if ancestor.nil?
-        errors.add(:ancestor_existance, 
+        errors.add(:ancestor_existance,
                    message: I18n.t('posts.errors.ancestor_existance', ancestor_id: self.ancestor_id))
       elsif ancestor.is_ancestor? == false
-        errors.add(:ancestor_not_valid, 
+        errors.add(:ancestor_not_valid,
                    message: I18n.t('posts.errors.ancestor_not_valid', ancestor_id: self.ancestor_id))
       end
     end
@@ -243,21 +242,21 @@ class Post < ActiveRecord::Base
       parent = Post.find_by_id(self.parent_id)
       if parent.nil?
         errors.add(:parent_existance, I18n.t('posts.errors.parent_existance', parent_id: parent_id))
-      
+
       elsif parent.board_id != self.board_id
-        errors.add(:parent_ancestor_mismatch, 
-                   I18n.t('posts.errors.parent_board_mismatch', 
+        errors.add(:parent_ancestor_mismatch,
+                   I18n.t('posts.errors.parent_board_mismatch',
                           parent_board_id: parent.board_id,
                           post_board_id: parent.board_id))
 
       elsif parent.is_ancestor? && (parent.id != self.ancestor_id)
         # This would occur if the reply had a ancestor that didn't match a parent who is an ancestor.
-        errors.add(:parent_ancestor_mismatch, 
+        errors.add(:parent_ancestor_mismatch,
                    I18n.t('posts.errors.parent_ancestor_mismatch', post_ancestor_id: self.ancestor_id))
 
       elsif parent.is_not_ancestor? && (parent.ancestor_id != self.ancestor_id)
-        errors.add(:ancestor_mismatch, 
-                   I18n.t('posts.errors.ancestor_mismatch', 
+        errors.add(:ancestor_mismatch,
+                   I18n.t('posts.errors.ancestor_mismatch',
                    parent_ancestor_id: parent.ancestor_id,
                    post_ancestor_id: self.ancestor_id))
       end
@@ -279,26 +278,20 @@ class Post < ActiveRecord::Base
       if suspensions.any?
         suspensions.each do |suspension|
           errors.add(
-                :suspended, I18n.t('posts.errors.suspended', 
-                ends_at: suspension.ends_at, 
+                :suspended, I18n.t('posts.errors.suspended',
+                ends_at: suspension.ends_at,
                 reason: suspension.reason))
         end
       end
     end
 
-    # An image is required if the post is a parent 
+    # An image is required if the post is a parent
     # or if the body is blank.
     def image_required?
       if self.parent_id # post is a reply
         return self.body.blank?
-      else 
+      else
         return true
-      end
-    end
-
-    def add_lorem_ipsum
-      if Rails.env.development? && self.body == "lorem"
-        self.body = generate_lorem_ipsum
       end
     end
   #end_private
