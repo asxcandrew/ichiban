@@ -13,4 +13,4 @@
       = link_to_post post do
         == image_tag(post.image.asset.thumbnail)
     .post-content
-      .body == truncate(strip_markdown(text: post.body, html_newlines: true), length: 400, separator: ' ')
+      .body == markdown(truncate(post.body, length: 400, separator: ' '))

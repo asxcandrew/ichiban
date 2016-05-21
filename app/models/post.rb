@@ -1,6 +1,5 @@
 # encoding: utf-8
 class Post < ActiveRecord::Base
-  include LoremIpsum
   include Tripcode
   include MarkdownConverter
   # Board relations
@@ -67,7 +66,7 @@ class Post < ActiveRecord::Base
 
   def as_json(options={})
     hash = super(options)
-    hash['body'] = strip_markdown(text: hash['body'], html_newlines: options[:html_newlines])
+    hash['body'] = strip_markdown(hash['body'], options[:html_newlines])
     return hash
   end
 
