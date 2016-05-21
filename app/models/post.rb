@@ -32,9 +32,6 @@ class Post < ActiveRecord::Base
   # Attributes
   validates_presence_of :ip_address, message: I18n.t('posts.errors.ip_address')
 
-  validates_length_of :name,
-                      maximum: 40,
-                      message: I18n.t('posts.errors.name_too_long', limit: 40)
   validates_length_of :subject,
                       maximum: 70,
                       message: I18n.t('posts.errors.subject_too_long', limit: 70)
@@ -54,15 +51,8 @@ class Post < ActiveRecord::Base
   before_create :set_tripcode
   before_create Proc.new { |post| post.related_id = Post.where(board_id: post.board_id).maximum(:related_id) + 1 }
   after_validation :touch_ancestor!
-  after_validation :increment_parent_replies!
 
-  after_initialize :set_reply_count
   after_initialize :inherit_parent, :if => :parent_id
-  after_destroy :decrement_parent_replies!
-
-  # Posting limitations
-  validate :throttle_limit, :if => :new_record?
-  # validate :creation_limit, :if => :new_record?
 
   def as_json(options={})
     hash = super(options)
@@ -70,43 +60,8 @@ class Post < ActiveRecord::Base
     return hash
   end
 
-  def throttle_limit
-    unless Rails.env.development?
-      posts = Post.limit(1).where("ip_address = ? AND created_at >= ?",
-                                  self.ip_address,
-                                  Time.now - 1.minute)
-      errors.add(:throttle_limit, I18n.t('posts.errors.throttle_limit')) if posts.any?
-    end
-  end
-
-  # TODO: This feature needs more work.
-  # def creation_limit
-  #   posts = Post.limit(5).where("ip_address = ? AND created_at >= ?",
-  #                                self.ip_address,
-  #                                Time.now - 5.minutes)
-  #   if posts.size == 5
-  #     errors.add(:creation_limit, I18n.t('posts.errors.creation_limit'))
-  #   end
-  # end
-
-  # We only increment after_validation instead of after_save to avoid undoing
-  # the decrement method.
-  def increment_parent_replies!
-    if self.parent
-      self.parent.with_lock do
-        self.parent.increment!(:replies)
-        self.parent.increment_parent_replies!
-      end
-    end
-  end
-
-  def decrement_parent_replies!
-    if self.parent
-      self.parent.with_lock do
-        self.parent.decrement!(:replies)
-        self.parent.decrement_parent_replies!
-      end
-    end
+  def replies
+    self.descendants.count
   end
 
   def self.threads_for(board)
@@ -124,10 +79,6 @@ class Post < ActiveRecord::Base
   def set_tripcode
     # Is passphrase declared? Not blank? Otherwise use the post's IP address
     self.tripcode = self[:ip_address] if self[:tripcode].nil? || self[:tripcode].blank?
-  end
-
-  def name
-    self[:name] && self[:name].present? ? self[:name] : I18n.t('posts.anonymous')
   end
 
   def tripcode_symbol
@@ -182,20 +133,11 @@ class Post < ActiveRecord::Base
     self.ancestor_id.nil?
   end
 
-  def is_not_ancestor?
-    !self.is_ancestor?
-  end
-
   private
-    def set_reply_count
-      # Will set the default value only if it's nil
-      self.replies ||= 0
-    end
 
   def inherit_parent
     parent = Post.find_by_id!(self.parent_id)
     self[:board_id] = parent.board_id
-    # The ancestor_id would be it's parent's ancestor_id or its own ID.
     self[:ancestor_id] = (parent.ancestor_id || parent.id)
   end
 
@@ -214,9 +156,6 @@ class Post < ActiveRecord::Base
     end
 
     def touch_ancestor!
-      # TODO: Fix issue where someone could keep
-      #       adding and deleting posts to bump a
-      #       thread past its limit
       if self.ancestor && self.ancestor.replies <= 300
         self.ancestor.touch
       end
@@ -253,7 +192,7 @@ class Post < ActiveRecord::Base
         errors.add(:parent_ancestor_mismatch,
                    I18n.t('posts.errors.parent_ancestor_mismatch', post_ancestor_id: self.ancestor_id))
 
-      elsif parent.is_not_ancestor? && (parent.ancestor_id != self.ancestor_id)
+      elsif (!parent.is_ancestor?) && (parent.ancestor_id != self.ancestor_id)
         errors.add(:ancestor_mismatch,
                    I18n.t('posts.errors.ancestor_mismatch',
                    parent_ancestor_id: parent.ancestor_id,

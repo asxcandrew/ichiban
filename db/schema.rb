@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026105139) do
+ActiveRecord::Schema.define(version: 20160521183748) do
 
   create_table "additions", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20151026105139) do
     t.datetime "updated_at"
     t.float    "file_size_limit",    limit: 24
     t.integer  "max_reports_per_IP", limit: 4
-    t.boolean  "save_IPs",           limit: 1,     default: true
-    t.boolean  "worksafe",           limit: 1,     default: true
+    t.boolean  "save_IPs",                         default: true
+    t.boolean  "worksafe",                         default: true
   end
 
   add_index "boards", ["directory"], name: "index_boards_on_directory", unique: true, using: :btree
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20151026105139) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string   "name",            limit: 255
     t.string   "subject",         limit: 255
     t.string   "ip_address",      limit: 255
     t.string   "tripcode",        limit: 255
@@ -61,8 +60,7 @@ ActiveRecord::Schema.define(version: 20151026105139) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ancestor_id",     limit: 4
-    t.boolean  "locked",          limit: 1
-    t.integer  "replies",         limit: 4
+    t.boolean  "locked"
     t.integer  "board_id",        limit: 4
     t.integer  "addition_id",     limit: 4
     t.integer  "related_id",      limit: 4,     null: false
