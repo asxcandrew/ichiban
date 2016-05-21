@@ -2,9 +2,8 @@
   == render partial: 'posts/header', locals: { post: post }
   - if post.image
 	  .left
-	    figure
-        ==link_to post.image.asset.url, class: 'post-img' do
-	         == image_tag(post.image.asset.thumbnail)
+	    figure ==link_to post.image.asset.url, class: 'post-img' do
+	        == image_tag(post.image.asset.thumbnail)
   .body
   	- if post.is_ancestor?
   		.title ==post.subject
