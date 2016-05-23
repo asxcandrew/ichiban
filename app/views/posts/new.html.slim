@@ -2,23 +2,18 @@
 .new-post.compact-form
   h1 Создать тред
   == post_article_tag(color: @post.board.color) do
-    == simple_form_for([@board, @post],
-                       :autocomplete => :off, 
+    == simple_form_for([@current_board, @post],
+                       :autocomplete => :off,
                        html: { multipart: true, 'data-postType' => :parent }) do |f|
 
       == f.input :subject, autofocus: true
       == f.input :body, :as => :text
       .meter:span
-      
-        .body
 
-      == f.input(:name,
-                 input_html: { value: cookies.signed[:name], 
-                               class: 'name', 
-                               :autocomplete => :off })
+        .body
       == f.input(:tripcode,
-                 input_html: { :type => :password, 
-                               value: cookies.signed[:passphrase], 
+                 input_html: { :type => :password,
+                               value: cookies.signed[:passphrase],
                                class: 'tripcode',
                                :autocomplete => :off })
       == label_tag :email
@@ -31,17 +26,17 @@
          == i.hidden_field :asset_cache, value: @post.image.try(:asset_cache)
 
       == show_simple_captcha
-      
-      == text_field_tag(:board_search, 
-                        @board.try(:name), list: 'board-search', 
+
+      == text_field_tag(:board_search,
+                        @current_board.try(:name), list: 'board-search',
                         placeholder: t('.board_search'),
                         required: true,
                         autocomplete: 'off',
                         input_html: { title: t('.board_search_help') })
-                        
-      datalist#board-search
-      == f.hidden_field :board_id, value: @board.try(:id)
 
-      == f.submit(disable_with: t('simple_form.disable_submit'), 
+      datalist#board-search
+      == f.hidden_field :board_id, value: @current_board.try(:id)
+
+      == f.submit(disable_with: t('simple_form.disable_submit'),
                   title: t('boards.show.image_required'),
                   style: submit_button_style(cookies.signed[:tripcode]))

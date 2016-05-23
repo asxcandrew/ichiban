@@ -5,7 +5,7 @@
         .title = post.subject
     ul.post-info
       li = post.created_at.strftime("%F %T")
-      - if !@board
+      - if !@current_board
         li = "/" + post.board.directory
       li = "ответов: #{post.replies}"
 

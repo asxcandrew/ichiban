@@ -48,7 +48,6 @@ class PostsController < ApplicationController
       else
         @post = Post.create(params[:post])
         cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
-        cookies.signed[:name] = { value: @post.name, expires: 1.week.from_now }
         cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
 
         # Used to delete posts.

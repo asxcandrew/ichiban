@@ -1,7 +1,7 @@
 .reply
   == post_article_tag(color: parent.board.color) do
-    ==  simple_form_for([@board, @reply],
-                        :autocomplete => :off, 
+    ==  simple_form_for([@current_board, @reply],
+                        :autocomplete => :off,
                         :namespace => parent.id,
                         :html => { :multipart => true, 'data-postType' => :reply }) do |f|
 
@@ -10,14 +10,9 @@
       == f.input :body, :as => :text, placeholder: false
       .meter:span
         .body
-      
-      == f.input(:name,
-                 input_html: { value: cookies.signed[:name], 
-                               class: 'name',
-                               :autocomplete => :off })
       == f.input(:tripcode,
-                 input_html: { :type => :password, 
-                               value: cookies.signed[:passphrase], 
+                 input_html: { :type => :password,
+                               value: cookies.signed[:passphrase],
                                class: 'tripcode',
                                :autocomplete => :off })
 

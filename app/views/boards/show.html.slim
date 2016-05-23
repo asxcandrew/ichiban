@@ -11,7 +11,7 @@
       h3
         == t('.empty_page')
         | &nbsp;
-        == link_to_board(t('.back_to_index'), @board)
+        == link_to_board(t('.back_to_index'), @current_board)
     - else
       h3
         == t('.no_posts')
