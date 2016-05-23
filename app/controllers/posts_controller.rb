@@ -4,10 +4,10 @@ class PostsController < ApplicationController
 
   def new
     @prefix = I18n.t('posts.new.prefix')
-    @board = Board.find_by_directory(params[:board_directory])
-    if @board
+    @current_board = Board.find_by_directory(params[:board_directory])
+    if @current_board
       @post = Post.new
-      @post.board = @board
+      @post.board = @current_board
     else
       redirect_to request.referrer
     end
@@ -16,22 +16,22 @@ class PostsController < ApplicationController
   def show
     @post = Post.joins(:board).where(related_id: params[:related_id], boards:{directory: params[:board_directory]}).first
     @reply = Post.new
-    @board = @post.board
+    @current_board = @post.board
     @child_limit = 10
     @counter = 0
-    if @post && @board
+    if @post && @current_board
       @prefix =  @post.subject && !@post.subject.blank? ? "#{@post.subject} : " : ""
-      @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: @board.name)
+      @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: @current_board.name)
       respond_to do |format|
         format.html
         format.json do
           omitted = []
           # omitted << :ip_address unless check_if_user_can?(:create, Suspension, @post)
-          render json: @post, 
-                  except: omitted, 
-                  :include => :image, 
+          render json: @post,
+                  except: omitted,
+                  :include => :image,
                   html_newlines: params[:html_newlines]
-        end 
+        end
       end
     end
   end
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
     if simple_captcha_valid?
       params.permit!
       params[:post][:ip_address] = request.ip
-      
+
       # Only a bot would see this field.
       if !params[:email].blank?
         logger.info "Spam Bot detected: #{request.ip}"
@@ -60,7 +60,7 @@ class PostsController < ApplicationController
       flash[:error] = t('simple_captcha.message.default')
       redirect_to :back
     end
- 
+
   end
 
   def destroy

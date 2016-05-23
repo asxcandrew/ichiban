@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   # before_filter :find_boards, except: [:destroy, :search]
-  before_filter :set_board, except: [:index, :search]
+  before_filter :set_current_board, except: [:index, :search]
 
   def search
     @boards = params[:keyword] ? Board.where('name LIKE ?', "%#{params[:keyword]}%").limit(5) : []
@@ -32,8 +32,8 @@ class BoardsController < ApplicationController
       @boards = Board.order("name ASC").all
     end
 
-    def set_board
-      @board = Board.find_by_directory!(params[:directory])
+    def set_current_board
+      @current_board = Board.find_by_directory!(params[:directory])
     end
   # protected_end
 end
