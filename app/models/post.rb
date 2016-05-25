@@ -49,7 +49,7 @@ class Post < ActiveRecord::Base
 
   # Routines
   before_create :set_tripcode
-  before_create Proc.new { |post| post.related_id = Post.where(board_id: post.board_id).maximum(:related_id) + 1 }
+  before_create Proc.new { |post| post.related_id = Post.where(board_id: post.board_id).maximum(:related_id).to_i + 1 }
   after_validation :touch_ancestor!
 
   after_initialize :inherit_parent, :if => :parent_id
