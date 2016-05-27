@@ -6,8 +6,7 @@ class PostsController < ApplicationController
     @prefix = I18n.t('posts.new.prefix')
     @current_board = Board.find_by_directory(params[:board_directory])
     if @current_board
-      @post = Post.new
-      @post.board = @current_board
+      @post = @current_board.posts.new
     else
       redirect_to request.referrer
     end
@@ -37,29 +36,32 @@ class PostsController < ApplicationController
   end
 
   def create
-    if simple_captcha_valid?
-      params.permit!
-      params[:post][:ip_address] = request.ip
-
-      # Only a bot would see this field.
-      if !params[:email].blank?
-        logger.info "Spam Bot detected: #{request.ip}"
-        redirect_to request.referrer
-      else
-        @post = Post.create(params[:post])
-        cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
-        cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
-
-        # Used to delete posts.
-        cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
-
-        redirect_to(@post.is_ancestor? ? view_context.post_path(@post) : view_context.post_path(@post.ancestor, anchor: @post.related_id))
-      end
+    params.permit!
+    params[:post][:ip_address] = request.ip
+    # Only a bot would see this field.
+    if !params[:email].blank?
+      logger.info "Spam Bot detected: #{request.ip}"
+      redirect_to request.referrer
     else
-      flash[:error] = t('simple_captcha.message.default')
-      redirect_to :back
-    end
+      @current_board = Board.find_by_directory(params[:board_directory])
+      @post = @current_board.posts.new(params[:post])
+      if simple_captcha_valid?
+        if @post.save
+          cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
+          cookies.signed[:tripcode] = { value: @post.tripcode, expires: 1.week.from_now }
 
+            # Used to delete posts.
+          cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
+
+          redirect_to(@post.is_ancestor? ? view_context.post_path(@post) : view_context.post_path(@post.ancestor, anchor: @post.related_id))
+        else 
+          render "new"
+        end
+      else
+        flash[:error] = t('simple_captcha.message.default')
+        render "new"
+      end
+    end
   end
 
   def destroy
