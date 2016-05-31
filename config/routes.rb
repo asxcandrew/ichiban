@@ -3,7 +3,9 @@ Ichiban::Application.routes.draw do
 
   resources :home, only: [:index]
   resources :boards, :param => :directory, :only => [:index, :show] do
-    resources :posts, :param => :related_id
+    resources :posts, :param => :related_id do
+      get 'new', on: :member, as: 'new_related'
+    end
     collection do
       get  'search/' => 'boards#search'
       get  'search/:keyword' => 'boards#search'
