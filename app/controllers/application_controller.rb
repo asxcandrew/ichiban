@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       respond_to do |format|
         format.json do
           render json: { flash: { :type => :error, message: @verboten }, responseText: @verboten }, status: 403
-        end 
+        end
         format.html do
           if @current_user
             flash[:error] = @verboten
@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
           else # Must not be logged in...
             # Let's hold on to that path so we can get the user back to where they were going.
             session[:redirect_to] = request.env["REQUEST_PATH"]
-            
+
             flash[:error] = I18n.t('sessions.require_log_in')
             redirect_to(new_session_path)
           end
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       @not_found_path = exception.message
       respond_to do |format|
         format.json do
-          response = { flash: { :type => :error, 
+          response = { flash: { :type => :error,
                                 message: @not_found_path },
                                 responseText: @not_found_path }
           render(json: response, status: 404)
@@ -77,16 +77,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_ability
-      @current_ability ||= Ability.new(current_user)
+    def current_board
+      @current_board ||= Board.find_by_directory(params[:board_directory] || params[:directory])
     end
 
-    # def current_user
-    #   if session[:user_id]
-    #     @current_user ||= User.find_by_id(session[:user_id])
-    #   end
-    # end
-
-    # helper_method :current_user
+    helper_method :current_board
   # private_end
 end

@@ -4,9 +4,8 @@ class PostsController < ApplicationController
 
   def new
     @prefix = I18n.t('posts.new.prefix')
-    @current_board = Board.find_by_directory(params[:board_directory])
-    if @current_board
-      @post = @current_board.posts.new
+    if current_board
+      @post = current_board.posts.new
     else
       redirect_to request.referrer
     end
@@ -15,12 +14,11 @@ class PostsController < ApplicationController
   def show
     @post = Post.joins(:board).where(related_id: params[:related_id], boards:{directory: params[:board_directory]}).first
     @reply = Post.new
-    @current_board = @post.board
     @child_limit = 10
     @counter = 0
-    if @post && @current_board
+    if @post
       @prefix =  @post.subject && !@post.subject.blank? ? "#{@post.subject} : " : ""
-      @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: @current_board.name)
+      @prefix << I18n.t('posts.show.prefix', post_id: @post.id, board: current_board.name)
       respond_to do |format|
         format.html
         format.json do
@@ -43,8 +41,7 @@ class PostsController < ApplicationController
       logger.info "Spam Bot detected: #{request.ip}"
       redirect_to request.referrer
     else
-      @current_board = Board.find_by_directory(params[:board_directory])
-      @post = @current_board.posts.new(params[:post])
+      @post = current_board.posts.new(params[:post])
       if simple_captcha_valid?
         if @post.save
           cookies.signed[:passphrase] = { value: params[:post][:tripcode], expires: 1.week.from_now }
@@ -54,7 +51,7 @@ class PostsController < ApplicationController
           cookies.signed[@post.to_sha2] = { value: @post.ip_address, expires: 1.week.from_now }
 
           redirect_to(@post.is_ancestor? ? view_context.post_path(@post) : view_context.post_path(@post.ancestor, anchor: @post.related_id))
-        else 
+        else
           render "new"
         end
       else

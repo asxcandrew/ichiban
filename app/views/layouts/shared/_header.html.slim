@@ -9,15 +9,15 @@
     .pure-menu.pure-menu-horizontal.pure-menu-scrollable.custom-menu.custom-menu-bottom.custom-menu-tucked#tuckedMenu
       .custom-menu-screen
       ul.pure-menu-list.left
-        - boards_top(@current_board).each do |board|
+        - boards_top(current_board).each do |board|
           li.pure-menu-item
             == link_to("/#{board.directory}", board_path(board), class: "pure-menu-link #{board == board ? 'highlighted':''}")
         li.pure-menu-item
           == link_to 'Все доски', boards_path, class: 'pure-menu-link'
       ul.pure-menu-list.right
-        - if @current_board.present?
+        - if current_board
           li.pure-menu-item
-            = link_to 'Создать тред', new_board_post_path(@current_board), class: 'pure-menu-link highlighted'
+            = link_to 'Создать тред', new_board_post_path(current_board), class: 'pure-menu-link highlighted'
         - if user_signed_in?
           li.pure-menu-item
             = link_to 'Aккаунт', account_boards_path, class: 'pure-menu-link'

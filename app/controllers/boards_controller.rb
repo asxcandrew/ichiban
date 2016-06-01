@@ -1,6 +1,5 @@
 class BoardsController < ApplicationController
   # before_filter :find_boards, except: [:destroy, :search]
-  before_filter :set_current_board, except: [:index, :search]
 
   def search
     @boards = params[:keyword] ? Board.where('name LIKE ?', "%#{params[:keyword]}%").limit(5) : []
@@ -16,10 +15,9 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @prefix = "#{@current_board.name}"
-    @posts = Post.threads_for(@current_board).order('locked DESC').order('updated_at DESC').page(params[:page])
-
-    @paged = params[:page]
+    Rails.logger.debug current_board
+    @prefix = current_board.name
+    @posts = Post.threads_for(current_board).order('locked DESC').order('updated_at DESC').page(params[:page])
 
     respond_to do |format|
       format.html
@@ -30,10 +28,6 @@ class BoardsController < ApplicationController
   protected
     def find_boards
       @boards = Board.order("name ASC").all
-    end
-
-    def set_current_board
-      @current_board = Board.find_by_directory!(params[:directory])
     end
   # protected_end
 end

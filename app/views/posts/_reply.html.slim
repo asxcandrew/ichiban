@@ -1,6 +1,6 @@
 .reply
   == post_article_tag(color: parent.board.color) do
-    ==  simple_form_for([@current_board, @reply],
+    ==  simple_form_for([current_board, @reply],
                         :autocomplete => :off,
                         :namespace => parent.id,
                         :html => { :multipart => true, 'data-postType' => :reply }) do |f|

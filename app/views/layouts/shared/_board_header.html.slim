@@ -1,8 +1,1 @@
 .pure-g
-	.pure-u-1-1
-	  - if @current_board && !@current_board.new_record?
-      span.hero-text = link_to_board_or_root
-      - if @current_board.description.present?
-        span.hero-separator
-          | ::
-        span.description = @current_board.description

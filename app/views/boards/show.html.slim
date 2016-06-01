@@ -6,12 +6,5 @@
   == paginate @posts
 
 - else
-  .blatant-notice
-    - if @paged
-      h3
-        == t('.empty_page')
-        | &nbsp;
-        == link_to_board(t('.back_to_index'), @current_board)
-    - else
-      h3
-        == t('.no_posts')
+  h3
+    == t('.no_posts')

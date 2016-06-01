@@ -2,7 +2,7 @@
 .new-post.compact-form
   h1 Создать тред
   == post_article_tag(color: @post.board.color) do
-    == simple_form_for([@current_board, @post],
+    == simple_form_for([current_board, @post],
                        :autocomplete => :off,
                        html: { multipart: true, 'data-postType' => :parent }) do |f|
 
@@ -28,14 +28,14 @@
       == show_simple_captcha
 
       == text_field_tag(:board_search,
-                        @current_board.try(:name), list: 'board-search',
+                        current_board.try(:name), list: 'board-search',
                         placeholder: t('.board_search'),
                         required: true,
                         autocomplete: 'off',
                         input_html: { title: t('.board_search_help') })
 
       datalist#board-search
-      == f.hidden_field :board_id, value: @current_board.try(:id)
+      == f.hidden_field :board_id, value: current_board.try(:id)
 
       == f.submit(disable_with: t('simple_form.disable_submit'),
                   title: t('boards.show.image_required'),
