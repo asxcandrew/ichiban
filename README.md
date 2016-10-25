@@ -1,9 +1,15 @@
 ### *Modern Imageboard Software*
 
+## Development was stopped forever. 
+New project here https://github.com/asxcandrew/gnuchan
+
+![Alt text](http://i.imgur.com/BwyS3vF.jpg "Ichiban screens")
+
+
 ## What's this all about?
 Every imageboard software has attempted to clone its predecessor. Futaba, Wakaba, Kusaba; It's time for something better than just a clone.
 
-Ichiban is an imageboard designed to retain the feel of its predecessors while fixing the usability issues that have plagued them. The layout attempts to reduce unnecessary distractions and exemplify user content. Ichiban acts more like a board platform than a single imageboard. Users are free to make their own boards and delegate moderator status accordingly. 
+Ichiban is an imageboard designed to retain the feel of its predecessors while fixing the usability issues that have plagued them. The layout attempts to reduce unnecessary distractions and exemplify user content. Ichiban acts more like a board platform than a single imageboard. Users are free to make their own boards and delegate moderator status accordingly.
 
 # Local Setup
 Ichiban is a Ruby on Rails application so the setup is minimal.
